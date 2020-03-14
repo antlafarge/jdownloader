@@ -7,7 +7,7 @@ if [ -z "${JD_EMAIL}" ] || [ -z "${JD_PASSWORD}" ]; then
 fi
 
 # Get current GID
-currentGID=$(cut -d: -f3 < <(getent group hdd))
+currentGID=$(cut -d: -f3 < <(getent group jdgroup))
 
 # If current GID does not match
 if [ currentGID != ${GID} ]; then
@@ -41,7 +41,7 @@ if [ currentGID != ${GID} ]; then
 fi
 
 # Get current UID
-currentUID=$(id -u erqsor)
+currentUID=$(id -u jduser)
 
 # If current UID does not match
 if [ currentUID != ${UID} ]; then
