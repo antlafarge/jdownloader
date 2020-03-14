@@ -10,14 +10,12 @@ fi
 currentGID=$(cut -d: -f3 < <(getent group jdgroup))
 
 # If current GID does not match
-if [ currentGID != ${GID} ]; then
+if [ $currentGID != ${GID} ]; then
 
-    echo "GID does not match (currentGID=$currentGID, GID=${GID})"
+    echo "GID does not match (currentGID='$currentGID', GID='${GID}')"
 
     # If current GID not set (or empty)
     if [ ! -z "$currentGID" ]; then
-
-        echo "Group already exists"
 
         echo "Remove user from group"
 
@@ -44,26 +42,27 @@ fi
 currentUID=$(id -u jduser)
 
 # If current UID does not match
-if [ currentUID != ${UID} ]; then
+if [ $currentUID != ${UID} ]; then
 
-    echo "UID does not match (currentUID=$currentUID, UID=${UID})"
+    echo "UID does not match (currentUID='$currentUID', UID='${UID}')"
 
     # If current UID not set (or empty)
     if [ ! -z "$currentUID" ]; then
 
-        echo "User already exists"
-
         echo "Delete user"
 
         # delete user
-        deluser --remove-home jduser
+        deluser jduser
+
+        # delete home directory
+        rm -R /home/jduser
 
     fi
 
     echo "Create user with UID '${UID}'"
 
     # Create user and add to group
-    useradd -ms /bin/bash -d /home/jduser/ -u ${UID} -G jdgroup jduser
+    useradd -ms /bin/bash -d /home/jduser -u ${UID} -G jdgroup jduser
 
     echo "User created"
 
