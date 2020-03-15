@@ -20,7 +20,7 @@
 `docker build -t jdownloader .`
 
 ## Display container logs
-`docker logs --follow jdownloader`
+`docker logs --follow --tail 100 jdownloader`
 
 ## Delete container
 `docker rm --force jdownloader`
