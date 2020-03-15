@@ -86,7 +86,7 @@ fi
 echo "Overwrite jdownloader email and password in config file"
 
 # Overwrite email and password to access https://my.jdownloader.org/
-echo "{ \"autoconnectenabledv2\" : true, \"email\": \"${JD_EMAIL}\", \"password\": \"${JD_PASSWORD}\", \"devicename\": \"docker@jdownloader\" }" > ./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+echo "{ \"autoconnectenabledv2\" : true, \"email\": \"${JD_EMAIL}\", \"password\": \"${JD_PASSWORD}\", \"devicename\": \"${JD_NAME}\" }" > ./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
 
 # Check JDownloader.jar
 if [ ! -f "./JDownloader.jar" ]; then

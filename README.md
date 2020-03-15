@@ -1,26 +1,31 @@
 # JDownloader
 
-## Run docker container (detached)
+## Run docker container
 
-### from docker hub
+    docker run -d -v <downloadPath>:/downloads/ -e "JD_EMAIL=<email>" -e "JD_PASSWORD=<password>" --restart unless-stopped --name jdownloader antlafarge/jdownloader
 
-`docker run -d -v <downloadPath>:/downloads/ -e "UID=<uid>" -e "GID=<gid>" -e "JD_EMAIL=<email>" -e "JD_PASSWORD=<password>" --restart unless-stopped --name jdownloader antlafarge/jdownloader:rpi3-raspbian`
+Replace `downloadPath` by your absolute folder path on your local device.
 
-- `<downloadPath>` : Absolute download folder path
-- `<email>` : Your my.jdownloader.org email
-- `<password>` : Your my.jdownloader.org password
-- `<uid>` : UID used for downloaded files owner (optional)
-- `<gid>` : GID used for downloaded files group owner (optional)
+### Available environment variables :
 
-### from locally built image
++ Mandatory :
+    - `JD_EMAIL` : Your my.jdownloader.org email
+    - `JD_PASSWORD` : Your my.jdownloader.org password
 
-`docker run -d -v <downloadPath>:/downloads/ -e "UID=<uid>" -e "GID=<gid>" -e "JD_EMAIL=<email>" -e "JD_PASSWORD=<password>" --restart unless-stopped --name jdownloader jdownloader`
-
-#### Build docker image
-`docker build -t jdownloader .`
++ Optional :
+    - `JD_NAME` : Device name in your my.jdownloader.org interface (default : `JDownloader`)
+    - `UID` : UID used for downloaded files owner (default : `1000`)
+    - `GID` : GID used for downloaded files group owner (default : `1000`)
 
 ## Display container logs
-`docker logs --follow --tail 100 jdownloader`
+    docker logs --follow --tail 100 jdownloader
 
 ## Delete container
-`docker rm --force jdownloader`
+    docker rm --force jdownloader
+
+## Build docker image
+    docker build -t jdownloader .
+
+## Install docker
+    sudo curl -sSL https://get.docker.com / | sh
+    sudo usermod -aG docker <username>

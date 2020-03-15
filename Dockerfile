@@ -1,12 +1,14 @@
 FROM ubuntu
 
-ENV UID 1000
-
-ENV GID 1000
-
 ENV JD_EMAIL ""
 
 ENV JD_PASSWORD ""
+
+ENV JD_NAME "JDownloader"
+
+ENV UID 1000
+
+ENV GID 1000
 
 RUN apt update
 
