@@ -10,7 +10,7 @@ fi
 currentGID=$(cut -d: -f3 < <(getent group jdgroup))
 
 # If current GID does not match
-if [ $currentGID != ${GID} ]; then
+if [ "$currentGID" != "${GID}" ]; then
 
     echo "GID does not match (currentGID='$currentGID', GID='${GID}')"
 
@@ -42,7 +42,7 @@ fi
 currentUID=$(id -u jduser)
 
 # If current UID does not match
-if [ $currentUID != ${UID} ]; then
+if [ "$currentUID" != "${UID}" ]; then
 
     echo "UID does not match (currentUID='$currentUID', UID='${UID}')"
 
