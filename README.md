@@ -34,6 +34,7 @@ Replace `downloadPath` by your absolute folder path on your local device.
 
 ### Build and push for all architectures
 
+https://docs.docker.com/buildx/working-with-buildx
 https://www.docker.com/blog/multi-arch-images
 
 Powershell :
