@@ -10,9 +10,7 @@ ENV UID 1000
 
 ENV GID 1000
 
-RUN apt update
-
-RUN apt install -y wget openjdk-8-jre ffmpeg
+RUN apt update && apt install -y wget openjdk-8-jre ffmpeg
 
 WORKDIR /jdownloader
 

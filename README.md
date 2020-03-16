@@ -1,6 +1,10 @@
 # JDownloader
 
-## Run docker container
+## Install docker
+    sudo curl -sSL https://get.docker.com / | sh
+    sudo usermod -aG docker <username>
+
+## Run JDownloader in docker
 
     docker run -d -v <downloadPath>:/downloads/ -e "JD_EMAIL=<email>" -e "JD_PASSWORD=<password>" --restart unless-stopped --name jdownloader antlafarge/jdownloader
 
@@ -23,9 +27,25 @@ Replace `downloadPath` by your absolute folder path on your local device.
 ## Delete container
     docker rm --force jdownloader
 
-## Build docker image
+## Dev commands
+
+### Build docker image
     docker build -t jdownloader .
 
-## Install docker
-    sudo curl -sSL https://get.docker.com / | sh
-    sudo usermod -aG docker <username>
+### Build and push for all architectures
+
+https://www.docker.com/blog/multi-arch-images
+
+Powershell :
+
+    docker buildx ls
+
+    docker buildx create --name mybuilder
+
+    docker buildx use mybuilder
+
+    docker buildx inspect --bootstrap
+
+    cd D:\DEV\jdownloader
+
+    docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t antlafarge/jdownloader:latest --push .
