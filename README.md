@@ -6,7 +6,7 @@
 
 ## Run JDownloader in docker
 
-    docker run -d -v <downloadPath>:/downloads/ -e "JD_EMAIL=<email>" -e "JD_PASSWORD=<password>" --restart unless-stopped --name jdownloader antlafarge/jdownloader
+    docker run -d -v <downloadPath>:/downloads -e "JD_EMAIL=<email>" -e "JD_PASSWORD=<password>" --restart unless-stopped --name jdownloader antlafarge/jdownloader
 
 Replace `downloadPath` by your absolute folder path on your local device.
 
