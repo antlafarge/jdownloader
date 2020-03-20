@@ -88,22 +88,26 @@ echo "Overwrite jdownloader email and password in config file"
 # Overwrite email and password to access https://my.jdownloader.org/
 echo "{ \"autoconnectenabledv2\" : true, \"email\": \"${JD_EMAIL}\", \"password\": \"${JD_PASSWORD}\", \"devicename\": \"${JD_NAME}\" }" > ./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
 
-# Check JDownloader.jar
-if [ ! -f "./JDownloader.jar" ]; then
+# JDownloader.jar can be invalid or corrupted after an update, so we delete it and download the last jar file at startup
 
-    echo "JDownloader.jar does not exist, starting download"
+# If file JDownloader.jar exists
+if [ -f "./JDownloader.jar" ]; then
 
-    # Download jdownloader
-    wget http://installer.jdownloader.org/JDownloader.jar
+    echo "Deleting JDownloader.jar"
 
-    echo "JDownloader.jar downloaded"
+    # Delete JDownloader.jar
+    rm JDownloader.jar
+
+    echo "JDownloader.jar deleted"
+
 fi
 
-echo "Setup access rights for JDownloader.jar file"
+echo "Downloading JDownloader.jar"
 
-# Fix update issue (access rigths could change)
-chown -R jduser:jdgroup .
-chmod -R 777 .
+# Download jdownloader
+wget http://installer.jdownloader.org/JDownloader.jar
+
+echo "JDownloader.jar downloaded"
 
 echo "Starting JDownloader.jar"
 
