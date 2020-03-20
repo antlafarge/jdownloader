@@ -49,4 +49,4 @@ Powershell :
 
     cd D:\DEV\jdownloader
 
-    docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t antlafarge/jdownloader:latest --push .
+    docker buildx build --no-cache --platform linux/amd64,linux/arm64,linux/arm/v7 -t antlafarge/jdownloader:latest --push .
