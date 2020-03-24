@@ -14,7 +14,7 @@ if [ "$currentGID" != "${GID}" ]; then
 
     echo "GID does not match (currentGID='$currentGID', GID='${GID}')"
 
-    # If current GID not set (or empty)
+    # If current GID is set (not null or not empty)
     if [ ! -z "$currentGID" ]; then
 
         echo "Remove user from group"
@@ -46,7 +46,7 @@ if [ "$currentUID" != "${UID}" ]; then
 
     echo "UID does not match (currentUID='$currentUID', UID='${UID}')"
 
-    # If current UID not set (or empty)
+    # If current UID is set (not null or not empty)
     if [ ! -z "$currentUID" ]; then
 
         echo "Delete user"
