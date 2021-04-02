@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Disable bash history substitution
+set +H
+
 # Log
 log()
 {
@@ -137,8 +140,8 @@ startJDownloader()
     replaceJsonValue()
     {
         file=$1
-        field=$(printf "$2" | sed -e 's/\\/\\\\/g' -e 's/[]\/$*.^[]/\\&/g') # this field will be compared to a value from a json file, so we need to double escape the backslashes \\\\    And this field will be used in a sed regex, so we escape regex special characters ]\/$*.^[
-        newValue=$(printf "$3" | sed -e 's/[\/&]/\\&/g' -e 's/"/\\\\"/g') # this value will be used in a sed replace, so we escape replace special characters \/&    And this value will be stored in a json file, so finally we double escape the quotes \\\\"
+        field=$(printf "%s" "$2" | sed -e 's/\\/\\\\/g' -e 's/[]\/$*.^[]/\\&/g') # this field will be compared to a value from a json file, so we need to double escape the backslashes \\\\    And this field will be used in a sed regex, so we escape regex special characters ]\/$*.^[
+        newValue=$(printf "%s" "$3" | sed -e 's/[\/&]/\\&/g' -e 's/"/\\\\"/g') # this value will be used in a sed replace, so we escape replace special characters \/&    And this value will be stored in a json file, so finally we double escape the quotes \\\\"
         
         fieldPart="\($field\)" # match the field
         valuePart="\([^\\\"]\|\\\\.\)*" # match the value. This looks complicated because it can contain escaped quotes \" because of json format.
@@ -146,9 +149,7 @@ startJDownloader()
         search="\"$fieldPart\"\s*:\s*\"$valuePart\""
         replace="\"\1\":\"$newValue\""
 
-        sedPattern="s/$search/$replace/g"
-
-        sed -i $sedPattern $file
+        sed -i "s/$search/$replace/g" $file
     }
 
     cfgDir="./cfg/"
@@ -187,12 +188,18 @@ startJDownloader()
 
     fi
 
-    log "Replacing JDownloader email and password in myJDownloader settings file"
+    log "Replacing JDownloader email, devicename and password in myJDownloader settings file"
 
-    # Replacing JDownloader email and password in myJDownloader settings file
-    replaceJsonValue $myJDownloaderSettingsFile "email" $JD_EMAIL
-    replaceJsonValue $myJDownloaderSettingsFile "password" $JD_PASSWORD
-    replaceJsonValue $myJDownloaderSettingsFile "devicename" $JD_NAME
+    # Replacing JDownloader email, devicename and password in myJDownloader settings file
+    replaceJsonValue $myJDownloaderSettingsFile "email" "$JD_EMAIL"
+
+    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$JD_NAME"
+    
+    if [ -n "$JD_PASSWORD" ]; then
+
+        replaceJsonValue $myJDownloaderSettingsFile "password" "$JD_PASSWORD"
+
+    fi
 
     # On linux/arm/v7 systems, sleep could generate this error :
     # "sleep: cannot read realtime clock: Operation not permitted"
@@ -301,23 +308,23 @@ startJDownloader()
 log "======== SCRIPT STARTED ========"
 
 # Check environment variables
-if [ -z "$JD_EMAIL" ];then
+if [ -z "$JD_EMAIL" ]; then
     logErr "Environment variable JD_EMAIL has not been set (JD_EMAIL='$JD_EMAIL')"
     exit 1
 fi
-if [ -z "$JD_PASSWORD" ];then
-    logErr "Environment variable JD_PASSWORD has not been set (JD_PASSWORD='$JD_PASSWORD')"
-    exit 1
+if [ -z "$JD_PASSWORD" ]; then
+    logErr "Warning: Environment variable JD_PASSWORD has not been set (JD_PASSWORD='$JD_PASSWORD')"
+    # Do not exit here, only display a warning, because the password could be placed by the user in the settings file
 fi
-if [ -z "$JD_NAME" ];then
+if [ -z "$JD_NAME" ]; then
     logErr "Environment variable JD_NAME has not been set (JD_NAME='$JD_NAME')"
     exit 1
 fi
-if [ -z "$UID" ];then
+if [ -z "$UID" ]; then
     logErr "Environment variable UID has not been set (UID='$UID')"
     exit 1
 fi
-if [ -z "$GID" ];then
+if [ -z "$GID" ]; then
     logErr "Environment variable GID has not been set (GID='$GID')"
     exit 1
 fi

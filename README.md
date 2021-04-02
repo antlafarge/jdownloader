@@ -77,8 +77,28 @@ docker run -d --restart unless-stopped \
         -e "UID=<b>1000</b>" \
         -e "GID=<b>1000</b>" \
     --name <b>jdownloader</b> \
-    antlafarge/jdownloader<b>:ubuntu</b>
+    antlafarge/jdownloader
 </pre>
+
+## Password special characters guide
+
+I recommand avoiding the use of special characters in your JDownloader password.  
+But if you have special characters in your password, you have 2 solutions :
+
+1. Adapt your **docker run** command :
+    - If you have exclamation marks (`!`) in your password and you use a **bash** shell, this special character correponds to commands history substitution. You might need to disable it by typing the command `set +H` in your bash shell.
+    - If your password contains double quotes (`"`) or backticks (`` ` ``), escape it with backslashes (`\`) in the **docker run** command. ``-e "JD_PASSWORD=My\"Great\`Password" \``
+    - Run the **docker run** command.
+
+2. Or put your password manually in the settings file :
+    - Customize your **docker run** command parameters :
+        - Set an empty password (or the password will be replaced each time the container is restarted). `-e "JD_PASSWORD=" \`
+        - Set a `<config-path>` volume to access the JDownloader settings files.
+    - Run the **docker run** command.
+    - Go to your config path and open the settings file named `org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json`.
+    - Search for `"password" : "",` and place your password in the empty double quotes. `"password" : "MyGreatPassword",`
+    - If your password contains double quotes (`"`), escape it with backslashes. `"password" : "My\"Great\"Password",`
+    - Save the file and restart the container. `docker restart jdownloader`
 
 ## Logs
 
