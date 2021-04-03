@@ -79,7 +79,7 @@ setupUserAndGroup()
     log "Get current UID"
 
     # Get current UID
-    currentUID=$(id -u jduser)
+    currentUID=$(id -u jduser 2> /dev/null)
 
     log "Get current GID"
 
@@ -208,11 +208,7 @@ startJDownloader()
     {
         seconds=$1
 
-        if [ -n "$seconds" ]; then
-
-            timeout "${seconds}s" "tail -f /dev/null" &>/dev/null
-
-        fi
+        read -t $seconds < /dev/zero || true
     }
 
     # Wait for a process to stop
@@ -220,22 +216,13 @@ startJDownloader()
     {
         pid=$1
 
-        # If pid not null
-        if [ -n "$pid" ]; then
+        # Wait process to stop
+        while kill -0 "$pid" 2> /dev/null; do
 
-            log "Waiting for process '$pid' to stop..."
+            # sleep 1
+            sleepWorkaround 1
 
-            # Wait process to stop
-            while kill -0 $pid; do
-
-                # sleep 1
-                sleepWorkaround 1
-
-            done
-
-            log "Process '$pid' stopped"
-
-        fi
+        done
     }
 
     JDownloaderJarFile="JDownloader.jar"
@@ -248,7 +235,7 @@ startJDownloader()
         log "Downloading $JDownloaderJarFile"
 
         # Download JDownloader
-        curl -O $JDownloaderJarUrl
+        curl -O $JDownloaderJarUrl 2> /dev/null
 
         log "$JDownloaderJarFile downloaded"
 
@@ -257,48 +244,31 @@ startJDownloader()
     log "Starting JDownloader"
 
     # Start JDownloader in background
-    java -Djava.awt.headless=true -jar $JDownloaderJarFile &>/dev/null &
+    java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &
 
     # Get PID
     pid=$!
 
-    log "JDownloader started"
-
     jdrunning=true
-
-    waitJDownloader()
-    {
-        waitProcess $pid
-
-        log "Searching for the next Java PID to wait..."
-
-        # If JDownloader is still running
-        if [ -f $JDownloaderPidFile ]; then
-
-            # Get PID
-            pid=$(cat $JDownloaderPidFile)
-
-            exit 0
-
-        fi
-
-        # Get next running Java PID
-        pid=$(pgrep java | head -n 1)
-
-        # If pid null
-        if [ -z "$pid" ]; then
-
-            # All Java processes stopped, stop script
-            jdrunning=false
-            
-        fi
-    }
 
     while [ $jdrunning = true ]; do
 
-        log "JDownloader is still running"
+        log "JDownloader started (PID $pid)"
 
-        waitJDownloader
+        waitProcess $pid
+        
+        log "JDownloader stopped (PID $pid)"
+
+        # Get the written JDownloader PID or the next running Java PID
+        pid=$(pgrep -L -F $JDownloaderPidFile 2> /dev/null || pgrep "java" | head -n 1)
+
+        # If no PID found
+        if [ -z "$pid" ]; then
+
+            # No running proces found, exit script
+            jdrunning=false
+            
+        fi
 
     done
 
