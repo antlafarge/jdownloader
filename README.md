@@ -12,54 +12,50 @@ You can report issues [here (github issues)](https://github.com/antlafarge/jdown
 
 <pre>
 docker run -d --restart unless-stopped &#92;  
-    --name <b>&#60;container-name&#62;</b> &#92;  
-    -v "<b>&#60;DOWNLOADS-PATH&#62;</b>:/downloads" &#92;  
+    --name <b>&#60;CONTAINER-NAME&#62;</b> &#92;  
+    -v "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads" &#92;  
     -e "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" &#92;  
     -e "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
-        -v "<b>&#60;config-path&#62;</b>:/jdownloader/cfg" &#92;  
-        -v "<b>&#60;logs-path&#62;</b>:/jdownloader/logs" &#92;  
-        -e "JD_NAME=<b>&#60;jd-name&#62;</b>" &#92;  
-        -e "UID=<b>&#60;uid&#62;</b>" &#92;  
-        -e "GID=<b>&#60;gid&#62;</b>" &#92;  
-        -p "<b>&#60;port&#62;</b>:3129" &#92;  
-    antlafarge/jdownloader:<b>&#60;tag&#62;</b>
+        -v "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg" &#92;  
+        -v "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs" &#92;  
+        -e "JD_NAME=<b>&#60;JD-NAME&#62;</b>" &#92;  
+        -e "UID=<b>&#60;UID&#62;</b>" &#92;  
+        -e "GID=<b>&#60;GID&#62;</b>" &#92;  
+        -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
+    antlafarge/jdownloader<b>&#60;:TAG&#62;</b>
 </pre>
 
-*Note : Lowercase parameters are optional.*
+*Note : Parameters indented twice are optional.*
 
-### Mandatory parameters :
+### Parameters :
 
-- **`<DOWNLOADS-PATH>`** Directory where your downloads will be stored.
-- **`<JD-EMAIL>`** Your [myJDownloader](https://my.jdownloader.org) email.
-- **`<JD-PASSWORD>`** Your [myJDownloader](https://my.jdownloader.org) password.
-
-### Optional parameters :
-
-- **`<container-name>`** Docker container name.
-- **`<config-path>`** Directory where the JDownloader settings files will be stored.
-- **`<logs-path>`** Directory where the JDownloader logs files will be stored.
-- **`<port>`** Network port used for Direct connection mode.
-- **`<jd-name>`** Device name in your [myJDownloader web interface](https://my.jdownloader.org) (default : `jd-ubuntu` or `jd-alpine`).
-- **`<uid>`** Linux User ID used for downloaded files owner (default : `1000`).
-- **`<gid>`** Linux Group ID used for downloaded files owner (default : `1000`).
-- **`<tag>`** Docker hub tag. (if omitted : `latest`).
-    - **`latest`** : Linked to `ubuntu` tag.
-    - **`ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).
-    - **`alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller).
+Name | Description | default
+--- | --- | ---
+**`<DOWNLOADS-PATH>`** | Directory where your downloads will be stored. | -
+**`<JD-EMAIL>`** | Your [myJDownloader](https://my.jdownloader.org) email. | -
+**`<JD-PASSWORD>`** | Your [myJDownloader](https://my.jdownloader.org) password. | -
+**`<CONTAINER-NAME>`** | Docker container name. | -
+**`<CONFIG-PATH>`** | Directory where the JDownloader settings files will be stored. | Stored in the container
+**`<LOGS-PATH>`** | Directory where the JDownloader logs files will be stored. | Stored in the container
+**`<PORT>`** | Network port used for Direct connection mode. | -
+**`<JD-NAME>`** | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | `jd-ubuntu` / `jd-alpine`
+**`<UID>`** | Linux User ID used for downloaded files owner. | `1000`
+**`<GID>`** | Linux Group ID used for downloaded files owner. | `1000`
+**`<:TAG>`** | Docker hub tag.<br>- **`:latest`** : Linked to `ubuntu` tag.<br>- **`:ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`:alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | `latest`
 
 ### Example
 
 <pre>
 docker run -d --restart unless-stopped \
     --name <b>jdownloader</b> \
-    -v <b>/mnt/hdd/Downloads</b>:/downloads \
+    -v <b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
         -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \
-        -e "JD_NAME=<b>JD-DOCKER</b>" \
+        -e "JD_NAME=<b>jd-docker</b>" \
         -e "UID=<b>1000</b>" \
-        -e "GID=<b>1000</b>" \
+        -e "gid=<b>1000</b>" \
         -p <b>3129</b>:3129 \
     antlafarge/jdownloader
 </pre>
@@ -72,23 +68,21 @@ docker run -d --restart unless-stopped \
 services:
   jdownloader:
     image: antlafarge/jdownloader
-    container_name: <b>&#60;container-name&#62;</b>
+    container_name: <b>&#60;CONTAINER-NAME&#62;</b>
     restart: unless-stopped
     volumes:
-      - "<b>&#60;DOWNLOADS-PATH&#62;</b>:/downloads"
-      - "<b>&#60;config-path&#62;</b>:/jdownloader/cfg"
-      - "<b>&#60;logs-path&#62;</b>:/jdownloader/logs"
+      - "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads"
+      - "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg" # optional
+      - "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs" # optional
     environment:
       - "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>"
       - "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>"
-      - "JD_NAME=<b>&#60;jd-name&#62;</b>"
-      - "UID=<b>&#60;uid&#62;</b>"
-      - "GID=<b>&#60;gid&#62;</b>"
+      - "JD_NAME=<b>&#60;JD-NAME&#62;</b>" # optional
+      - "UID=<b>&#60;UID&#62;</b>" # optional
+      - "GID=<b>&#60;GID&#62;</b>" # optional
     ports:
-      - "<b>&#60;port&#62;</b>:3129"
+      - "<b>&#60;PORT&#62;</b>:3129" # optional
 </pre>
-
-*Note : Lowercase parameters are optional.*
 
 ### Example
 
@@ -99,17 +93,17 @@ services:
     container_name: <b>jdownloader</b>
     restart: unless-stopped
     volumes:
-      - "<b>/mnt/hdd/Downloads</b>:/downloads"
-      - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg"
-      - "<b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs"
+      - "<b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads"
+      - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional
+      - "<b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs" # optional
     environment:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"
-      - "JD_NAME=<b>JD-DOCKER</b>"
-      - "UID=<b>1000</b>"
-      - "GID=<b>1000</b>"
+      - "JD_NAME=<b>jd-docker</b>" # optional
+      - "UID=<b>1000</b>" # optional
+      - "GID=<b>1000</b>" # optional
     ports:
-      - "<b>3129</b>:3129"
+      - "<b>3129</b>:3129" # optional
 </pre>
 
 ## Guides
@@ -118,7 +112,7 @@ services:
 
 - Go to [my.jdownloader.org](https://my.jdownloader.org).
 - Create an account.
-- Run the container by choosing the **docker run** or **docker-compose** method and customizing the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
+- Run the container by choosing the [docker run](https://docs.docker.com/engine/reference/run) or [docker-compose](https://docs.docker.com/compose) method and customizing the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
 
 ### Special characters in password
@@ -133,7 +127,7 @@ If you have special characters in your password, you have 2 solutions :
 2. Or put your password manually in the settings file :
     - Customize your **docker run** command or **docker-compose.yml** file parameters :
         - Set an empty `<JD-PASSWORD>` (because the password will be replaced each time the container is restarted). `"JD_PASSWORD="`
-        - Set a `<config-path>` volume to access the JDownloader settings files.
+        - Set a `<CONFIG-PATH>` volume to access the JDownloader settings files.
     - Start the docker container.
     - Go to your config directory and open the settings file named `org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json`.
     - Search for the password field and place your password in the empty double quotes. `"password":"MyGreatPassword",`
@@ -160,7 +154,7 @@ docker restart <b>jdownloader</b>
 docker logs --follow --tail 100 <b>jdownloader</b>
 </pre>
 
-*Note: To access the JDownloader logs, you have to set the `<logs-path>` volume.*
+*Note: To access the JDownloader logs, you have to set the `<LOGS-PATH>` volume.*
 
 ### Container delete
 
