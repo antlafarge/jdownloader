@@ -11,13 +11,14 @@ You can report issues [here (github issues)](https://github.com/antlafarge/jdown
 ## Docker
 
 <pre>
-docker run -d --restart unless-stopped &#92;  
-    --name <b>&#60;CONTAINER-NAME&#62;</b> &#92;  
+docker run -d &#92;  
+        --restart <b>&#60;RESTART&#62;</b> &#92;  
+        --name <b>&#60;CONTAINER-NAME&#62;</b> &#92;  
     -v "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads" &#92;  
-    -e "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" &#92;  
-    -e "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
         -v "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg" &#92;  
         -v "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs" &#92;  
+    -e "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" &#92;  
+    -e "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
         -e "JD_NAME=<b>&#60;JD-NAME&#62;</b>" &#92;  
         -e "UID=<b>&#60;UID&#62;</b>" &#92;  
         -e "GID=<b>&#60;GID&#62;</b>" &#92;  
@@ -29,30 +30,32 @@ docker run -d --restart unless-stopped &#92;
 
 ### Parameters :
 
-Name | Description | default
---- | --- | ---
-**`<DOWNLOADS-PATH>`** | Directory where your downloads will be stored. | -
-**`<JD-EMAIL>`** | Your [myJDownloader](https://my.jdownloader.org) email. | -
-**`<JD-PASSWORD>`** | Your [myJDownloader](https://my.jdownloader.org) password. | -
-**`<CONTAINER-NAME>`** | Docker container name. | -
-**`<CONFIG-PATH>`** | Directory where the JDownloader settings files will be stored. | Stored in the container
-**`<LOGS-PATH>`** | Directory where the JDownloader logs files will be stored. | Stored in the container
-**`<PORT>`** | Network port used for Direct connection mode. | -
-**`<JD-NAME>`** | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | `jd-ubuntu` / `jd-alpine`
-**`<UID>`** | Linux User ID used for downloaded files owner. | `1000`
-**`<GID>`** | Linux Group ID used for downloaded files owner. | `1000`
-**`<:TAG>`** | Docker hub tag.<br>- **`:latest`** : Linked to `ubuntu` tag.<br>- **`:ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`:alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | `latest`
+Name | Type | Description | Optional (default)
+--- | --- | --- | ---
+**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Docker container restart policy. | Optional
+**`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Docker container name. | Optional (random)
+**`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine. | REQUIRED
+**`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine. | Optional (in container)
+**`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader logs files will be stored on your host machine. | Optional (in container)
+**`<JD-EMAIL>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) email. | REQUIRED
+**`<JD-PASSWORD>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) password. | REQUIRED
+**`<JD-NAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional (`jd-ubuntu` / `jd-alpine`)
+**`<UID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (User ID) of the files and directories created. | Optional (`1000`)
+**`<GID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (Group ID) of the files and directories created. | Optional (`1000`)
+**`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
+**`<:TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- **`:latest`** : Linked to `ubuntu` tag.<br>- **`:ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`:alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
 
 ### Example
 
 <pre>
-docker run -d --restart unless-stopped \
-    --name <b>jdownloader</b> \
+docker run -d \
+        --restart <b>unless-stopped</b> \
+        --name <b>jdownloader</b> \
     -v <b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads \
-    -e "JD_EMAIL=<b>my@email.fr</b>" \
-    -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
         -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \
+    -e "JD_EMAIL=<b>my@email.fr</b>" \
+    -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_NAME=<b>jd-docker</b>" \
         -e "UID=<b>1000</b>" \
         -e "gid=<b>1000</b>" \
@@ -68,8 +71,8 @@ docker run -d --restart unless-stopped \
 services:
   jdownloader:
     image: antlafarge/jdownloader
-    container_name: <b>&#60;CONTAINER-NAME&#62;</b>
-    restart: unless-stopped
+    container_name: <b>&#60;CONTAINER-NAME&#62;</b> # optional
+    restart: <b>&#60;RESTART&#62;</b> # optional
     volumes:
       - "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads"
       - "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg" # optional
@@ -90,8 +93,8 @@ services:
 services:
   jdownloader:
     image: antlafarge/jdownloader
-    container_name: <b>jdownloader</b>
-    restart: unless-stopped
+    container_name: <b>jdownloader</b> # optional
+    restart: <b>unless-stopped</b> # optional
     volumes:
       - "<b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads"
       - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional
