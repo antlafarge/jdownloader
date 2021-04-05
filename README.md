@@ -33,13 +33,13 @@ docker run -d &#92;
 Name | Type | Description | Optional (default)
 --- | --- | --- | ---
 **`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Docker container name. | Optional (random)
-**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Docker container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Optional (no)
+**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Docker container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Optional (`no`)
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine. | REQUIRED
 **`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine. | Optional (in container)
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader logs files will be stored on your host machine. | Optional (in container)
 **`<JD-EMAIL>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) email. | REQUIRED
 **`<JD-PASSWORD>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) password. | REQUIRED
-**`<JD-NAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional (`jd-ubuntu` / `jd-alpine`)
+**`<JD-NAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional<br>(`jd-ubuntu` or `jd-alpine`)
 **`<UID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (User ID) of the files and directories created. | Optional (`1000`)
 **`<GID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (Group ID) of the files and directories created. | Optional (`1000`)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
@@ -50,7 +50,7 @@ Name | Type | Description | Optional (default)
 <pre>
 docker run -d \
         --name <b>jdownloader</b> \
-        --restart <b>unless-stopped</b> \
+        --restart <b>on-failure:2</b> \
     -v <b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads \
         -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
         -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \
@@ -94,7 +94,7 @@ services:
   jdownloader:
     image: antlafarge/jdownloader
     container_name: <b>jdownloader</b> # optional
-    restart: <b>unless-stopped</b> # optional
+    restart: <b>on-failure:2</b> # optional
     volumes:
       - "<b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads"
       - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional

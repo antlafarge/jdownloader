@@ -194,11 +194,17 @@ startJDownloader()
 
     while [ $jdrunning = true ]
     do
-        log "JDownloader started (PID $pid)"
+        if [ -z "$lastPid"]
+        then
+            log "JDownloader started (PID $pid)"
+        else
+            log "JDownloader restarted (PID $lastPid -> $pid)"
+        fi
+
         waitProcess $pid
-        log "JDownloader stopped (PID $pid)"
 
         # Get the written JDownloader PID or the next running Java PID
+        lastPid="$pid"
         pid=$(pgrep -L -F $JDownloaderPidFile 2> /dev/null || pgrep "java" | head -n 1)
 
         # If no PID found
@@ -208,17 +214,21 @@ startJDownloader()
             jdrunning=false
         fi
     done
-
-    log "JDownloader exited"
+    
+    log "JDownloader stopped (PID $pid)"
 }
 
-log "======== SCRIPT STARTED ========"
+log "======== CONTAINER STARTED ========"
 
 # Deprecated parameters
-if [ ! -d "/downloads" ]
+if [ -d "/downloads" ]
 then
     log "WARNING" "'/downloads' directory path deprecated, please use '/jdownloader/downloads' instead"
-    ln -s "/jdownloader/downloads" "/downloads"
+
+    if [ ! -d "/jdownloader/downloads" ]
+    then
+        ln -s "/downloads" "/jdownloader/downloads"
+    fi
 fi
 
 # Check environment variables
@@ -258,5 +268,5 @@ chmod -R 770 .
 
 su jduser -c "$(declare -f startJDownloader log); startJDownloader"
 
-log "======== SCRIPT EXITED ========"
+log "======== CONTAINER STOPPED ========"
 log ""
