@@ -194,7 +194,7 @@ startJDownloader()
 
     while [ $jdrunning = true ]
     do
-        if [ -z "$lastPid"]
+        if [ -z "$lastPid" ]
         then
             log "JDownloader started (PID $pid)"
         else
