@@ -12,8 +12,8 @@ You can report issues [here (github issues)](https://github.com/antlafarge/jdown
 
 <pre>
 docker run -d &#92;  
-        --restart <b>&#60;RESTART&#62;</b> &#92;  
         --name <b>&#60;CONTAINER-NAME&#62;</b> &#92;  
+        --restart <b>&#60;RESTART&#62;</b> &#92;  
     -v "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads" &#92;  
         -v "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg" &#92;  
         -v "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs" &#92;  
@@ -32,8 +32,8 @@ docker run -d &#92;
 
 Name | Type | Description | Optional (default)
 --- | --- | --- | ---
-**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Docker container restart policy. | Optional
 **`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Docker container name. | Optional (random)
+**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Docker container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Optional (no)
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine. | REQUIRED
 **`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine. | Optional (in container)
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader logs files will be stored on your host machine. | Optional (in container)
@@ -49,8 +49,8 @@ Name | Type | Description | Optional (default)
 
 <pre>
 docker run -d \
-        --restart <b>unless-stopped</b> \
         --name <b>jdownloader</b> \
+        --restart <b>unless-stopped</b> \
     -v <b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads \
         -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
         -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \

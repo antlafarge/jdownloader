@@ -259,3 +259,4 @@ chmod -R 770 .
 su jduser -c "$(declare -f startJDownloader log); startJDownloader"
 
 log "======== SCRIPT EXITED ========"
+log ""
