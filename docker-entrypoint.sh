@@ -140,6 +140,8 @@ fi
 
 setupUserAndGroup
 
+log "--------------------------------"
+
 ./setup.sh "$JD_EMAIL" "$JD_PASSWORD" "$JD_NAME"
 
 log "Setup access rights to current directory"
@@ -147,6 +149,8 @@ log "Setup access rights to current directory"
 # Set access rigths
 chown -R jduser:jdgroup .
 chmod -R 770 .
+
+log "--------------------------------"
 
 exec su jduser -s "./start.sh"
 
