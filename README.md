@@ -23,7 +23,7 @@ docker run -d &#92;
         -e "UID=<b>&#60;UID&#62;</b>" &#92;  
         -e "GID=<b>&#60;GID&#62;</b>" &#92;  
         -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
-    antlafarge/jdownloader<b>&#60;:TAG&#62;</b>
+    antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
 </pre>
 
 *Note : Parameters indented twice are optional.*
@@ -43,7 +43,7 @@ Name | Type | Description | Optional (default)
 **`<UID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (User ID) of the files and directories created. | Optional (`1000`)
 **`<GID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (Group ID) of the files and directories created. | Optional (`1000`)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
-**`<:TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- **`:latest`** : Linked to `ubuntu` tag.<br>- **`:ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`:alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
+**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- **`:latest`** : Linked to `ubuntu` tag.<br>- **`:ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`:alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
 
 ### Example
 
@@ -60,7 +60,7 @@ docker run -d \
         -e "UID=<b>1000</b>" \
         -e "gid=<b>1000</b>" \
         -p <b>3129</b>:3129 \
-    antlafarge/jdownloader:latest
+    antlafarge/jdownloader:<b>latest</b>
 </pre>
 
 *Note : Parameters indented twice are optional.*
@@ -70,7 +70,7 @@ docker run -d \
 <pre>
 services:
   jdownloader:
-    image: antlafarge/jdownloader:latest
+    image: antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
     container_name: <b>&#60;CONTAINER-NAME&#62;</b> # optional
     restart: <b>&#60;RESTART&#62;</b> # optional
     volumes:
@@ -92,7 +92,7 @@ services:
 <pre>
 services:
   jdownloader:
-    image: antlafarge/jdownloader:latest
+    image: antlafarge/jdownloader<b>:latest</b>
     container_name: <b>jdownloader</b> # optional
     restart: <b>on-failure:2</b> # optional
     volumes:
@@ -168,7 +168,7 @@ docker rm -f <b>jdownloader</b>
 ### Image delete
 
 <pre>
-docker rmi <b>antlafarge/jdownloader:latest</b>
+docker rmi antlafarge/jdownloader:<b>latest</b>
 </pre>
 
 ### Compose start
