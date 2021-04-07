@@ -31,19 +31,19 @@ docker run -d &#92;
 ### Parameters :
 
 Name | Type | Description | Optional (default)
---- | --- | --- | ---
-**`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Docker container name. | Optional (random)
-**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Docker container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Optional (`no`)
+---- | ---- | ----------- | ------------------
+**`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Docker container name. | Optional<br>(random)
+**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Docker container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Optional<br>(`no`)
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine. | REQUIRED
 **`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine. | Optional (in container)
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader logs files will be stored on your host machine. | Optional (in container)
 **`<JD-EMAIL>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) email. | REQUIRED
 **`<JD-PASSWORD>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) password. | REQUIRED
 **`<JD-NAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional<br>(`jd-ubuntu` or `jd-alpine`)
-**`<UID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (User ID) of the files and directories created. | Optional (`1000`)
-**`<GID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (Group ID) of the files and directories created. | Optional (`1000`)
+**`<UID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (User ID) of the files and directories created. | Optional<br>(`1000`)
+**`<GID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (Group ID) of the files and directories created. | Optional<br>(`1000`)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
-**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- **`:latest`** : Linked to `ubuntu` tag.<br>- **`:ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`:alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
+**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- **`:latest`** : Linked to `ubuntu` tag.<br>- **`:ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`:alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional<br>(`latest`)
 
 ### Example
 
