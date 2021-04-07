@@ -2,10 +2,9 @@ FROM ubuntu:latest
 
 STOPSIGNAL SIGTERM
 
-ENV OS="ubuntu" \
-    JD_EMAIL="" \
+ENV JD_EMAIL="" \
     JD_PASSWORD="" \
-    JD_NAME="jd-$OS" \
+    JD_NAME="" \
     UID="1000" \
     GID="1000"
 

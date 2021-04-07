@@ -2,10 +2,9 @@ FROM alpine:3.12
 
 STOPSIGNAL SIGTERM
 
-ENV OS="alpine" \
-    JD_EMAIL="" \
+ENV JD_EMAIL="" \
     JD_PASSWORD="" \
-    JD_NAME="jd-$OS" \
+    JD_NAME="" \
     UID="1000" \
     GID="1000"
 

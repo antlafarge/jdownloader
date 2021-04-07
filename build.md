@@ -44,5 +44,8 @@ https://www.docker.com/blog/multi-arch-images
 
 ## Debug container
 
+    docker exec -it jdownloader /bin/bash
+        ps -fp $(pgrep -d" " -u jduser)
+
     docker commit jdownloader jdebug
     docker run -it --entrypoint=/bin/bash --name jdebug jdebug

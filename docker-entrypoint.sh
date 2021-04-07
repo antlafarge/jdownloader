@@ -2,6 +2,8 @@
 
 source functions.sh
 
+OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
+
 # Create user
 createUser()
 {
@@ -60,7 +62,6 @@ setupUserAndGroup()
         then
             log "Delete user"
             deleteUser
-            log "User deleted"
         fi
 
         # If current GID is set (not null or not empty)
@@ -68,16 +69,13 @@ setupUserAndGroup()
         then
             log "Delete group"
             deleteGroup
-            log "Group deleted"
         fi
 
         log "Create group with GID '$GID'"
         createGroup
-        log "Group created"
 
         log "Create user with UID '$UID'"
         createUser
-        log "User created"
     fi
 
     log "User and group set up"
@@ -85,9 +83,15 @@ setupUserAndGroup()
 
 handleSignal()
 {
-    log "docker-entrypoint.sh received kill signal"
-    log "Exit now"
-    exit 0
+    log "docker-entrypoint.sh Received kill signal"
+    if [ -n "$pid" ]
+    then
+        kill -TERM $pid
+        log "docker-entrypoint.sh SIGTERM sent to start.sh process ($pid)"
+    else
+        log "======== CONTAINER KILLED ========"
+        exit 0
+    fi
 }
 trap handleSignal SIGTERM SIGINT SIGHUP
 
@@ -152,6 +156,10 @@ chmod -R 770 .
 
 log "--------------------------------"
 
-exec su jduser -s "./start.sh"
+su jduser -s "./start.sh" &
+
+pid=$!
+
+wait $pid
 
 log "======== CONTAINER STOPPED ========"

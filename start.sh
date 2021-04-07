@@ -6,14 +6,14 @@ source functions.sh
 
 handleSignal()
 {
-    log "start.sh received kill signal"
-    pids=$(pgrep -d " " java)
+    log "start.sh Received kill signal"
+    pids=$(pgrep -d", " java)
     if [ -n "$pids" ]
     then
         kill -TERM $pids
-        log "SIGTERM sent to all java processes $pid"
+        log "start.sh SIGTERM sent to java process ($pids)"
     else
-        log "Exit now"
+        log "start.sh Exit now"
         exit 0
     fi
 }
@@ -55,7 +55,7 @@ fi
 
 log "Starting JDownloader"
 java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null & # Start JDownloader in background
-pid=$! # Get PID
+pid=$! # Get java PID
 
 jdrunning=true
 
@@ -72,7 +72,7 @@ do
 
     # Get the written JDownloader PID or the next running Java PID
     lastPid="$pid"
-    pid=$(pgrep -L -F $JDownloaderPidFile 2> /dev/null || pgrep "java" | head -n 1)
+    pid=$(pgrep -L -F $JDownloaderPidFile 2> /dev/null || pgrep -n java)
 
     # If no PID found
     if [ -z "$pid" ]
