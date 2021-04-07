@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 
+STOPSIGNAL SIGTERM
+
 ENV OS="ubuntu" \
     JD_EMAIL="" \
     JD_PASSWORD="" \
@@ -8,14 +10,19 @@ ENV OS="ubuntu" \
     GID="1000"
 
 RUN apt update \
-    && apt install -y \
+    && apt install -y --no-install-recommends \
         curl \
-        openjdk-11-jre \
+        openjdk-8-jre-headless \
         ffmpeg \
+    && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader
 
-COPY run.sh .
+COPY docker-entrypoint.sh \
+    functions.sh \
+    setup.sh \
+    start.sh \
+    ./
 
-CMD ["/bin/bash", "-c", "./run.sh"]
+CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]

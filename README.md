@@ -60,7 +60,7 @@ docker run -d \
         -e "UID=<b>1000</b>" \
         -e "gid=<b>1000</b>" \
         -p <b>3129</b>:3129 \
-    antlafarge/jdownloader
+    antlafarge/jdownloader:latest
 </pre>
 
 *Note : Parameters indented twice are optional.*
@@ -70,7 +70,7 @@ docker run -d \
 <pre>
 services:
   jdownloader:
-    image: antlafarge/jdownloader
+    image: antlafarge/jdownloader:latest
     container_name: <b>&#60;CONTAINER-NAME&#62;</b> # optional
     restart: <b>&#60;RESTART&#62;</b> # optional
     volumes:
@@ -92,7 +92,7 @@ services:
 <pre>
 services:
   jdownloader:
-    image: antlafarge/jdownloader
+    image: antlafarge/jdownloader:latest
     container_name: <b>jdownloader</b> # optional
     restart: <b>on-failure:2</b> # optional
     volumes:
@@ -168,7 +168,7 @@ docker rm -f <b>jdownloader</b>
 ### Image delete
 
 <pre>
-docker rmi <b>antlafarge/jdownloader</b>
+docker rmi <b>antlafarge/jdownloader:latest</b>
 </pre>
 
 ### Compose start

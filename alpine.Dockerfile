@@ -1,5 +1,7 @@
 FROM alpine:3.12
 
+STOPSIGNAL SIGTERM
+
 ENV OS="alpine" \
     JD_EMAIL="" \
     JD_PASSWORD="" \
@@ -16,6 +18,10 @@ RUN apk -U upgrade \
 
 WORKDIR /jdownloader
 
-COPY run.sh .
+COPY docker-entrypoint.sh \
+    functions.sh \
+    setup.sh \
+    start.sh \
+    ./
 
-CMD ["/bin/bash", "-c", "./run.sh"]
+CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
