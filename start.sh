@@ -82,4 +82,4 @@ do
     fi
 done
 
-log "JDownloader stopped (PID $pid)"
+log "JDownloader stopped"
