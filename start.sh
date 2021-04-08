@@ -65,7 +65,7 @@ do
     then
         log "JDownloader started (PID $pid)"
     else
-        log "JDownloader restarted (PID $lastPid -> $pid)"
+        log "JDownloader restarted (PID $pid)"
     fi
 
     waitProcess $pid
