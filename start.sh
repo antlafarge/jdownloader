@@ -7,7 +7,7 @@ source functions.sh
 handleSignal()
 {
     log "start.sh Kill signal received"
-    pids=$(pgrep -d", " java)
+    pids=$(pgrep java | tr '\n' ' ')
     if [ -n "$pids" ]
     then
         kill -TERM $pids
