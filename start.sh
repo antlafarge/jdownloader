@@ -6,18 +6,18 @@ source functions.sh
 
 handleSignal()
 {
-    log "start.sh Received kill signal"
+    log "start.sh Kill signal received"
     pids=$(pgrep -d", " java)
     if [ -n "$pids" ]
     then
         kill -TERM $pids
         log "start.sh SIGTERM sent to java process ($pids)"
     else
-        log "start.sh Exit now"
+        log "start.sh Killed"
         exit 0
     fi
 }
-trap handleSignal SIGTERM SIGINT SIGHUP
+trap handleSignal TERM INT
 
 # sleep workaround
 ## On linux/arm/v7 systems, docker containers with insufficient permissions can generate this error :

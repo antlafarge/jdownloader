@@ -83,7 +83,7 @@ setupUserAndGroup()
 
 handleSignal()
 {
-    log "docker-entrypoint.sh Received kill signal"
+    log "docker-entrypoint.sh Kill signal received"
     if [ -n "$pid" ]
     then
         kill -TERM $pid
@@ -93,7 +93,7 @@ handleSignal()
         exit 0
     fi
 }
-trap handleSignal SIGTERM SIGINT SIGHUP
+trap handleSignal TERM INT
 
 # Disable bash history substitution
 set +H
@@ -159,7 +159,11 @@ log "--------------------------------"
 su jduser -s "./start.sh" &
 
 pid=$!
-
 wait $pid
+trap - TERM INT
+wait $pid
+exitStatus=$?
 
 log "======== CONTAINER STOPPED ========"
+
+exit $exitStatus
