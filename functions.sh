@@ -28,8 +28,7 @@ sleepWorkaround()
         fi
     fi
 
-    # TODO : Fix this workaround which can have a 100% CPU usage
-    read -t $seconds < /dev/zero || true # sleep workaround
+    coproc read -t $seconds && wait "$!" || true
 }
 
 # Wait for a process to stop
