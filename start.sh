@@ -19,28 +19,6 @@ handleSignal()
 }
 trap handleSignal TERM INT
 
-# sleep workaround
-## On linux/arm/v7 systems, docker containers with insufficient permissions can generate this error :
-## "sleep: cannot read realtime clock: Operation not permitted"
-sleepWorkaround()
-{
-    seconds=$1
-    read -t $seconds < /dev/zero || true
-}
-
-# Wait for a process to stop
-waitProcess()
-{
-    pid=$1
-
-    # Wait process to stop
-    while kill -0 "$pid" 2> /dev/null
-    do
-        # sleep 1
-        sleepWorkaround 1
-    done
-}
-
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"
