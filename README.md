@@ -4,9 +4,14 @@
 
 Run JDownloader in headless mode (no graphical interface) in a Docker container.
 
-*Warning : The **alpine** image is smaller, but may lack optimizations. So prefer the default **ubuntu** image (**latest**).*
+## Architectures
 
-You can report issues [here (github issues)](https://github.com/antlafarge/jdownloader/issues).
+|     | amd64| arm64 | arm/v7 | arm/v6 | 386 | ppc64le | s390x |
+| :-: | :--: | :---: | :----: | :----: | :-: | :-----: | :---: |
+| **Ubuntu<br>(latest)** | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | - | - | - |
+| **Alpine** | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | Performance issues<br>*bad openJDK optimization*<br>Use ubuntu | - | - | - | - |
+
+You can send feedback and report issues on architectures you tested [here (github issues)](https://github.com/antlafarge/jdownloader/issues).
 
 ## Docker
 
@@ -43,7 +48,7 @@ Name | Type | Description | Optional (default)
 **`<UID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (User ID) of the files and directories created. | Optional<br>(`1000`)
 **`<GID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (Group ID) of the files and directories created. | Optional<br>(`1000`)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
-**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- **`:latest`** : Linked to `ubuntu` tag.<br>- **`:ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`:alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional<br>(`latest`)
+**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- **`latest`** : Linked to `ubuntu` tag.<br>- **`ubuntu`** : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- **`alpine`** : Use [alpine:3.12](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional<br>(`latest`)
 
 ### Example
 
