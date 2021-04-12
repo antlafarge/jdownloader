@@ -57,8 +57,8 @@ docker run -d \
         --name <b>jdownloader</b> \
         --restart <b>on-failure:2</b> \
     -v <b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads \
-        -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
-        -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \
+        -v <b>/mnt/hdd/Apps/JDownloader/Config</b>:/jdownloader/cfg \
+        -v <b>/mnt/hdd/Apps/JDownloader/Logs</b>:/jdownloader/logs \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_NAME=<b>jd-docker</b>" \
@@ -102,8 +102,8 @@ services:
     restart: <b>on-failure:2</b> # optional
     volumes:
       - "<b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads"
-      - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional
-      - "<b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs" # optional
+      - "<b>/mnt/hdd/Apps/JDownloader/Config</b>:/jdownloader/cfg" # optional
+      - "<b>/mnt/hdd/Apps/JDownloader/Logs</b>:/jdownloader/logs" # optional
     environment:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"
@@ -134,7 +134,7 @@ If you have special characters in your password, you have 2 solutions :
 
 2. Or put your password manually in the settings file :
     - Customize your **docker run** command or **docker-compose.yml** file parameters :
-        - Set an empty `<JD-PASSWORD>` (because the password will be replaced each time the container is restarted). `"JD_PASSWORD="`
+        - Set an empty `<JD-PASSWORD>` (for disabling password replacement on container start). `"JD_PASSWORD="`
         - Set a `<CONFIG-PATH>` volume to access the JDownloader settings files.
     - Start the docker container.
     - Go to your config directory and open the settings file named `org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json`.
