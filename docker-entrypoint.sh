@@ -83,17 +83,21 @@ setupUserAndGroup()
 
 handleSignal()
 {
-    log "docker-entrypoint.sh Kill signal received"
+    log "Kill signal received"
     if [ -n "$pid" ]
     then
-        kill -TERM $pid
-        log "docker-entrypoint.sh SIGTERM sent to start.sh process ($pid)"
+        pids=$(pgrep java | tr '\n' ' ')
+        if [ -n "$pids" ]
+        then
+            kill -SIGTERM $pids
+            log "SIGTERM sent to java process $pids"
+        fi
     else
         log "======== CONTAINER KILLED ========"
         exit 0
     fi
 }
-trap handleSignal TERM INT
+trap handleSignal SIGTERM SIGINT
 
 # Disable bash history substitution
 set +H

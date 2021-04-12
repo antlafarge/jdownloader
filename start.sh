@@ -4,21 +4,6 @@
 
 source functions.sh
 
-handleSignal()
-{
-    log "start.sh Kill signal received"
-    pids=$(pgrep java | tr '\n' ' ')
-    if [ -n "$pids" ]
-    then
-        kill -TERM $pids
-        log "start.sh SIGTERM sent to java process ($pids)"
-    else
-        log "start.sh Killed"
-        exit 0
-    fi
-}
-trap handleSignal TERM INT
-
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"
