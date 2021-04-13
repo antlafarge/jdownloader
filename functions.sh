@@ -37,10 +37,15 @@ waitProcess()
 {
     pid=$1
 
-    # Wait process to stop
-    while kill -0 $pid 2> /dev/null
-    do
-        # sleep 1
-        sleepWorkaround 1
-    done
+    # Wait process
+    if ! wait $pid 2> /dev/null
+    then
+        # If pid is not a child process
+        # Wait process with a sleep loop
+        while kill -0 $pid 2> /dev/null
+        do
+            # sleep 1
+            sleepWorkaround 1
+        done
+    fi
 }
