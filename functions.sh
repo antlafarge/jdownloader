@@ -28,7 +28,8 @@ sleepWorkaround()
         fi
     fi
 
-    coproc read -t $seconds && wait "$!" || true
+    # sleep workaround
+    coproc read -t $seconds && wait $! || true
 }
 
 # Wait for a process to stop
@@ -37,7 +38,7 @@ waitProcess()
     pid=$1
 
     # Wait process to stop
-    while kill -0 "$pid" 2> /dev/null
+    while kill -0 $pid 2> /dev/null
     do
         # sleep 1
         sleepWorkaround 1

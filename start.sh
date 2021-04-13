@@ -4,6 +4,20 @@
 
 source functions.sh
 
+handleSignal()
+{
+    echo "start.sh| Kill signal received"
+    if [ -n "$pid" ]
+    then
+        kill -SIGTERM $pid 2> /dev/null
+        echo "start.sh| SIGTERM sent to start.sh process $pid"
+    else
+        echo "start.sh| Killed"
+        exit 0
+    fi
+}
+trap handleSignal SIGTERM SIGINT
+
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"

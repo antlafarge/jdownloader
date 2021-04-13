@@ -83,14 +83,20 @@ setupUserAndGroup()
 
 handleSignal()
 {
-    log "Kill signal received"
-    if [ -n "$pid" ]
+    log "docker-entrypoint.sh| Kill signal received"
+    if [ -n "$pid" ] # If start.sh started
     then
-        pids=$(pgrep java | tr '\n' ' ')
-        if [ -n "$pids" ]
+        javaPids=$(pgrep java | tr '\n' ' ')
+        if [ -n "$javaPids" ] # If java process started
         then
-            kill -SIGTERM $pids
-            log "SIGTERM sent to java process $pids"
+            log "docker-entrypoint.sh| Send SIGTERM to java process $javaPids"
+            kill -SIGTERM $javaPids 2> /dev/null
+            sleepWorkaround 2 # Wait start.sh to terminate
+        fi
+        if kill -0 $pid 2> /dev/null
+        then
+            log "docker-entrypoint.sh| Send SIGTERM to start.sh process $pid"
+            kill -SIGTERM $pid 2> /dev/null
         fi
     else
         log "======== CONTAINER KILLED ========"
