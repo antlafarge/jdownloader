@@ -13,8 +13,7 @@ RUN apt update \
         curl \
         openjdk-8-jre-headless \
         ffmpeg \
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader
 

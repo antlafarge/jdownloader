@@ -11,7 +11,7 @@ Run JDownloader in headless mode (no graphical interface) in a Docker container.
 | **Ubuntu<br>(latest)** | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | - | - | - |
 | **Alpine** | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | Performance issues<br>*bad openJDK optimization*<br>Use ubuntu | - | - | - | - |
 
-You can send feedback and report issues on architectures you tested [here (github issues)](https://github.com/antlafarge/jdownloader/issues).
+You can send feedback (label `arch test`) and report issues [here (github issues)](https://github.com/antlafarge/jdownloader/issues).
 
 ## Docker
 

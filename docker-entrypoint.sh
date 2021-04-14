@@ -2,6 +2,11 @@
 
 source functions.sh
 
+# Set locales to support UTF-8
+export LANG="C.UTF-8"
+export LC_ALL="C.UTF-8"
+
+# Detect OS (ubuntu or alpine)
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 
 # Create user
