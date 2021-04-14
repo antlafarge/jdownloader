@@ -8,8 +8,8 @@ Run JDownloader in headless mode (no graphical interface) in a Docker container.
 
 |     | amd64| arm64 | arm/v7 | arm/v6 | 386 | ppc64le | s390x |
 | :-: | :--: | :---: | :----: | :----: | :-: | :-----: | :---: |
-| **Ubuntu<br>(latest)** | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | - | - | - |
-| **Alpine** | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | - | Performance issues<br>*bad openJDK optimization*<br>Use ubuntu | - | - | - | - |
+| **Ubuntu<br>(latest)** | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | *Need feedback* | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | *Need feedback* | *Need feedback* | *Need feedback* | *Need feedback* |
+| **Alpine** | OK<br>tested by<br>[antlafarge](https://github.com/antlafarge) | *Need feedback* | Performance issues<br>*bad openJDK optimization*<br>Use ubuntu | *Need feedback* | *Need feedback* | *Need feedback* | *Need feedback* |
 
 You can send feedback (label `arch test`) and report issues [here (github issues)](https://github.com/antlafarge/jdownloader/issues).
 
