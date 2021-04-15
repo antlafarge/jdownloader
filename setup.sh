@@ -2,10 +2,10 @@
 
 # This script set up JDownloader
 
-source functions.sh
-
 # Disable bash history substitution
 set +H
+
+source functions.sh
 
 # Get variables from arguments
 email=$1

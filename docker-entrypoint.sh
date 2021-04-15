@@ -1,119 +1,35 @@
 #!/bin/bash
 
-source functions.sh
+# Disable bash history substitution
+set +H
 
 # Set locales to support UTF-8
 export LANG="C.UTF-8"
 export LC_ALL="C.UTF-8"
 
-# Detect OS (ubuntu or alpine)
-OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
-
-# Create user
-createUser()
-{
-    if [ $OS = "alpine" ]
-    then
-        adduser -DH -s /bin/bash -u $UID -G jdgroup jduser
-    else # default ubuntu
-        useradd -M -s /bin/bash -u $UID -G jdgroup jduser
-    fi
-}
-
-# Delete user
-deleteUser()
-{
-    deluser jduser
-}
-
-# Create group
-createGroup()
-{
-    if [ $OS = "alpine" ]
-    then
-        addgroup -g $GID jdgroup
-    else # default ubuntu
-        groupadd -g $GID jdgroup
-    fi
-}
-
-# Delete group
-deleteGroup()
-{
-    if [ $OS = "alpine" ]
-    then
-        delgroup jdgroup
-    else # default ubuntu
-        groupdel jdgroup
-    fi
-}
-
-# Setup user and group in OS
-setupUserAndGroup()
-{
-    log "Setting up User and Group"
-
-    currentUID=$(id -u jduser 2> /dev/null)
-
-    currentGID=$(cut -d: -f3 < <(getent group jdgroup))
-
-    # If current UID does not match OR If current GID does not match
-    if [ "$currentUID" != "$UID" ] || [ "$currentGID" != "$GID" ]
-    then
-        log "UID or GID does not match (currentUID='$currentUID', UID='$UID', currentGID='$currentGID', GID='$GID')"
-
-        # If current UID is set (not null or not empty)
-        if [ -n "$currentUID" ]
-        then
-            log "Delete user"
-            deleteUser
-        fi
-
-        # If current GID is set (not null or not empty)
-        if [ -n "$currentGID" ]
-        then
-            log "Delete group"
-            deleteGroup
-        fi
-
-        log "Create group with GID '$GID'"
-        createGroup
-
-        log "Create user with UID '$UID'"
-        createUser
-    fi
-
-    log "User and group set up"
-}
+source functions.sh
 
 handleSignal()
 {
-    log "docker-entrypoint.sh| Kill signal received"
-    if [ -n "$pid" ] # If start.sh started
+    handleSignal_signalCode=$1
+    log "Kill signal $handleSignal_signalCode received"
+    if [ -n "$pid" ] # If java process found
     then
-        javaPids=$(pgrep java | tr '\n' ' ')
-        if [ -n "$javaPids" ] # If java process started
-        then
-            log "docker-entrypoint.sh| Send SIGTERM to java process $javaPids"
-            kill -SIGTERM $javaPids 2> /dev/null
-            sleepWorkaround 2 # Wait start.sh to terminate
-        fi
-        if kill -0 $pid 2> /dev/null
-        then
-            log "docker-entrypoint.sh| Send SIGTERM to start.sh process $pid"
-            kill -SIGTERM $pid 2> /dev/null
-        fi
+        stop=true
+        killProcess $pid
     else
-        log "======== CONTAINER KILLED ========"
-        exit 0
+        log "================================ CONTAINER KILLED ================================"
+        exit $((128 + $handleSignal_signalCode))
     fi
 }
-trap handleSignal SIGTERM SIGINT
+trap "handleSignal 1" SIGHUP
+trap "handleSignal 2" SIGINT
+trap "handleSignal 15" SIGTERM
 
-# Disable bash history substitution
-set +H
+# Detect OS (ubuntu or alpine)
+OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 
-log "======== CONTAINER STARTED ========"
+log "================================ CONTAINER STARTED ================================"
 
 # Check deprecated parameters
 
@@ -157,28 +73,59 @@ then
     GID=0
 fi
 
-setupUserAndGroup
+setupUserAndGroup $UID $GID $OS
 
-log "--------------------------------"
+log "----------------------------------------"
 
 ./setup.sh "$JD_EMAIL" "$JD_PASSWORD" "$JD_NAME"
 
-log "Setup access rights to current directory"
+log "----------------------------------------"
 
-# Set access rigths
+JDownloaderJarFile="JDownloader.jar"
+JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
+JDownloaderPidFile="JDownloader.pid"
+
+# If JDownloader jar file does not exist
+if [ ! -f "./$JDownloaderJarFile" ]
+then
+    log "Downloading $JDownloaderJarFile"
+    curl -O $JDownloaderJarUrl 2> /dev/null
+    log "$JDownloaderJarFile downloaded"
+fi
+
+log "Setup access rights to current directory"
 chown -R jduser:jdgroup .
 chmod -R 770 .
 
-log "--------------------------------"
+log "----------------------------------------"
 
-su jduser -s "./start.sh" &
+log "Starting JDownloader"
+su jduser -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &" # Start JDownloader in background
 
-pid=$!
-wait $pid
-trap - TERM INT
-wait $pid
-exitStatus=$?
+running=true
+while [ $running = true ]
+do
+    lastPid="$pid"
 
-log "======== CONTAINER STOPPED ========"
+    # Get the written JDownloader PID or another running Java PID
+    pid=$(pgrep -L -F $JDownloaderPidFile 2> /dev/null || pgrep -o java)
 
-exit $exitStatus
+    if [ -n "$pid" ]
+    then
+        log "JDownloader ${lastPid:+re}started (PID $pid)"
+        if [[ $stop ]]
+        then
+            killProcess $pid
+        fi
+        waitProcess $pid
+        exitCode=$?
+    else
+        running=false
+    fi
+done
+
+log "JDownloader stopped"
+
+log "================================ CONTAINER STOPPED ================================"
+
+exit $exitCode

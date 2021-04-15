@@ -20,7 +20,6 @@ WORKDIR /jdownloader
 COPY docker-entrypoint.sh \
     functions.sh \
     setup.sh \
-    start.sh \
     ./
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
