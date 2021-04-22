@@ -11,7 +11,7 @@ Run JDownloader in headless mode (no graphical interface) in a Docker container.
 | **Ubuntu<br>(latest)** | OK<br>*tested by<br>[antlafarge](https://github.com/antlafarge)* | OK<br>*tested by<br>[the4anoni](https://github.com/the4anoni)* | OK<br>*tested by<br>[antlafarge](https://github.com/antlafarge)* | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
 | **Alpine** | OK<br>*tested by<br>[antlafarge](https://github.com/antlafarge)* | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | Performance issues<br>*bad openJDK optimization*<br>Use ubuntu | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
 
-You can send feedback (label `arch test`) and report issues [here (github issues)](https://github.com/antlafarge/jdownloader/issues).
+You can send feedback (label `arch feedback`) and report issues [here (github issues)](https://github.com/antlafarge/jdownloader/issues).
 
 ## Docker
 
