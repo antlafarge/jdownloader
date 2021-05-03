@@ -63,7 +63,7 @@ docker run -d \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_NAME=<b>jd-docker</b>" \
         -e "UID=<b>1000</b>" \
-        -e "gid=<b>1000</b>" \
+        -e "GID=<b>1000</b>" \
         -p <b>3129</b>:3129 \
     antlafarge/jdownloader:<b>latest</b>
 </pre>

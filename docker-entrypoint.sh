@@ -18,7 +18,7 @@ handleSignal()
         stop=true
         killProcess $pid
     else
-        log "================================ CONTAINER KILLED ================================"
+        log "========================================= CONTAINER KILLED ========================================="
         exit $((128 + $handleSignal_signalCode))
     fi
 }
@@ -29,7 +29,7 @@ trap "handleSignal 15" SIGTERM
 # Detect OS (ubuntu or alpine)
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 
-log "================================ CONTAINER STARTED ================================"
+log "======================================== CONTAINER STARTED ========================================="
 
 # Check deprecated parameters
 
@@ -73,7 +73,17 @@ then
     GID=0
 fi
 
+user="" # it is set in setupUserAndGroup
+group="" # it is set in setupUserAndGroup
+
 setupUserAndGroup $UID $GID $OS
+
+if [ -z "$user" || -z "$group" ]
+then
+    log "User setup failed, exiting the container..."
+    log "========================================= CONTAINER EXITED ========================================="
+    exit 1
+fi
 
 log "----------------------------------------"
 
@@ -94,13 +104,13 @@ then
 fi
 
 log "Setup access rights to current directory"
-chown -R jduser:jdgroup .
+chown -R $user:$group .
 chmod -R 770 .
 
 log "----------------------------------------"
 
 log "Starting JDownloader"
-su jduser -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &" # Start JDownloader in background
+su $user -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &" # Start JDownloader in background
 
 running=true
 while [ $running = true ]
@@ -126,6 +136,6 @@ done
 
 log "JDownloader stopped"
 
-log "================================ CONTAINER STOPPED ================================"
+log "======================================== CONTAINER STOPPED ========================================="
 
 exit $exitCode

@@ -11,90 +11,131 @@ log()
 # Create user
 createUser()
 {
-    createUser_UID=$1
-    createUser_OS=$2
+    createUser_userName=$1
+    createUser_uid=$2
+    createUser_groupName=$3
+    createUser_gid=$4
+    createUser_os=$5
 
-    if [ $createUser_OS = "alpine" ]
+    if [ $createUser_os = "alpine" ]
     then
-        adduser -DH -s /bin/bash -u $createUser_UID -G jdgroup jduser
+        adduser -DH -s /bin/bash -u $createUser_uid -G $createUser_groupName $createUser_userName
     else # default ubuntu
-        useradd -M -s /bin/bash -u $createUser_UID -G jdgroup jduser
+        useradd -M -s /bin/bash -u $createUser_uid -g $createUser_groupName -G $createUser_groupName $createUser_userName
     fi
 }
 
 # Delete user
 deleteUser()
 {
-    deluser jduser
+    deleteUser_userName=$1
+
+    deluser $deleteUser_userName
 }
 
 # Create group
 createGroup()
 {
-    createGroup_GID=$1
-    createGroup_OS=$2
+    createGroup_groupName=$1
+    createGroup_gid=$2
+    createGroup_os=$3
 
-    if [ $createGroup_OS = "alpine" ]
+    if [ $createGroup_os = "alpine" ]
     then
-        addgroup -g $createGroup_GID jdgroup
+        addgroup -g $createGroup_gid $createGroup_groupName
     else # default ubuntu
-        groupadd -g $createGroup_GID jdgroup
+        groupadd -g $createGroup_gid $createGroup_groupName
     fi
 }
 
 # Delete group
 deleteGroup()
 {
-    deleteGroup_OS=$1
+    deleteGroup_groupName=$1
+    deleteGroup_os=$2
 
-    if [ $deleteGroup_OS = "alpine" ]
+    if [ $deleteGroup_os = "alpine" ]
     then
-        delgroup jdgroup
+        delgroup $deleteGroup_groupName
     else # default ubuntu
-        groupdel jdgroup
+        groupdel $deleteGroup_groupName
     fi
 }
 
 # Setup user and group in OS
 setupUserAndGroup()
 {
-    setupUserAndGroup_UID=$1
-    setupUserAndGroup_GID=$2
-    setupUserAndGroup_OS=$3
+    setupUserAndGroup_uid=$1
+    setupUserAndGroup_gid=$2
+    setupUserAndGroup_os=$3
 
     log "Setting up User and Group"
+    
+    # Retrieve the passwd entry of the user which reserved the UID
+    userInfo=$(getent passwd $setupUserAndGroup_uid)
 
-    currentUID=$(id -u jduser 2> /dev/null)
+    # Extract the user name (set the 'user' variable declared in the docker-entrypoint.sh script)
+    user=$(echo "$userInfo" | cut -d":" -f1)
 
-    currentGID=$(cut -d: -f3 < <(getent group jdgroup))
+    # Extract the user primary group GID
+    currentPrimaryGID=$(echo "$userInfo" | cut -d":" -f4)
 
-    # If current UID does not match OR If current GID does not match
-    if [ "$currentUID" != "$setupUserAndGroup_UID" ] || [ "$currentGID" != "$setupUserAndGroup_GID" ]
+    # If the user primary group GID matches the group GID
+    if [ "$currentPrimaryGID" == "$setupUserAndGroup_gid" ]
     then
-        log "UID or GID does not match (currentUID='$currentUID', UID='$setupUserAndGroup_UID', currentGID='$currentGID', GID='$setupUserAndGroup_GID')"
-
-        # If current UID is set (not null or not empty)
-        if [ -n "$currentUID" ]
-        then
-            log "Delete user"
-            deleteUser
-        fi
-
-        # If current GID is set (not null or not empty)
-        if [ -n "$currentGID" ]
-        then
-            log "Delete group"
-            deleteGroup $setupUserAndGroup_OS
-        fi
-
-        log "Create group with GID '$setupUserAndGroup_GID'"
-        createGroup $setupUserAndGroup_GID $setupUserAndGroup_OS
-
-        log "Create user with UID '$setupUserAndGroup_UID'"
-        createUser $setupUserAndGroup_UID $setupUserAndGroup_OS
+        # The user is valid, we exit
+        return
     fi
 
-    log "User and group set up"
+    # If a user with the user UID exists
+    if [ -n "$user" ]
+    then
+        # Delete this user (because it reserved the user UID)
+        log "Delete user '$user' (UID '$setupUserAndGroup_uid')"
+        deleteUser $user
+    fi
+
+    # Retrieve the 'jduser' user UID
+    jduserUID=$(id -u jduser 2> /dev/null)
+
+    # If the 'jduser' user exists
+    if [ -n "$jduserUID" ]
+    then
+        # Delete the 'jduser' user (because it reserved the user name)
+        log "Delete user 'jduser' (UID '$jduserUID')"
+        deleteUser jduser
+    fi
+
+    # Retrieve the group name (set the 'group' variable declared in the docker-entrypoint.sh script)
+    group=$(cut -d: -f1 < <(getent group $setupUserAndGroup_gid))
+
+    # If the group does not exist
+    if [ -z "$group" ]
+    then
+        # Retrieve the 'jdgroup' group GID
+        jdgroupGID=$(cut -d: -f3 < <(getent group jdgroup))
+
+        # If the 'jdgroup' group exists
+        if [ -n "$jdgroupGID" ]
+        then
+            # Delete the 'jdgroup' group (because it reserved the group name)
+            log "Delete group 'jdgroup' (GID '$jdgroupGID')"
+            deleteGroup jdgroup $setupUserAndGroup_os
+        fi
+
+        # Set 'jdgroup' as default group name (set the 'group' variable declared in the docker-entrypoint.sh script)
+        group="jdgroup"
+
+        # Create the 'jdgroup' group by using the group GID
+        createGroup $group $setupUserAndGroup_gid $setupUserAndGroup_os
+    fi
+
+    # Set default user (set the 'user' variable declared in the docker-entrypoint.sh script)
+    user="jduser"
+
+    # Create the 'jduser' user byu using the user UID and the group name of the group which reserved the GID
+    log "Create user 'jduser' (UID '$setupUserAndGroup_uid') with primary group '$group' (GID '$setupUserAndGroup_gid')"
+    createUser jduser $setupUserAndGroup_uid $group $setupUserAndGroup_gid $setupUserAndGroup_os
 }
 
 # sleep workaround
