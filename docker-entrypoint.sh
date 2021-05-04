@@ -78,7 +78,7 @@ group="" # it is set in setupUserAndGroup
 
 setupUserAndGroup $UID $GID $OS
 
-if [ -z "$user" || -z "$group" ]
+if [ -z "$user" ] || [ -z "$group" ]
 then
     log "User setup failed, exiting the container..."
     log "========================================= CONTAINER EXITED ========================================="
