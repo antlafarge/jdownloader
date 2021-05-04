@@ -135,7 +135,10 @@ setupUserAndGroup()
 
     # Create the 'jduser' user byu using the user UID and the group name of the group which reserved the GID
     log "Create user 'jduser' (UID '$setupUserAndGroup_uid') with primary group '$group' (GID '$setupUserAndGroup_gid')"
+
     createUser jduser $setupUserAndGroup_uid $group $setupUserAndGroup_gid $setupUserAndGroup_os
+
+    log "User and group set up"
 }
 
 # sleep workaround
