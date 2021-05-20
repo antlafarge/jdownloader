@@ -77,13 +77,16 @@ setupUserAndGroup()
     # Extract the user name (set the 'user' variable declared in the docker-entrypoint.sh script)
     user=$(echo "$userInfo" | cut -d":" -f1)
 
+    # Extract the group name (set the 'group' variable declared in the docker-entrypoint.sh script)
+    group=$(cut -d: -f1 < <(getent group $setupUserAndGroup_gid))
+
     # Extract the user primary group GID
     currentPrimaryGID=$(echo "$userInfo" | cut -d":" -f4)
 
     # If the user primary group GID matches the group GID
     if [ "$currentPrimaryGID" == "$setupUserAndGroup_gid" ]
     then
-        # The user is valid, we exit
+        # The user and the group are valid, we exit
         return
     fi
 
@@ -105,9 +108,6 @@ setupUserAndGroup()
         log "Delete user 'jduser' (UID '$jduserUID')"
         deleteUser jduser
     fi
-
-    # Retrieve the group name (set the 'group' variable declared in the docker-entrypoint.sh script)
-    group=$(cut -d: -f1 < <(getent group $setupUserAndGroup_gid))
 
     # If the group does not exist
     if [ -z "$group" ]
@@ -133,7 +133,7 @@ setupUserAndGroup()
     # Set default user (set the 'user' variable declared in the docker-entrypoint.sh script)
     user="jduser"
 
-    # Create the 'jduser' user byu using the user UID and the group name of the group which reserved the GID
+    # Create the 'jduser' user by using the user UID and the group name of the group which reserved the GID
     log "Create user 'jduser' (UID '$setupUserAndGroup_uid') with primary group '$group' (GID '$setupUserAndGroup_gid')"
 
     createUser jduser $setupUserAndGroup_uid $group $setupUserAndGroup_gid $setupUserAndGroup_os

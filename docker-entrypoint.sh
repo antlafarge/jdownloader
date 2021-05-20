@@ -78,6 +78,8 @@ group="" # it is set in setupUserAndGroup
 
 setupUserAndGroup $UID $GID $OS
 
+log "User '$user' and group '$group' selected"
+
 if [ -z "$user" ] || [ -z "$group" ]
 then
     log "User setup failed, exiting the container..."
