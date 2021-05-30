@@ -17,7 +17,7 @@ createUser()
     createUser_gid=$4
     createUser_os=$5
 
-    if [ $createUser_os = "alpine" ]
+    if [ $createUser_os == "alpine" ]
     then
         adduser -DH -s /bin/bash -u $createUser_uid -G $createUser_groupName $createUser_userName
     else # default ubuntu
@@ -30,7 +30,7 @@ deleteUser()
 {
     deleteUser_userName=$1
 
-    deluser $deleteUser_userName
+    deluser $deleteUser_userName > /dev/null
 }
 
 # Create group
@@ -40,7 +40,7 @@ createGroup()
     createGroup_gid=$2
     createGroup_os=$3
 
-    if [ $createGroup_os = "alpine" ]
+    if [ $createGroup_os == "alpine" ]
     then
         addgroup -g $createGroup_gid $createGroup_groupName
     else # default ubuntu
@@ -54,7 +54,7 @@ deleteGroup()
     deleteGroup_groupName=$1
     deleteGroup_os=$2
 
-    if [ $deleteGroup_os = "alpine" ]
+    if [ $deleteGroup_os == "alpine" ]
     then
         delgroup $deleteGroup_groupName
     else # default ubuntu
@@ -123,10 +123,11 @@ setupUserAndGroup()
             deleteGroup jdgroup $setupUserAndGroup_os
         fi
 
-        # Set 'jdgroup' as default group name (set the 'group' variable declared in the docker-entrypoint.sh script)
+        # Set default group (set the 'group' variable declared in the docker-entrypoint.sh script)
         group="jdgroup"
 
         # Create the 'jdgroup' group by using the group GID
+        log "Create group 'jdgroup' (GID '$setupUserAndGroup_gid')"
         createGroup $group $setupUserAndGroup_gid $setupUserAndGroup_os
     fi
 
@@ -135,7 +136,6 @@ setupUserAndGroup()
 
     # Create the 'jduser' user by using the user UID and the group name of the group which reserved the GID
     log "Create user 'jduser' (UID '$setupUserAndGroup_uid') with primary group '$group' (GID '$setupUserAndGroup_gid')"
-
     createUser jduser $setupUserAndGroup_uid $group $setupUserAndGroup_gid $setupUserAndGroup_os
 
     log "User and group set up"
@@ -154,8 +154,8 @@ sleepWorkaround()
         then
             return 0 # We exit
         else
-            log "WARNING" "Sleep failed : Switching to sleep workaround"
             useSleepWorkaround=true # Else we switch to sleep workaround
+            log "WARNING" "Sleep failed : Switching to sleep workaround"
         fi
     fi
 

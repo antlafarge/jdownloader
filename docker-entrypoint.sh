@@ -82,7 +82,7 @@ log "User '$user' and group '$group' selected"
 
 if [ -z "$user" ] || [ -z "$group" ]
 then
-    log "User setup failed, exiting the container..."
+    log "User setup failed"
     log "========================================= CONTAINER EXITED ========================================="
     exit 1
 fi
@@ -101,7 +101,17 @@ JDownloaderPidFile="JDownloader.pid"
 if [ ! -f "./$JDownloaderJarFile" ]
 then
     log "Downloading $JDownloaderJarFile"
-    curl -O $JDownloaderJarUrl 2> /dev/null
+    curl -O "$JDownloaderJarUrl" 2> /dev/null
+    curlExitCode=$?
+
+    if [ $curlExitCode -ne 0 ]
+    then
+        log "ERROR" "$JDownloaderJarFile download failed: curl returned code '$curlExitCode'"
+        log "You can try to run the image in --privileged mode : https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities"
+        log "========================================= CONTAINER EXITED ========================================="
+        exit 1
+    fi
+
     log "$JDownloaderJarFile downloaded"
 fi
 
@@ -115,7 +125,7 @@ log "Starting JDownloader"
 su $user -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &" # Start JDownloader in background
 
 running=true
-while [ $running = true ]
+while [ $running == true ]
 do
     lastPid="$pid"
 
