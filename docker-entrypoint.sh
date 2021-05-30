@@ -123,6 +123,15 @@ log "----------------------------------------"
 
 log "Starting JDownloader"
 su $user -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &" # Start JDownloader in background
+suExitCode=$?
+
+if [ $suExitCode -ne 0 ]
+then
+    log "ERROR" "su returned code '$suExitCode'"
+    log "You can try to run the image in --privileged mode : https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities"
+    log "========================================= CONTAINER EXITED ========================================="
+    exit 1
+fi
 
 running=true
 while [ $running == true ]
