@@ -6,14 +6,23 @@ Run JDownloader in headless mode (no graphical interface) in a Docker container.
 
 ## Architectures
 
-|     | amd64| arm64 | arm/v7 | arm/v6 | 386 | ppc64le | s390x |
-| :-: | :--: | :---: | :----: | :----: | :-: | :-----: | :---: |
-| **Ubuntu<br>(latest)** | OK<br>*tested by<br>[antlafarge](https://github.com/antlafarge)* | OK<br>*tested by<br>[the4anoni](https://github.com/the4anoni)* | OK<br>*tested by<br>[antlafarge](https://github.com/antlafarge)* | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
-| **Alpine** | OK<br>*tested by<br>[antlafarge](https://github.com/antlafarge)* | OK<br>*tested by<br>[antlafarge](https://github.com/antlafarge)* | Performance issues<br>*bad openJDK optimization*<br>Use ubuntu | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
+|     | **Ubuntu<br>(latest)** | **Alpine** |
+| :-: | :--------------------: | :--------: |
+| **amd64** | [i7 / Windows 10](https://github.com/antlafarge/jdownloader/issues/6) : OK | [i7 / Windows 10](https://github.com/antlafarge/jdownloader/issues/5) : OK |
+| **arm64** | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/7) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/9) : OK | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/8) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/10) : OK |
+| **arm/v7** | [Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/3) : OK<br>[Odroid HC1 / Armbian](https://github.com/antlafarge/jdownloader/issues/2) : OK | [Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/4) : Avoid<br>[Odroid HC1 / Armbian](https://github.com/antlafarge/jdownloader/issues/11) : Avoid |
+| **arm/v6** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
+| **386** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
+| **ppc64le** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
+| **s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
 
-You can send feedback (label `arch feedback`) and report issues [here (github issues)](https://github.com/antlafarge/jdownloader/issues).
+### Troubleshooting
 
-## Docker
+For many reasons, docker can be instable depending on builds, devices, architectures, OS, packages, etc...  
+If you encounter some difficulties to run the image, you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) mode.  
+You can send feedback and report problems in the [github issues](https://github.com/antlafarge/jdownloader/issues).
+
+## Docker CLI
 
 <pre>
 docker run -d &#92;  
@@ -33,7 +42,7 @@ docker run -d &#92;
 
 *Note : Parameters indented twice are optional.*
 
-### Parameters :
+### Parameters
 
 Name | Type | Description | Optional (default)
 ---- | ---- | ----------- | ------------------
