@@ -107,7 +107,7 @@ then
     if [ $curlExitCode -ne 0 ]
     then
         log "ERROR" "$JDownloaderJarFile download failed: curl returned code '$curlExitCode'"
-        log "You can try to run the image in --privileged mode : https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities"
+        log "You can try to run the image in --privileged mode : https://github.com/antlafarge/jdownloader#troubleshooting"
         log "========================================= CONTAINER EXITED ========================================="
         exit 1
     fi
@@ -128,7 +128,7 @@ suExitCode=$?
 if [ $suExitCode -ne 0 ]
 then
     log "ERROR" "su returned code '$suExitCode'"
-    log "You can try to run the image in --privileged mode : https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities"
+    log "You can try to run the image in --privileged mode : https://github.com/antlafarge/jdownloader#troubleshooting"
     log "========================================= CONTAINER EXITED ========================================="
     exit 1
 fi
