@@ -31,18 +31,6 @@ OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 
 log "======================================== CONTAINER STARTED ========================================="
 
-# Check deprecated parameters
-
-if [ -d "/downloads" ]
-then
-    log "WARNING" "'/downloads' directory path deprecated, please use '/jdownloader/downloads' instead"
-
-    if [ ! -d "/jdownloader/downloads" ]
-    then
-        ln -s "/downloads" "/jdownloader/downloads"
-    fi
-fi
-
 # Check environment variables
 
 if [ -z "$JD_EMAIL" ]
@@ -73,16 +61,18 @@ then
     GID=0
 fi
 
-user="" # it is set in setupUserAndGroup
-group="" # it is set in setupUserAndGroup
+user="" # it is set in the setupUserAndGroup function
+group="" # it is set in the setupUserAndGroup function
 
 setupUserAndGroup $UID $GID $OS
+setupUserExitCode=$?
 
 log "User '$user' and group '$group' selected"
 
-if [ -z "$user" ] || [ -z "$group" ]
+if [ $setupUserExitCode -ne 0 ] || [ -z "$user" ] || [ -z "$group" ]
 then
-    log "User setup failed"
+    log "ERROR" "User setup failed"
+    log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
     log "========================================= CONTAINER EXITED ========================================="
     exit 1
 fi
@@ -107,7 +97,7 @@ then
     if [ $curlExitCode -ne 0 ]
     then
         log "ERROR" "$JDownloaderJarFile download failed: curl returned code '$curlExitCode'"
-        log "You can try to run the image in --privileged mode : https://github.com/antlafarge/jdownloader#troubleshooting"
+        log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
         log "========================================= CONTAINER EXITED ========================================="
         exit 1
     fi
@@ -121,14 +111,15 @@ chmod -R 770 .
 
 log "----------------------------------------"
 
+# Start JDownloader in a background process by using the created user
 log "Starting JDownloader"
-su $user -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &" # Start JDownloader in background
+su $user -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &"
 suExitCode=$?
 
 if [ $suExitCode -ne 0 ]
 then
     log "ERROR" "su returned code '$suExitCode'"
-    log "You can try to run the image in --privileged mode : https://github.com/antlafarge/jdownloader#troubleshooting"
+    log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
     log "========================================= CONTAINER EXITED ========================================="
     exit 1
 fi
