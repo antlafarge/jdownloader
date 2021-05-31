@@ -10,7 +10,7 @@ source functions.sh
 # Get variables from arguments
 email=$1
 password=$2
-name=$3
+devicename=$3
 
 # Replace a JSON value by searching its field in a JSON file
 # Usage : replaceJsonValue file field value
@@ -27,9 +27,13 @@ replaceJsonValue()
     replace="\"\1\":\"$newValue\""
 
     sed -i "s/$search/$replace/g" $file
-}
+    sedExitCode=$?
 
-log "Setting up JDownloader"
+    if [ $sedExitCode -ne 0 ]
+    then
+        fatal "sed exited with code '$sedExitCode'"
+    fi
+}
 
 cfgDir="./cfg/"
 
@@ -60,20 +64,18 @@ fi
 
 if [ -n "$email" ]
 then
-    log "Replacing JDownloader email in myJDownloader settings file"
+    log "Replace JDownloader email in myJDownloader settings file"
     replaceJsonValue $myJDownloaderSettingsFile "email" "$email"
 fi
 
 if [ -n "$password" ]
 then
-    log "Replacing JDownloader password in myJDownloader settings file"
+    log "Replace JDownloader password in myJDownloader settings file"
     replaceJsonValue $myJDownloaderSettingsFile "password" "$password"
 fi
 
-if [ -n "$name" ]
+if [ -n "$devicename" ]
 then
-    log "Replacing JDownloader devicename in myJDownloader settings file"
-    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$name"
+    log "Replace JDownloader devicename in myJDownloader settings file"
+    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$devicename"
 fi
-
-log "JDownloader set up"

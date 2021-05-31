@@ -19,7 +19,7 @@ Run JDownloader in headless mode (no graphical interface) in a Docker container.
 ### Troubleshooting
 
 For many reasons, docker can be instable depending on builds, devices, architectures, OS, packages, etc...  
-If you encounter some difficulties to run the image, you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) mode.  
+If you encounter some difficulties to run the image, you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.  
 You can send feedback and report problems in the [github issues](https://github.com/antlafarge/jdownloader/issues).
 
 ## Docker CLI
@@ -33,7 +33,7 @@ docker run -d &#92;
         -v "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs" &#92;  
     -e "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" &#92;  
     -e "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
-        -e "JD_NAME=<b>&#60;JD-NAME&#62;</b>" &#92;  
+        -e "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" &#92;  
         -e "UID=<b>&#60;UID&#62;</b>" &#92;  
         -e "GID=<b>&#60;GID&#62;</b>" &#92;  
         -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
@@ -53,7 +53,7 @@ Name | Type | Description | Optional (default)
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader logs files will be stored on your host machine. | Optional (in container)
 **`<JD-EMAIL>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) email. | REQUIRED
 **`<JD-PASSWORD>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) password. | REQUIRED
-**`<JD-NAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional<br>(`jd-ubuntu` or `jd-alpine`)
+**`<JD-DEVICENAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional<br>(hostname)
 **`<UID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (User ID) of the files and directories created. | Optional<br>(`1000`)
 **`<GID>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Owner (Group ID) of the files and directories created. | Optional<br>(`1000`)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
@@ -65,12 +65,12 @@ Name | Type | Description | Optional (default)
 docker run -d \
         --name <b>jdownloader</b> \
         --restart <b>on-failure:2</b> \
-    -v <b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads \
-        -v <b>/mnt/hdd/Apps/JDownloader/Config</b>:/jdownloader/cfg \
-        -v <b>/mnt/hdd/Apps/JDownloader/Logs</b>:/jdownloader/logs \
+    -v <b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads \
+        -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
+        -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
-        -e "JD_NAME=<b>jd-docker</b>" \
+        -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
         -e "UID=<b>1000</b>" \
         -e "GID=<b>1000</b>" \
         -p <b>3129</b>:3129 \
@@ -94,7 +94,7 @@ services:
     environment:
       - "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>"
       - "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>"
-      - "JD_NAME=<b>&#60;JD-NAME&#62;</b>" # optional
+      - "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" # optional
       - "UID=<b>&#60;UID&#62;</b>" # optional
       - "GID=<b>&#60;GID&#62;</b>" # optional
     ports:
@@ -110,13 +110,13 @@ services:
     container_name: <b>jdownloader</b> # optional
     restart: <b>on-failure:2</b> # optional
     volumes:
-      - "<b>/mnt/hdd/Apps/JDownloader/Downloads</b>:/jdownloader/downloads"
-      - "<b>/mnt/hdd/Apps/JDownloader/Config</b>:/jdownloader/cfg" # optional
-      - "<b>/mnt/hdd/Apps/JDownloader/Logs</b>:/jdownloader/logs" # optional
+      - "<b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads"
+      - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional
+      - "<b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs" # optional
     environment:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"
-      - "JD_NAME=<b>jd-docker</b>" # optional
+      - "JD_DEVICENAME=<b>JD-DOCKER</b>" # optional
       - "UID=<b>1000</b>" # optional
       - "GID=<b>1000</b>" # optional
     ports:

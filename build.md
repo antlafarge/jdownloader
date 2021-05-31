@@ -8,11 +8,11 @@ Check files use `LF` line endings (linux style).
 
 ### ubuntu
 
-    docker build -t jdownloader-ubuntu -f ubuntu.Dockerfile .
+    docker build -t jd-ubuntu -f ubuntu.Dockerfile .
 
 ### alpine
 
-    docker build -t jdownloader-alpine -f alpine.Dockerfile .
+    docker build -t jd-alpine -f alpine.Dockerfile .
 
 ## Build and push for all architectures
 

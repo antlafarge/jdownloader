@@ -4,9 +4,11 @@ STOPSIGNAL SIGTERM
 
 ENV JD_EMAIL="" \
     JD_PASSWORD="" \
-    JD_NAME="" \
+    JD_DEVICENAME="" \
     UID="1000" \
-    GID="1000"
+    GID="1000" \
+    LANG="C.UTF-8" \
+    LC_ALL="C.UTF-8"
 
 RUN apk -U upgrade \
     && apk add --no-cache \

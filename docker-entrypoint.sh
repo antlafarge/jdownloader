@@ -3,10 +3,6 @@
 # Disable bash history substitution
 set +H
 
-# Set locales to support UTF-8
-export LANG="C.UTF-8"
-export LC_ALL="C.UTF-8"
-
 source functions.sh
 
 handleSignal()
@@ -18,7 +14,7 @@ handleSignal()
         stop=true
         killProcess $pid
     else
-        log "========================================= CONTAINER KILLED ========================================="
+        log "________________________________________ CONTAINER KILLED __________________________________________"
         exit $((128 + $handleSignal_signalCode))
     fi
 }
@@ -29,36 +25,42 @@ trap "handleSignal 15" SIGTERM
 # Detect OS (ubuntu or alpine)
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 
-log "======================================== CONTAINER STARTED ========================================="
+log "________________________________________ CONTAINER STARTED _________________________________________"
+
+# Deprecated 'JD_NAME' environment variable
+if [ -n "$JD_NAME" ] && [ -z "$JD_DEVICENAME" ]
+then
+    JD_DEVICENAME="$JD_NAME"
+    log "WARNING" "Environment variable 'JD_NAME' is deprecated (change to 'JD_DEVICENAME')"
+fi
 
 # Check environment variables
 
 if [ -z "$JD_EMAIL" ]
 then
-    log "ERROR" "Environment variable 'JD_EMAIL' not set (JD_EMAIL='$JD_EMAIL')"
+    log "WARNING" "Environment variable 'JD_EMAIL' not set"
 fi
 
 if [ -z "$JD_PASSWORD" ]
 then
-    log "WARNING" "Environment variable 'JD_PASSWORD' not set (JD_PASSWORD='$JD_PASSWORD')"
-    # Do not exit here, only display a warning, because the password could be placed by the user in the settings file
+    log "WARNING" "Environment variable 'JD_PASSWORD' not set"
 fi
 
-if [ -z "$JD_NAME" ]
+if [ -z "$JD_DEVICENAME" ]
 then
-    log "WARNING" "Environment variable 'JD_NAME' not set (JD_NAME='$JD_NAME')"
+    JD_DEVICENAME=$(uname -n)
 fi
 
 if [ -z "$UID" ]
 then
-    log "WARNING" "Environment variable 'UID' not set (UID='$UID')"
-    UID=0
+    log "WARNING" "Environment variable 'UID' not set (changed to '1000')"
+    UID=1000
 fi
 
 if [ -z "$GID" ]
 then
-    log "WARNING" "Environment variable 'GID' not set (GID='$GID')"
-    GID=0
+    log "WARNING" "Environment variable 'GID' not set (changed to '1000')"
+    GID=1000
 fi
 
 user="" # it is set in the setupUserAndGroup function
@@ -67,61 +69,61 @@ group="" # it is set in the setupUserAndGroup function
 setupUserAndGroup $UID $GID $OS
 setupUserExitCode=$?
 
-log "User '$user' and group '$group' selected"
-
-if [ $setupUserExitCode -ne 0 ] || [ -z "$user" ] || [ -z "$group" ]
+if [ $setupUserExitCode -ne 0 ]
 then
-    log "ERROR" "User setup failed"
-    log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
-    log "========================================= CONTAINER EXITED ========================================="
-    exit 1
+    fatal "User setup exited with code '$setupUserExitCode'"
 fi
 
-log "----------------------------------------"
+if [ -z "$user" ]
+then
+    fatal "No user selected"
+fi
 
-./setup.sh "$JD_EMAIL" "$JD_PASSWORD" "$JD_NAME"
-
-log "----------------------------------------"
+if [ -z "$group" ]
+then
+    fatal "No group selected"
+fi
 
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"
 
-# If JDownloader jar file does not exist
+# If the JDownloader jar file does not exist
 if [ ! -f "./$JDownloaderJarFile" ]
 then
-    log "Downloading $JDownloaderJarFile"
+    log "Download $JDownloaderJarFile"
+    
     curl -O "$JDownloaderJarUrl" 2> /dev/null
     curlExitCode=$?
 
     if [ $curlExitCode -ne 0 ]
     then
-        log "ERROR" "$JDownloaderJarFile download failed: curl returned code '$curlExitCode'"
-        log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
-        log "========================================= CONTAINER EXITED ========================================="
-        exit 1
+        fatal "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
     fi
-
-    log "$JDownloaderJarFile downloaded"
 fi
 
-log "Setup access rights to current directory"
+./setup.sh "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
+setupShExitCode=$?
+
+if [ $setupShExitCode -ne 0 ]
+then
+    fatal "setup.sh exited with code '$setupShExitCode'"
+fi
+
+log "Set up permissions on the current directory"
+
 chown -R $user:$group .
 chmod -R 770 .
 
-log "----------------------------------------"
+log "Start JDownloader as user '$user'"
 
-# Start JDownloader in a background process by using the created user
-log "Starting JDownloader"
-su $user -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &"
+# Start JDownloader in a background process as $user
+su -p $user -s /bin/bash -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &" 2> /dev/null
 suExitCode=$?
 
 if [ $suExitCode -ne 0 ]
 then
-    log "ERROR" "su returned code '$suExitCode'"
-    log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
-    log "========================================= CONTAINER EXITED ========================================="
-    exit 1
+    fatal "su exited with code '$suExitCode'"
 fi
 
 running=true
@@ -148,6 +150,6 @@ done
 
 log "JDownloader stopped"
 
-log "======================================== CONTAINER STOPPED ========================================="
+log "________________________________________ CONTAINER STOPPED _________________________________________"
 
 exit $exitCode
