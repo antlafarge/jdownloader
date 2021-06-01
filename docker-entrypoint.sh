@@ -93,7 +93,7 @@ if [ ! -f "./$JDownloaderJarFile" ]
 then
     log "Download $JDownloaderJarFile"
     
-    curl -O "$JDownloaderJarUrl" 2> /dev/null
+    curl -O "$JDownloaderJarUrl"
     curlExitCode=$?
 
     if [ $curlExitCode -ne 0 ]
@@ -118,7 +118,7 @@ chmod -R 770 .
 log "Start JDownloader as user '$user'"
 
 # Start JDownloader in a background process as $user
-su -p $user -s /bin/bash -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &" 2> /dev/null
+su -p $user -s /bin/bash -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &"
 suExitCode=$?
 
 if [ $suExitCode -ne 0 ]

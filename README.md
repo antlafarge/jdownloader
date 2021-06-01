@@ -9,7 +9,7 @@ Run JDownloader in headless mode (no graphical interface) in a Docker container.
 |     | **Ubuntu<br>(latest)** | **Alpine** |
 | :-: | :--------------------: | :--------: |
 | **amd64** | [i7 / Windows 10](https://github.com/antlafarge/jdownloader/issues/6) : OK | [i7 / Windows 10](https://github.com/antlafarge/jdownloader/issues/5) : OK |
-| **arm64** | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/7) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/9) : OK | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/8) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/10) : OK |
+| **arm64** | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/1) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/9) : OK | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/8) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/10) : OK |
 | **arm/v7** | [Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/3) : OK<br>[Odroid HC1 / Armbian](https://github.com/antlafarge/jdownloader/issues/2) : OK | [Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/4) : Avoid<br>[Odroid HC1 / Armbian](https://github.com/antlafarge/jdownloader/issues/11) : Avoid |
 | **arm/v6** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
 | **386** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
@@ -46,8 +46,8 @@ docker run -d &#92;
 
 Name | Type | Description | Optional (default)
 ---- | ---- | ----------- | ------------------
-**`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Docker container name. | Optional<br>(random)
-**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Docker container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Optional<br>(`no`)
+**`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Container name. | Optional<br>(random)
+**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Optional<br>(`no`)
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine. | REQUIRED
 **`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine. | Optional (in container)
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader logs files will be stored on your host machine. | Optional (in container)
@@ -129,23 +129,38 @@ services:
 
 - Go to [my.jdownloader.org](https://my.jdownloader.org).
 - Create an account.
-- Run the container by choosing the [docker run](https://docs.docker.com/engine/reference/run) or [docker-compose](https://docs.docker.com/compose) method and customizing the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
+- Run the container by choosing the [docker CLI](https://docs.docker.com/engine/reference/run) or [docker-compose](https://docs.docker.com/compose) method and customizing the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
+
+### Update the image
+
+- Remove the current container : `docker rm -f jdownloader`.
+- Update the image : `docker pull antlafarge/jdownloader:latest`.
+- Remove the old untagged images : `docker rmi $(docker images --filter “dangling=true” -q --no-trunc)`.
+- Start a new container by using docker CLI or docker compose.
+
+### Change your email or password
+
+- If you started the container by setting the email and password environment variables :
+  - You must follow the [Update the image](https://github.com/antlafarge/jdownloader#update-the-image) guide by setting the new email or password on the final step.
+- If you started the container without setting the email and password environment variables :
+    - Run the **setup** script in the running container : `docker exec jdownloader /jdownloader/setup.sh "<JD-EMAIL>" "<JD-PASSWORD>" "<JD-DEVICENAME>"`.
+    - Restart the container : `docker restart jdownloader`.
 
 ### Special characters in password
 
 If you have special characters in your password, you have 2 solutions :
 
-1. Adapt your **docker run** command or **docker-compose.yml** file :
+1. Adapt your **docker CLI** command or **docker-compose.yml** file :
     - If you have exclamation marks (`!`) in your password and you use a **bash** shell, this special character correponds to commands history substitution. You might need to disable it by typing the command `set +H` in your bash shell.
-    - If your password contains double quotes (`"`) or backticks (`` ` ``), escape it with backslashes (`\`) in the **docker run** command or **docker-compose.yml** file. ``"JD_PASSWORD=My\"Great\`Password"``
-    - Start the docker container.
+    - If your password contains double quotes (`"`) or backticks (`` ` ``), escape it with backslashes (`\`) in the **docker CLI** command or **docker-compose.yml** file. ``"JD_PASSWORD=My\"Great\`Password"``
+    - Start the container.
 
 2. Or put your password manually in the settings file :
-    - Customize your **docker run** command or **docker-compose.yml** file parameters :
+    - Customize your **docker CLI** command or **docker-compose.yml** file parameters :
         - Set an empty `<JD-PASSWORD>` (for disabling password replacement on container start). `"JD_PASSWORD="`
         - Set a `<CONFIG-PATH>` volume to access the JDownloader settings files.
-    - Start the docker container.
+    - Start the container.
     - Go to your config directory and open the settings file named `org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json`.
     - Search for the password field and place your password in the empty double quotes. `"password":"MyGreatPassword",`
     - If your password contains double quotes (`"`), escape it with backslashes (`\`). ``"password":"My\"Great\`Password",``
