@@ -140,7 +140,7 @@ services:
 
 - Remove the current container : `docker rm -f jdownloader`.
 - Update the image : `docker pull antlafarge/jdownloader:latest`.
-- Remove the old untagged images : `docker rmi $(docker images --filter “dangling=true” -q --no-trunc)`.
+- Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`.
 - Start a new container by using [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose).
 
 ### Change your email or password
