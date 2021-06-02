@@ -93,7 +93,7 @@ if [ ! -f "./$JDownloaderJarFile" ]
 then
     log "Download $JDownloaderJarFile"
     
-    curl -O "$JDownloaderJarUrl"
+    curl -O "$JDownloaderJarUrl" > /dev/null
     curlExitCode=$?
 
     if [ $curlExitCode -ne 0 ]
