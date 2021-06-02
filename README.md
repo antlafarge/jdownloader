@@ -22,7 +22,9 @@ For many reasons, docker can be instable depending on builds, devices, architect
 If you encounter some difficulties to run the image, you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.  
 You can send feedback and report problems in the [github issues](https://github.com/antlafarge/jdownloader/issues).
 
-## Docker CLI
+## Docker run
+
+[docker run (official documentation)](https://docs.docker.com/engine/reference/run)
 
 <pre>
 docker run -d &#92;  
@@ -79,7 +81,9 @@ docker run -d \
 
 *Note : Parameters indented twice are optional.*
 
-## Docker compose
+## Docker Compose
+
+[Docker Compose (official documentation)](https://docs.docker.com/compose)
 
 <pre>
 services:
@@ -129,7 +133,7 @@ services:
 
 - Go to [my.jdownloader.org](https://my.jdownloader.org).
 - Create an account.
-- Run the container by choosing the [docker CLI](https://docs.docker.com/engine/reference/run) or [docker-compose](https://docs.docker.com/compose) method and customizing the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
+- Run the container by choosing the [docker run](#docker-run) or [docker compose](#docker-compose) method and customizing the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
 
 ### Update the image
@@ -137,7 +141,7 @@ services:
 - Remove the current container : `docker rm -f jdownloader`.
 - Update the image : `docker pull antlafarge/jdownloader:latest`.
 - Remove the old untagged images : `docker rmi $(docker images --filter “dangling=true” -q --no-trunc)`.
-- Start a new container by using docker CLI or docker compose.
+- Start a new container by using [docker run](#docker-run) or [docker compose](#docker-compose).
 
 ### Change your email or password
 
@@ -151,13 +155,13 @@ services:
 
 If you have special characters in your password, you have 2 solutions :
 
-1. Adapt your **docker CLI** command or **docker-compose.yml** file :
+1. Adapt your [docker run](#docker-run) command or [docker-compose.yml](#docker-compose) file :
     - If you have exclamation marks (`!`) in your password and you use a **bash** shell, this special character correponds to commands history substitution. You might need to disable it by typing the command `set +H` in your bash shell.
-    - If your password contains double quotes (`"`) or backticks (`` ` ``), escape it with backslashes (`\`) in the **docker CLI** command or **docker-compose.yml** file. ``"JD_PASSWORD=My\"Great\`Password"``
+    - If your password contains double quotes (`"`) or backticks (`` ` ``), escape it with backslashes (`\`) in the [docker run](#docker-run) command or [docker-compose.yml](#docker-compose) file. ``"JD_PASSWORD=My\"Great\`Password"``
     - Start the container.
 
 2. Or put your password manually in the settings file :
-    - Customize your **docker CLI** command or **docker-compose.yml** file parameters :
+    - Customize your [docker run](#docker-run) command or [docker-compose.yml](#docker-compose) file parameters :
         - Set an empty `<JD-PASSWORD>` (for disabling password replacement on container start). `"JD_PASSWORD="`
         - Set a `<CONFIG-PATH>` volume to access the JDownloader settings files.
     - Start the container.
