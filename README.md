@@ -150,8 +150,10 @@ services:
 - If you started the container by setting the email and password environment variables :
   - You must follow the [Update the image](https://github.com/antlafarge/jdownloader#update-the-image) guide by setting the new email or password on the final step.
 - If you started the container without setting the email and password environment variables :
-    - Run the **setup** script in the running container : `docker exec jdownloader /jdownloader/setup.sh "<JD-EMAIL>" "<JD-PASSWORD>" "<JD-DEVICENAME>"`.
-    - Restart the container : `docker restart jdownloader`.
+    - Run the **setup** script in the running container : `docker exec jdownloader /jdownloader/setup.sh "my@email.fr" "MyNewPassword" "JD-DOCKER"`.
+    - Restart the container :
+        - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method : `docker restart jdownloader`.
+        - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method : `docker-compose restart`.
 
 ### Special characters in password
 
@@ -159,7 +161,8 @@ If you have special characters in your password, you have 2 solutions :
 
 1. Modify your [docker run](https://github.com/antlafarge/jdownloader#docker-run) command or [docker-compose.yml](https://github.com/antlafarge/jdownloader#docker-compose) file :
     - If you have exclamation marks (`!`) in your password and you use a **bash** shell, this special character correponds to commands history substitution. You might need to disable it by using the command `set +H` in your bash shell.
-    - If your password contains double quotes (`"`) or backticks (`` ` ``), escape it with backslashes (`\`) in the [docker run](https://github.com/antlafarge/jdownloader#docker-run) command or [docker-compose.yml](https://github.com/antlafarge/jdownloader#docker-compose) file. ``"JD_PASSWORD=My\"Great\`Password"``
+    - If your password contains double quotes (`"`), escape it with backslashes (`\`) in the [docker run](https://github.com/antlafarge/jdownloader#docker-run) command or [docker-compose.yml](https://github.com/antlafarge/jdownloader#docker-compose) file. ``"JD_PASSWORD=My\"Great`Password"``
+        - If you use the [docker run](https://github.com/antlafarge/jdownloader#docker-run) method, also escape backticks (`` ` ``) with backslashes (`\`). ``"JD_PASSWORD=My\"Great\`Password"``
     - Start the container.
 
 2. Or put your password manually in the settings file :
