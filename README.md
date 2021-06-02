@@ -163,7 +163,7 @@ If you have special characters in your password, you have 2 solutions :
     - Start the container.
     - Go to your config directory and open the settings file named `org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json`.
     - Search for the password field and place your password in the empty double quotes. `"password":"MyGreatPassword",`
-    - If your password contains double quotes (`"`), escape it with backslashes (`\`). ``"password":"My\"Great\`Password",``
+    - If your password contains double quotes (`"`), escape it with backslashes (`\`). ``"password":"My\"Great`Password",``
     - Save the file and restart the container. `docker restart jdownloader`
 
 ## Docker commands reminder
