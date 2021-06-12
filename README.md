@@ -49,7 +49,7 @@ docker run -d &#92;
 Name | Type | Description | Optional (default)
 ---- | ---- | ----------- | ------------------
 **`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Container name. | Optional (random)
-**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Optional (`no`)
+**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.<br>Use `unless-stopped` if the container doesn't restart on system reboot.* | Optional (`no`)
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine. | **REQUIRED**
 **`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine. | Optional (in container)
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader log files will be stored on your host machine. | Optional (in container)
@@ -66,7 +66,7 @@ Name | Type | Description | Optional (default)
 <pre>
 docker run -d \
         --name <b>jdownloader</b> \
-        --restart <b>on-failure:2</b> \
+        --restart <b>on-failure:10</b> \
     -v <b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads \
         -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
         -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \
@@ -112,7 +112,7 @@ services:
   jdownloader:
     image: antlafarge/jdownloader<b>:latest</b>
     container_name: <b>jdownloader</b> # optional
-    restart: <b>on-failure:2</b> # optional
+    restart: <b>on-failure:10</b> # optional
     volumes:
       - "<b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads"
       - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional
