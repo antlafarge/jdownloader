@@ -17,9 +17,22 @@ RUN apk -U upgrade \
         openjdk8-jre \
         ffmpeg
 
+RUN addgroup \
+    -S -g ${GID} \
+    jdgroup && \
+  adduser \
+    -S -H -D \
+    -h /jdownloader \
+    -s /bin/bash \
+    -u ${UID} \
+    -G jdgroup \
+    jduser
+
+USER jduser:jdgroup
+
 WORKDIR /jdownloader
 
-COPY docker-entrypoint.sh \
+COPY --chown=jduser:jdgroup docker-entrypoint.sh \
     functions.sh \
     setup.sh \
     ./
