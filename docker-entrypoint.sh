@@ -118,12 +118,12 @@ chmod -R 770 .
 log "Start JDownloader as user '$user'"
 
 # Start JDownloader in a background process as $user
-su -p $user -s /bin/bash -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &"
-suExitCode=$?
+/bin/bash -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &"
+UserExitCode=$?
 
-if [ $suExitCode -ne 0 ]
+if [ $UserExitCode -ne 0 ]
 then
-    fatal "su exited with code '$suExitCode'"
+    fatal "su exited with code '$UserExitCode'"
 fi
 
 running=true
