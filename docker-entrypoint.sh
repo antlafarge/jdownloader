@@ -51,39 +51,6 @@ then
     JD_DEVICENAME=$(uname -n)
 fi
 
-if [ -z "$UID" ]
-then
-    log "WARNING" "Environment variable 'UID' not set (changed to '1000')"
-    UID=1000
-fi
-
-if [ -z "$GID" ]
-then
-    log "WARNING" "Environment variable 'GID' not set (changed to '1000')"
-    GID=1000
-fi
-
-user="" # it is set in the setupUserAndGroup function
-group="" # it is set in the setupUserAndGroup function
-
-setupUserAndGroup $UID $GID $OS
-setupUserExitCode=$?
-
-if [ $setupUserExitCode -ne 0 ]
-then
-    fatal "User setup exited with code '$setupUserExitCode'"
-fi
-
-if [ -z "$user" ]
-then
-    fatal "No user selected"
-fi
-
-if [ -z "$group" ]
-then
-    fatal "No group selected"
-fi
-
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"
@@ -110,42 +77,29 @@ then
     fatal "setup.sh exited with code '$setupShExitCode'"
 fi
 
-log "Set up permissions on the current directory"
+log "Start JDownloader"
 
-chown -R $user:$group .
-chmod -R 770 .
+# Start JDownloader in a background process
+java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &
+pid=$!
+lastPid=""
 
-log "Start JDownloader as user '$user'"
-
-# Start JDownloader in a background process as $user
-/bin/bash -c "java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &"
-UserExitCode=$?
-
-if [ $UserExitCode -ne 0 ]
-then
-    fatal "su exited with code '$UserExitCode'"
-fi
-
-running=true
-while [ $running == true ]
+while [ -n "$pid" ]
 do
+    log "JDownloader ${lastPid:+re}started (PID $pid)"
+    
+    if [[ $stop ]]
+    then
+        killProcess $pid
+    fi
+    
+    waitProcess $pid
+    exitCode=$?
+    
     lastPid="$pid"
 
     # Get the written JDownloader PID or another running Java PID
     pid=$(pgrep -L -F $JDownloaderPidFile 2> /dev/null || pgrep -o java)
-
-    if [ -n "$pid" ]
-    then
-        log "JDownloader ${lastPid:+re}started (PID $pid)"
-        if [[ $stop ]]
-        then
-            killProcess $pid
-        fi
-        waitProcess $pid
-        exitCode=$?
-    else
-        running=false
-    fi
 done
 
 log "JDownloader stopped"

@@ -40,7 +40,7 @@ cfgDir="./cfg/"
 # If JDownloader cfg directory does not exist
 if [ ! -d $cfgDir ]
 then
-    log "create cfg directory"
+    log "Create cfg directory"
     mkdir -p cfg
 fi
 
@@ -50,7 +50,14 @@ generalSettingsFile="${cfgDir}org.jdownloader.settings.GeneralSettings.json"
 if [ ! -f $generalSettingsFile ]
 then
     log "Write JDownloader download path in settings file"
+
     printf "{\n\t\"defaultdownloadfolder\":\"/jdownloader/downloads\"\n}" > $generalSettingsFile
+    writeExitCode=$?
+
+    if [ $? -ne 0 ]
+    then
+        fatal "Write file exited with code $writeExitCode"
+    fi
 fi
 
 myJDownloaderSettingsFile="${cfgDir}org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json"
@@ -59,7 +66,14 @@ myJDownloaderSettingsFile="${cfgDir}org.jdownloader.api.myjdownloader.MyJDownloa
 if [ ! -f $myJDownloaderSettingsFile ]
 then
     log "Write myJDownloader settings file"
+
     printf "{\n\t\"email\":\"\",\n\t\"password\":\"\",\n\t\"devicename\":\"\",\n\t\"autoconnectenabledv2\":true\n}" > $myJDownloaderSettingsFile
+    writeExitCode=$?
+
+    if [ $writeExitCode -ne 0 ]
+    then
+        fatal "Write file exited with code $writeExitCode"
+    fi
 fi
 
 if [ -n "$email" ]
