@@ -43,14 +43,14 @@ Name | Type | Description | Optional (default)
 ---- | ---- | ----------- | ------------------
 **`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Container name. | Optional (random)
 **`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.<br>Use `unless-stopped` if the container doesn't restart on system reboot.* | Optional (`no`)
-**`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine. | **REQUIRED**
-**`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine. | Optional (in container)
-**`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader log files will be stored on your host machine. | Optional (in container)
+**`<UID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (User ID) of the files and directories created.<br>*You can use the `id -u` command in your shell to get the `uid` number.* | Optional (`0`)
+**`<GID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (Group ID) of the files and directories created.<br>*You can use the `id -g` command in your shell to get the `gid` number.* | Optional (`0`)
+**`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the files and directories you mount as volumes.* | **REQUIRED**
+**`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the files and directories you mount as volumes.* | Optional (in container)
+**`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader log files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the files and directories you mount as volumes.* | Optional (in container)
 **`<JD-EMAIL>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) email. | **REQUIRED**
 **`<JD-PASSWORD>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) password. | **REQUIRED**
 **`<JD-DEVICENAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional (hostname)
-**`<UID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (User ID) of the files and directories created.<br>*You can use the `id -u` command in your shell to get the `uid` number.* | Optional (`0`)
-**`<GID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (Group ID) of the files and directories created.<br>*You can use the `id -g` command in your shell to get the `gid` number.* | Optional (`0`)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
 **`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- `latest` : Same as `ubuntu` tag.<br>- `ubuntu` : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- `alpine` : Use [alpine:latest](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
 
@@ -123,6 +123,7 @@ services:
 
 - Go to [my.jdownloader.org](https://my.jdownloader.org).
 - Create an account.
+- If you want to run the image as an unprivileged user, check the permissions of the files and directories you mount as volumes, and use the `user` parameter.
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customizing the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
 
