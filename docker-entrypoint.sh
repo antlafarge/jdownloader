@@ -34,6 +34,11 @@ then
     log "WARNING" "Environment variable 'JD_NAME' is deprecated (change to 'JD_DEVICENAME')"
 fi
 
+if [ -n "$UID" ] || [ -n "$GID" ]
+then
+    log "WARNING" "Environment variables 'UID' and 'GID' are no longer used. Please use the '--user' docker parameter (https://github.com/antlafarge/jdownloader#docker-run)."
+fi
+
 # Check environment variables
 
 if [ -z "$JD_EMAIL" ]
