@@ -56,7 +56,7 @@ then
 
     if [ $? -ne 0 ]
     then
-        fatal "Write file exited with code $writeExitCode"
+        fatal "Write file exited with code '$writeExitCode'"
     fi
 fi
 
@@ -72,7 +72,7 @@ then
 
     if [ $writeExitCode -ne 0 ]
     then
-        fatal "Write file exited with code $writeExitCode"
+        fatal "Write file exited with code '$writeExitCode'"
     fi
 fi
 

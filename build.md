@@ -3,7 +3,6 @@
 ## First steps
 
 - Check files use `LF` line endings (linux style).  
-- Check script files (*.sh) are executable by non-root users.
 
 ## Build docker image
 
