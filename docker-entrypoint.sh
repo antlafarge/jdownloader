@@ -27,28 +27,20 @@ OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 
 log "________________________________________ CONTAINER STARTED _________________________________________"
 
-# Deprecated 'JD_NAME' environment variable
-if [ -n "$JD_NAME" ] && [ -z "$JD_DEVICENAME" ]
-then
-    JD_DEVICENAME="$JD_NAME"
-    log "WARNING" "Environment variable 'JD_NAME' is deprecated (change to 'JD_DEVICENAME')"
-fi
-
-if [ -n "$UID" ] || [ -n "$GID" ]
-then
-    log "WARNING" "Environment variables 'UID' and 'GID' are no longer used. Please use the '--user' docker parameter (https://github.com/antlafarge/jdownloader#docker-run)."
-fi
+# Log OS pretty name
+OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=(.+)$/\1/p")
+log "OS is $OS_prettyName"
 
 # Check environment variables
 
 if [ -z "$JD_EMAIL" ]
 then
-    log "WARNING" "Environment variable 'JD_EMAIL' not set"
+    log "WARNING" "Environment variable 'JD_EMAIL' is not set"
 fi
 
 if [ -z "$JD_PASSWORD" ]
 then
-    log "WARNING" "Environment variable 'JD_PASSWORD' not set"
+    log "WARNING" "Environment variable 'JD_PASSWORD' is not set"
 fi
 
 if [ -z "$JD_DEVICENAME" ]
@@ -59,6 +51,15 @@ fi
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"
+
+JDownloaderJarFileSize=$(ls -l JDownloader.jar 2> /dev/null | awk '{print $5}')
+
+# If the JDownloader.jar file does not exist or is corrupted (file size equals zero)
+if [ ! -f "./$JDownloaderJarFile" ] || ("$JDownloaderJarFileSize" = "0")
+then
+    log "Delete any existing JDownloader installation files"
+    rm -f -r JDownloader.jar Core.jar ./tmp ./update
+fi
 
 # If the JDownloader jar file does not exist
 if [ ! -f "./$JDownloaderJarFile" ]
