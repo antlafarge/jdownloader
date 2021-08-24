@@ -55,7 +55,7 @@ JDownloaderPidFile="JDownloader.pid"
 JDownloaderJarFileSize=$(ls -l JDownloader.jar 2> /dev/null | awk '{print $5}')
 
 # If the JDownloader.jar file does not exist or is corrupted (file size equals zero)
-if [ ! -f "./$JDownloaderJarFile" ] || ("$JDownloaderJarFileSize" = "0")
+if [ ! -f "./$JDownloaderJarFile" ] || [ "$JDownloaderJarFileSize" = "0" ]
 then
     log "Delete any existing JDownloader installation files"
     rm -f -r JDownloader.jar Core.jar ./tmp ./update
