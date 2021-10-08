@@ -2,7 +2,8 @@
 
 ## Description
 
-Run JDownloader in headless mode (no graphical interface) in a Docker container.
+Run JDownloader in headless mode in a Docker container.  
+There is no embedded graphical interface, you should manage your downloads through a web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
 
 ## Architectures
 
@@ -124,7 +125,7 @@ services:
 - Go to [my.jdownloader.org](https://my.jdownloader.org).
 - Create an account.
 - If you want to run the image as an unprivileged user, check the permissions of the files and directories you mount as volumes, and use the `user` parameter.
-- Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customizing the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
+- Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
 
 ### Update the image
@@ -166,16 +167,29 @@ If you have special characters in your password, you have 2 solutions :
     - If your password contains double quotes (`"`), escape it with backslashes (`\`). ``"password":"My\"Great`Password",``
     - Save the file and restart the container. `docker restart jdownloader`
 
-### Troubleshooting
+## Troubleshooting
 
-#### Files permissions
+### Files permissions issue
 
-&nbsp;&nbsp;Check your user can read and write the files and the directories you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).
+&nbsp;&nbsp;Check your user can read and write the files and the directories you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).  
+&nbsp;&nbsp;Or run the container as root (remove `user` option).
 
-#### Docker privileges
+### Armhf libseccomp2 issue
 
-&nbsp;&nbsp;For many reasons, docker may lack privileges depending on builds, devices, architectures, OS, packages, etc...  
-&nbsp;&nbsp;If you encounter some difficulties to run the image, you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
+&nbsp;&nbsp;If you run the image on an armhf host (linux/arm/v7), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
+&nbsp;&nbsp;This may be resolved by upgrading the `libseccomp2` library (docker dependency).  
+&nbsp;&nbsp;First you should try to upgrade your system by using the usual method.  
+&nbsp;&nbsp;If this upgrade didn't resolve the problem, add the backports repo for debian buster : 
+``` 
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 04EE7237B7D453EC 648ACFD622F3D138  
+echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee -a /etc/apt/sources.list.d/buster-backports.list  
+sudo apt update  
+sudo apt install -t buster-backports libseccomp2
+```
+
+### Docker privileges
+
+&nbsp;&nbsp;If nothing worked and many internal commands fail, your container may lack some privileges and you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
 
 You can send feedback and report problems in the [github issues](https://github.com/antlafarge/jdownloader/issues).
 
