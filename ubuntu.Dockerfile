@@ -8,12 +8,12 @@ ENV JD_EMAIL="" \
     LANG="C.UTF-8" \
     LC_ALL="C.UTF-8"
 
-RUN apt update \
-    && apt install -y --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
         curl \
         openjdk-8-jre-headless \
         ffmpeg \
-    && apt clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader
 

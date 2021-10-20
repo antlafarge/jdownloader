@@ -65,7 +65,7 @@ fi
 if [ ! -f "./$JDownloaderJarFile" ]
 then
     log "Download $JDownloaderJarFile"
-    
+
     curl -s -O "$JDownloaderJarUrl"
     curlExitCode=$?
 
@@ -93,15 +93,15 @@ lastPid=""
 while [ -n "$pid" ]
 do
     log "JDownloader ${lastPid:+re}started (PID $pid)"
-    
+
     if [[ $stop ]]
     then
         killProcess $pid
     fi
-    
+
     waitProcess $pid
     exitCode=$?
-    
+
     lastPid="$pid"
 
     # Get the written JDownloader PID or another running Java PID

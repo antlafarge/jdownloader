@@ -19,7 +19,7 @@ replaceJsonValue()
     file=$1
     field=$(printf "%s" "$2" | sed -e 's/\\/\\\\/g' -e 's/[]\/$*.^[]/\\&/g') # this field will be compared to a value from a json file, so we need to double escape the backslashes \\\\    And this field will be used in a sed regex, so we escape regex special characters ]\/$*.^[
     newValue=$(printf "%s" "$3" | sed -e 's/[\/&]/\\&/g' -e 's/"/\\\\"/g') # this value will be used in a sed replace, so we escape replace special characters \/&    And this value will be stored in a json file, so finally we double escape the quotes \\\\"
-    
+
     fieldPart="\($field\)" # match the field
     valuePart="\([^\\\"]\|\\\\.\)*" # match the value. This looks complicated because it can contain escaped quotes \" because of json format.
 
@@ -31,7 +31,8 @@ replaceJsonValue()
 
     if [ $sedExitCode -ne 0 ]
     then
-        fatal "sed exited with code '$sedExitCode'"
+        log "ERROR" "sed exited with code '$sedExitCode'"
+	exit $sedExitCode
     fi
 }
 
@@ -52,11 +53,12 @@ then
     log "Write JDownloader download path in settings file"
 
     printf "{\n\t\"defaultdownloadfolder\":\"/jdownloader/downloads\"\n}" > $generalSettingsFile
-    writeExitCode=$?
+    printfExitCode=$?
 
-    if [ $? -ne 0 ]
+    if [ $printfExitCode -ne 0 ]
     then
-        fatal "Write file exited with code '$writeExitCode'"
+        log "ERROR" "printf exited with code '$printfExitCode'"
+        exit $printfExitCode
     fi
 fi
 
@@ -68,11 +70,12 @@ then
     log "Write myJDownloader settings file"
 
     printf "{\n\t\"email\":\"\",\n\t\"password\":\"\",\n\t\"devicename\":\"\",\n\t\"autoconnectenabledv2\":true\n}" > $myJDownloaderSettingsFile
-    writeExitCode=$?
+    printfExitCode=$?
 
-    if [ $writeExitCode -ne 0 ]
+    if [ $printfExitCode -ne 0 ]
     then
-        fatal "Write file exited with code '$writeExitCode'"
+        log "ERROR" "printf exited with code '$printfExitCode'"
+	    exit $printfExitCode
     fi
 fi
 
