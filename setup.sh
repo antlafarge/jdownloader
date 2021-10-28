@@ -32,7 +32,7 @@ replaceJsonValue()
     if [ $sedExitCode -ne 0 ]
     then
         log "ERROR" "sed exited with code '$sedExitCode'"
-	exit $sedExitCode
+        exit $sedExitCode
     fi
 }
 
@@ -75,7 +75,7 @@ then
     if [ $printfExitCode -ne 0 ]
     then
         log "ERROR" "printf exited with code '$printfExitCode'"
-	    exit $printfExitCode
+        exit $printfExitCode
     fi
 fi
 
