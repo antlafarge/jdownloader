@@ -24,12 +24,14 @@ trap "handleSignal 15" SIGTERM
 
 # Detect OS (ubuntu or alpine)
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
+JAVA_VERSION=$(dpkg -l | grep openjdk | cut -d" " -f4)
 
 log "________________________________________ CONTAINER STARTED _________________________________________"
 
 # Log OS pretty name
-OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=(.+)$/\1/p")
+OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=\"(.+)\"$/\1/p")
 log "OS is $OS_prettyName"
+log "Java version is $JAVA_VERSION"
 
 # Check environment variables
 
@@ -52,13 +54,14 @@ JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"
 
-JDownloaderJarFileSize=$(ls -l JDownloader.jar 2> /dev/null | awk '{print $5}')
+# Check JDownloader application integrity
+unzip -t $JDownloaderJarFile &> /dev/null
+unzipExitCode=$?
 
-# If the JDownloader.jar file does not exist or is corrupted (file size equals zero)
-if [ ! -f "./$JDownloaderJarFile" ] || [ "$JDownloaderJarFileSize" = "0" ]
+if [ "$unzipExitCode" -ne "0" ]
 then
     log "Delete any existing JDownloader installation files"
-    rm -f -r JDownloader.jar Core.jar ./tmp ./update
+    rm -f -r $JDownloaderJarFile Core.jar ./tmp ./update
 fi
 
 # If the JDownloader jar file does not exist
@@ -92,7 +95,10 @@ lastPid=""
 
 while [ -n "$pid" ]
 do
-    log "JDownloader ${lastPid:+re}started (PID $pid)"
+    jdrev=$(cat update/versioninfo/JD/rev 2> /dev/null)
+    jdurev=$(cat update/versioninfo/JDU/rev 2> /dev/null)
+
+    log "JDownloader ${lastPid:+re}started (${jdrev:+JD-REV=$jdrev }${jdurev:+JDU-REV=$jdurev }PID=$pid)"
 
     if [[ $stop ]]
     then
