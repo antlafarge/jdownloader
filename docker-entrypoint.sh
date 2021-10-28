@@ -98,7 +98,7 @@ do
     jdrev=$(cat update/versioninfo/JD/rev 2> /dev/null)
     jdurev=$(cat update/versioninfo/JDU/rev 2> /dev/null)
 
-    log "JDownloader ${lastPid:+re}started (${jdrev:+JD-REV=$jdrev }${jdurev:+JDU-REV=$jdurev }PID=$pid)"
+    log "JDownloader ${lastPid:+re}started (${jdurev:+JDU-REV=$jdurev }${jdrev:+JD-REV=$jdrev }PID=$pid)"
 
     if [[ $stop ]]
     then
