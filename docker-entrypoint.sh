@@ -86,6 +86,14 @@ then
     fatal "setup.sh exited with code '$setupShExitCode'"
 fi
 
+# Request eventscripter install
+mkdir -p ./update/versioninfo/JD
+echo '["eventscripter"]' > ./update/versioninfo/JD/extensions.requestedinstalls.json
+
+# Put setup autoupdate script
+autoUpdateScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
+cp "./$autoUpdateScript" "./cfg/$autoUpdateScript"
+
 log "Start JDownloader"
 
 # Start JDownloader in a background process

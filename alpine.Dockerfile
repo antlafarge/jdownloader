@@ -20,12 +20,14 @@ WORKDIR /jdownloader
 COPY docker-entrypoint.sh \
     functions.sh \
     setup.sh \
+    org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
     ./
 
 RUN chmod 777 \
     . \
     docker-entrypoint.sh \
     functions.sh \
-    setup.sh
+    setup.sh \
+    org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
