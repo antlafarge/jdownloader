@@ -1,12 +1,13 @@
-[ {
-  "eventTrigger" : "INTERVAL",
-  "enabled" : true,
-  "name" : "Auto-update JD",
-  "script" : "// Restart & Update when JD is idle.\n\nif (callAPI('update', 'isUpdateAvailable'))\n{\n        var idle = isDownloadControllerIdle() &&\n                !callAPI('linkcrawler', 'isCrawling') &&\n                !callAPI('linkgrabberv2', 'isCollecting') &&\n                !callAPI('extraction', 'getQueue').length > 0;\n\n        if (idle)\n        {\n                callAPI('update', 'restartAndUpdate');\n        }\n}",
-  "eventTriggerSettings" : {
-    "lastFire" : 1594799412187,
-    "interval" : 600000,
-    "isSynchronous" : false
+[{
+  "eventTrigger": "INTERVAL",
+  "freshinstall": false,
+  "enabled": true,
+  "name": "Auto-update JD",
+  "script": "disablePermissionChecks(); if (callAPI('update', 'isUpdateAvailable') && isDownloadControllerIdle() && !callAPI('linkcrawler', 'isCrawling') && !callAPI('linkgrabberv2', 'isCollecting') && !callAPI('extraction', 'getQueue').length > 0) { callAPI('update', 'restartAndUpdate'); }",
+  "eventTriggerSettings": {
+    "lastFire": 1594799412187,
+    "interval": 600000,
+    "isSynchronous": false
   },
-  "id" : 1594796988140
-} ]
+  "id": 1594796988140
+}]
