@@ -2,7 +2,7 @@
   "eventTrigger": "INTERVAL",
   "freshinstall": false,
   "enabled": true,
-  "name": "Auto-update JD",
+  "name": "Auto-update",
   "script": "disablePermissionChecks(); if (callAPI('update', 'isUpdateAvailable') && isDownloadControllerIdle() && !callAPI('linkcrawler', 'isCrawling') && !callAPI('linkgrabberv2', 'isCollecting') && !callAPI('extraction', 'getQueue').length > 0) { callAPI('update', 'restartAndUpdate'); }",
   "eventTriggerSettings": {
     "lastFire": 1594799412187,
