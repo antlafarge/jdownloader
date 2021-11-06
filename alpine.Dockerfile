@@ -13,7 +13,8 @@ RUN apk -U upgrade \
         bash \
         curl \
         openjdk8-jre \
-        ffmpeg
+        ffmpeg \
+        unzip
 
 WORKDIR /jdownloader
 

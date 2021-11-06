@@ -2,7 +2,7 @@
 
 ## Description
 
-Run JDownloader in headless mode in a Docker container.  
+Run JDownloader 2 in headless mode in a Docker container.  
 There is no embedded graphical interface, you should manage your downloads through a web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
 
 ## Architectures
