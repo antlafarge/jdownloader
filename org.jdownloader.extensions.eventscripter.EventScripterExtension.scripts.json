@@ -1,6 +1,5 @@
 [{
   "eventTrigger": "INTERVAL",
-  "freshinstall": false,
   "enabled": true,
   "name": "Auto-update",
   "script": "disablePermissionChecks(); if (callAPI('update', 'isUpdateAvailable') && isDownloadControllerIdle() && !callAPI('linkcrawler', 'isCrawling') && !callAPI('linkgrabberv2', 'isCollecting') && !callAPI('extraction', 'getQueue').length > 0) { callAPI('update', 'restartAndUpdate'); }",
