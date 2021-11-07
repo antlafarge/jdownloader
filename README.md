@@ -2,8 +2,11 @@
 
 ## Description
 
-Docker JDownloader 2 headless image with automatic updates.  
+Docker JDownloader 2 headless image with automatic updates.
+
 There is no embedded graphical interface, you should manage your downloads through a web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
+
+To enable automatic updates, go to `Settings` / `Event Scripter` and switch from `Disabled` to `enabled`.
 
 ## Architectures
 
@@ -44,8 +47,8 @@ Name | Type | Description | Optional (default)
 ---- | ---- | ----------- | ------------------
 **`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Container name. | Optional (random)
 **`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.<br>Use `unless-stopped` if the container doesn't restart on system reboot.* | Optional (`no`)
-**`<UID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (User ID) of the files and directories created.<br>*You can use the `id -u` command in your shell to get the `uid` number.* | Optional (`0`)
-**`<GID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (Group ID) of the files and directories created.<br>*You can use the `id -g` command in your shell to get the `gid` number.* | Optional (`0`)
+**`<UID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (User ID) of the files and directories created.<br>*You can use the `id -u` command in your shell to get your current user id.* | Optional (`0`)
+**`<GID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (Group ID) of the files and directories created.<br>*You can use the `id -g` command in your shell to get your current groud id.* | Optional (`0`)
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the files and directories you mount as volumes.* | **REQUIRED**
 **`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader settings files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the files and directories you mount as volumes.* | Optional (in container)
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where the JDownloader log files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the files and directories you mount as volumes.* | Optional (in container)
