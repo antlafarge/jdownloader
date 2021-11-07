@@ -2,7 +2,7 @@
 
 ## Description
 
-JDownloader 2 (headless) with automatic updates.  
+Docker JDownloader 2 headless image with automatic updates.  
 There is no embedded graphical interface, you should manage your downloads through a web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
 
 ## Architectures
