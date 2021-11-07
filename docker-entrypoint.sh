@@ -91,8 +91,10 @@ mkdir -p ./update/versioninfo/JD
 echo '["eventscripter"]' > ./update/versioninfo/JD/extensions.requestedinstalls.json
 
 # Put setup autoupdate script
-autoUpdateScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
-cp "./$autoUpdateScript" "./cfg/$autoUpdateScript"
+autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
+autoUpdateEventScripterScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
+cp "./$autoUpdateEventScripterSettings" "./cfg/$autoUpdateEventScripterSettings"
+cp "./$autoUpdateEventScripterScript" "./cfg/$autoUpdateEventScripterScript"
 
 log "Start JDownloader"
 
