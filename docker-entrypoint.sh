@@ -22,11 +22,17 @@ trap "handleSignal 1" SIGHUP
 trap "handleSignal 2" SIGINT
 trap "handleSignal 15" SIGTERM
 
+log "________________________________________ CONTAINER STARTED _________________________________________"
+
 # Detect OS (ubuntu or alpine)
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
-JAVA_VERSION=$(dpkg -l | grep openjdk | cut -d" " -f4)
 
-log "________________________________________ CONTAINER STARTED _________________________________________"
+if [ "$OS" = "alpine" ]
+then
+    JAVA_VERSION=$(apk -vv info | grep 'openjdk\d*-jre-\d' | cut -d" " -f1)
+else
+    JAVA_VERSION=$(dpkg -l | grep openjdk | cut -d" " -f4)
+fi
 
 # Log OS pretty name
 OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=\"(.+)\"$/\1/p")
@@ -74,7 +80,13 @@ then
 
     if [ $curlExitCode -ne 0 ]
     then
-        fatal "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
+        wget "$JDownloaderJarUrl" 2> /dev/null
+        wgetExitCode=$?
+
+        if [ $wgetExitCode -ne 0 ]
+        then
+            fatal "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode' and wget exited with code '$wgetExitCode'"
+        fi
     fi
 fi
 

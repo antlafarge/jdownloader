@@ -11,6 +11,7 @@ ENV JD_EMAIL="" \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
+        wget \
         openjdk-8-jre-headless \
         ffmpeg \
         unzip \
@@ -21,6 +22,7 @@ WORKDIR /jdownloader
 COPY docker-entrypoint.sh \
     functions.sh \
     setup.sh \
+    org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
     org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
     ./
 
@@ -29,6 +31,7 @@ RUN chmod 777 \
     docker-entrypoint.sh \
     functions.sh \
     setup.sh \
+    org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
     org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
