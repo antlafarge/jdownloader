@@ -131,7 +131,7 @@ services:
 
 ### Update JDownloader
 
-Automatic updates are enabled by default, so you have nothing to do. JDownloader will update itself when JDownloader is idle.  
+Automatic updates are enabled by default, so you have nothing to do. JDownloader will update itself it is idle.  
 To disable the automatic upates, go to `Settings` / `Event Scripter` and switch from `Enabled` to `Disabled`.
 
 ### Update the image
