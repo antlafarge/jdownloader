@@ -6,8 +6,6 @@ Docker JDownloader 2 headless image with automatic updates.
 
 There is no embedded graphical interface, you should manage your downloads through a web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
 
-To enable automatic updates, go to `Settings` / `Event Scripter` and switch from `Disabled` to `enabled`.
-
 ## Architectures
 
 | arch \ tag | **ubuntu<br>(latest)** | **alpine** |
@@ -130,6 +128,11 @@ services:
 - If you want to run the image as an unprivileged user, check the permissions of the files and directories you mount as volumes, and use the `user` parameter.
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
+
+### Update JDownloader
+
+Automatic updates are enabled by default, so you have nothing to do. JDownloader will update itself when JDownloader is idle.  
+To disable the automatic upates, go to `Settings` / `Event Scripter` and switch from `Enabled` to `Disabled`.
 
 ### Update the image
 

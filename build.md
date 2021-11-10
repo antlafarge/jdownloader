@@ -49,3 +49,7 @@ https://www.docker.com/blog/multi-arch-images
 
     docker commit jdownloader jdebug
     docker run -it --entrypoint=/bin/bash --name jdebug jdebug
+
+## Remove not tagged images
+
+    docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
