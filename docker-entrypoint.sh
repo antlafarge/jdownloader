@@ -80,12 +80,14 @@ then
 
     if [ $curlExitCode -ne 0 ]
     then
+        log "WARNING" "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
+
         wget "$JDownloaderJarUrl" 2> /dev/null
         wgetExitCode=$?
 
         if [ $wgetExitCode -ne 0 ]
         then
-            fatal "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode' and wget exited with code '$wgetExitCode'"
+            fatal "$JDownloaderJarFile download failed: wget exited with code '$wgetExitCode'"
         fi
     fi
 fi
