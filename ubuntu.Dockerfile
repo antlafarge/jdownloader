@@ -11,7 +11,6 @@ ENV JD_EMAIL="" \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
-        wget \
         openjdk-8-jre-headless \
         ffmpeg \
         unzip \

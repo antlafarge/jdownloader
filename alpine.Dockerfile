@@ -12,7 +12,6 @@ RUN apk -U upgrade \
     && apk add --no-cache \
         bash \
         curl \
-        wget \
         openjdk8-jre \
         ffmpeg \
         unzip
