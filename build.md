@@ -41,7 +41,7 @@ https://www.docker.com/blog/multi-arch-images
 
 ### ubuntu (and latest because more stable)
 
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f ubuntu.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f ubuntu.Dockerfile --push .
 
 ## Debug container
 
