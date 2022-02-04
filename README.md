@@ -1,24 +1,25 @@
-# JDownloader
+JDownloader
+===========
 
-## Description
+# Description
 
 Docker JDownloader 2 headless image with automatic updates.
 
 There is no embedded graphical interface, you should manage your downloads through a web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
 
-## Architectures
+# Architectures
 
 | arch \ tag | **ubuntu<br>(latest)** | **alpine** |
 | :--------: | :--------------------: | :--------: |
 | **amd64** | [i7 / Windows 10](https://github.com/antlafarge/jdownloader/issues/6) : OK | [i7 / Windows 10](https://github.com/antlafarge/jdownloader/issues/5) : OK |
 | **arm64** | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/1) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/9) : OK | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/8) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/10) : OK |
 | **arm/v7** | [Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/3) : OK<br>[Odroid HC1 / Armbian](https://github.com/antlafarge/jdownloader/issues/2) : OK | [Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/4) : Avoid<br>[Odroid HC1 / Armbian](https://github.com/antlafarge/jdownloader/issues/11) : Avoid |
-| **arm/v6** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
-| **386** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
+| **arm/v6** | - | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
+| **386** | - | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
 | **ppc64le** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
 | **s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
 
-## Docker run
+# Docker run
 
 [docker run (official documentation)](https://docs.docker.com/engine/reference/run)
 
@@ -39,7 +40,7 @@ docker run -d &#92;
 
 *Note : Parameters indented twice are optional.*
 
-### Parameters
+## Parameters
 
 Name | Type | Description | Optional (default)
 ---- | ---- | ----------- | ------------------
@@ -56,7 +57,7 @@ Name | Type | Description | Optional (default)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
 **`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- `latest` : Same as `ubuntu` tag.<br>- `ubuntu` : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- `alpine` : Use [alpine:latest](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
 
-### Example
+## Example
 
 <pre>
 docker run -d \
@@ -75,7 +76,7 @@ docker run -d \
 
 *Note : Parameters indented twice are optional.*
 
-## Docker Compose
+# Docker Compose
 
 [Docker Compose (official documentation)](https://docs.docker.com/compose)
 
@@ -98,7 +99,7 @@ services:
       - "<b>&#60;PORT&#62;</b>:3129" # optional
 </pre>
 
-### Example
+## Example
 
 <pre>
 services:
@@ -119,9 +120,9 @@ services:
       - "<b>3129</b>:3129" # optional
 </pre>
 
-## Guides
+# Guides
 
-### Setup
+## Setup
 
 - Go to [my.jdownloader.org](https://my.jdownloader.org).
 - Create an account.
@@ -129,12 +130,12 @@ services:
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
 
-### Update JDownloader
+## Update JDownloader
 
 Automatic updates are enabled by default, so you have nothing to do. JDownloader will update itself when it is idle.  
 To disable the automatic upates, go to `Settings` / `Event Scripter` and switch from `Enabled` to `Disabled`.
 
-### Update the image
+## Update the image
 
 - Remove the current container :
     - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method : `docker rm -f jdownloader`.
@@ -143,7 +144,7 @@ To disable the automatic upates, go to `Settings` / `Event Scripter` and switch 
 - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`.
 - Start a new container by using [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose).
 
-### Change your email or password
+## Change your email or password
 
 - If you started the container by setting the email and password environment variables :
   - You must follow the [Update the image](https://github.com/antlafarge/jdownloader#update-the-image) guide by setting the new email or password on the final step.
@@ -153,7 +154,7 @@ To disable the automatic upates, go to `Settings` / `Event Scripter` and switch 
         - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method : `docker restart jdownloader`.
         - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method : `docker-compose restart`.
 
-### Special characters in password
+## Special characters in password
 
 If you have special characters in your password, you have 2 solutions :
 
@@ -173,14 +174,14 @@ If you have special characters in your password, you have 2 solutions :
     - If your password contains double quotes (`"`), escape it with backslashes (`\`). ``"password":"My\"Great`Password",``
     - Save the file and restart the container. `docker restart jdownloader`
 
-## Troubleshooting
+# Troubleshooting
 
-### Files permissions issue
+## Files permissions issue
 
 &nbsp;&nbsp;Check your user can read and write the files and the directories you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).  
 &nbsp;&nbsp;Or run the container as root (remove `user` option).
 
-### Armhf libseccomp2 issue
+## Armhf libseccomp2 issue
 
 &nbsp;&nbsp;If you run the image on an armhf host (linux/arm/v7), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
 &nbsp;&nbsp;This may be resolved by upgrading the `libseccomp2` library (docker dependency).  
@@ -193,27 +194,27 @@ sudo apt update
 sudo apt install -t buster-backports libseccomp2
 ```
 
-### Docker privileges
+## Docker privileges
 
 &nbsp;&nbsp;If nothing worked and many internal commands fail, your container may lack some privileges and you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
 
 You can send feedback and report problems in the [github issues](https://github.com/antlafarge/jdownloader/issues).
 
-## Docker commands reminder
+# Docker commands reminder
 
-### Container stop
+## Container stop
 
 <pre>
 docker stop <b>jdownloader</b>
 </pre>
 
-### Container restart
+## Container restart
 
 <pre>
 docker restart <b>jdownloader</b>
 </pre>
 
-### Container logs
+## Container logs
 
 <pre>
 docker logs --follow --tail 100 <b>jdownloader</b>
@@ -221,26 +222,26 @@ docker logs --follow --tail 100 <b>jdownloader</b>
 
 *Note: To access the JDownloader log files, you have to set the `<LOGS-PATH>` volume.*
 
-### Container delete
+## Container delete
 
 <pre>
 docker rm -f <b>jdownloader</b>
 </pre>
 
-### Image delete
+## Image delete
 
 <pre>
 docker rmi antlafarge/jdownloader:<b>latest</b>
 </pre>
 
-### Compose start
+## Compose start
 
 <pre>
 cd /path/to/docker-compose.yml/directory/
 docker-compose up -d
 </pre>
 
-### Compose stop
+## Compose stop
 
 <pre>
 cd /path/to/docker-compose.yml/directory/

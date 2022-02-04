@@ -20,6 +20,7 @@ https://docs.docker.com/buildx/working-with-buildx
 https://www.docker.com/blog/multi-arch-images  
 
     docker buildx ls
+    docker buildx rm mybuilder
     docker buildx create --name mybuilder
     docker buildx use mybuilder
     docker buildx inspect --bootstrap
@@ -32,15 +33,15 @@ https://www.docker.com/blog/multi-arch-images
 
 #### dev-ubuntu
 
-    docker buildx build --no-cache --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t antlafarge/jdownloader:dev-ubuntu -f ubuntu.Dockerfile --push .
+    docker buildx build --no-cache --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-ubuntu -f ubuntu.Dockerfile --push .
 
 ### alpine
 
-    docker buildx build --no-cache --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:alpine -f alpine.Dockerfile --push .
+    docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:alpine -f alpine.Dockerfile --push .
 
 ### ubuntu (and latest because more stable)
 
-    docker buildx build --no-cache --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f ubuntu.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f ubuntu.Dockerfile --push .
 
 ## Debug container
 
