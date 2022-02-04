@@ -11,13 +11,16 @@ There is no embedded graphical interface, you should manage your downloads throu
 
 | arch \ tag | **ubuntu<br>(latest)** | **alpine** |
 | :--------: | :--------------------: | :--------: |
-| **amd64** | [i7 / Windows 10](https://github.com/antlafarge/jdownloader/issues/6) : OK | [i7 / Windows 10](https://github.com/antlafarge/jdownloader/issues/5) : OK |
-| **arm64** | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/1) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/9) : OK | [Raspberry PI 4B / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/8) : OK<br>[Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/10) : OK |
-| **arm/v7** | [Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/3) : OK<br>[Odroid HC1 / Armbian](https://github.com/antlafarge/jdownloader/issues/2) : OK | [Raspberry PI 3B+ / Raspberry OS](https://github.com/antlafarge/jdownloader/issues/4) : Avoid<br>[Odroid HC1 / Armbian](https://github.com/antlafarge/jdownloader/issues/11) : Avoid |
-| **arm/v6** | - | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
-| **386** | - | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
-| **ppc64le** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
-| **s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) | [*Need feedback*](https://github.com/antlafarge/jdownloader/issues) |
+| **amd64** | OK | OK |
+| **arm64** | OK | OK |
+| **arm/v7** | OK | Avoid<br>[Issue 4](https://github.com/antlafarge/jdownloader/issues/4), [Issue 11](https://github.com/antlafarge/jdownloader/issues/11) |
+| **arm/v6** | - | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| **386** | - | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| **ppc64le** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| **s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+
+You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
+You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
 # Docker run
 
@@ -132,7 +135,7 @@ services:
 
 ## Update JDownloader
 
-Automatic updates are enabled by default, so you have nothing to do. JDownloader will update itself when it is idle.  
+JDownloader will update itself automatically when it is idle, so you have nothing to do.  
 To disable the automatic upates, go to `Settings` / `Event Scripter` and switch from `Enabled` to `Disabled`.
 
 ## Update the image
@@ -198,7 +201,8 @@ sudo apt install -t buster-backports libseccomp2
 
 &nbsp;&nbsp;If nothing worked and many internal commands fail, your container may lack some privileges and you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
 
-You can send feedback and report problems in the [github issues](https://github.com/antlafarge/jdownloader/issues).
+You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
+You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
 # Docker commands reminder
 
