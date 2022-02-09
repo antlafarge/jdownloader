@@ -64,7 +64,7 @@ JDownloaderPidFile="JDownloader.pid"
 unzip -t $JDownloaderJarFile &> /dev/null
 unzipExitCode=$?
 
-if [ "$unzipExitCode" -ne "0" ]
+if [ "$unzipExitCode" -ne 0 ]
 then
     log "Delete any existing JDownloader installation files"
     rm -f -r $JDownloaderJarFile Core.jar ./tmp ./update
