@@ -22,6 +22,14 @@ There is no embedded graphical interface, you should manage your downloads throu
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
+# Pre-steps
+
+You need to create the configuration and downloads directories by yourself (otherwise the directories will be created by docker and the root user will have the ownership as user and group).
+<pre>
+mkdir <b>&#60;DOWNLOADS-PATH&#62;</b>
+mkdir <b>&#60;CONFIG-PATH&#62;</b>
+</pre>
+
 # Docker run
 
 [docker run (official documentation)](https://docs.docker.com/engine/reference/run)
