@@ -24,7 +24,8 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 # Pre-steps
 
-You need to create the configuration and downloads directories by yourself (otherwise the directories will be created by docker and the root user will have the ownership as user and group).
+You need to create the configuration and downloads directories by yourself to have ownership on them.  
+Otherwise the directories will be created by docker and the root user will have the ownership as user and group, and Jdownloader (started as your user) may not be able to write in these directories.
 <pre>
 mkdir <b>&#60;DOWNLOADS-PATH&#62;</b>
 mkdir <b>&#60;CONFIG-PATH&#62;</b>
