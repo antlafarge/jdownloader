@@ -69,7 +69,6 @@ docker run -d \
         --user <b>1000:100</b> \
     -v <b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads \
         -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
-        -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
@@ -114,7 +113,6 @@ services:
     volumes:
       - "<b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads"
       - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional
-      - "<b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs" # optional
     environment:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"
