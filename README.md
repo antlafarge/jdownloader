@@ -144,12 +144,18 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
 
 ## Update the image
 
-- Remove the current container :
-    - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method : `docker rm -f jdownloader`.
-    - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method : `docker-compose down`.
-- Update the image : `docker pull antlafarge/jdownloader:latest`.
-- Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`.
-- Start a new container by using [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose).
+- [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method :
+    - Stop the current container : `docker stop jdownloader`
+    - Remove the current container : `docker rm -f jdownloader`
+    - Update the image : `docker pull antlafarge/jdownloader:latest`
+    - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`
+    - Restart the container : `docker start jdownloader`
+- [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method :
+    - Stop the current container : `docker-compose stop jdownloader`
+    - Remove the current container : `docker-compose rm -f jdownloader`
+    - Update the image : `docker-compose pull jdownloader`
+    - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`
+    - Restart the container : `docker-compose up -d`
 
 ## Change your email or password
 
