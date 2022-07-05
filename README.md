@@ -133,6 +133,7 @@ services:
         - You can get your User Group ID (GID) by using : `id -g`
         - I recommend to use `100` as GID (`users` group), because every users should be in this group, and it will be easier to manage multi-users privileges.
     - Setup the access rights : `sudo chmod -R 770 /path/to/downloads`
+    - Do the same for the config directory
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
 
