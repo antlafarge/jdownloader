@@ -184,15 +184,16 @@ If you have special characters in your password, you have 2 solutions :
 
 ## Files permissions issue
 
-&nbsp;&nbsp;Check your user can read and write the files and the directories you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).  
-&nbsp;&nbsp;Or run the container as root (remove `user` option).
+Check your user can read and write the directories you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).  
+Read carefully the [Setup guide](https://github.com/antlafarge/jdownloader#docker-compose) and follow the steps.  
+Or run the container as root (remove `user` option).
 
 ## Armhf libseccomp2 issue
 
-&nbsp;&nbsp;If you run the image on an armhf host (linux/arm/v7), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
-&nbsp;&nbsp;This may be resolved by upgrading the `libseccomp2` library (docker dependency).  
-&nbsp;&nbsp;First you should try to upgrade your system by using the usual method.  
-&nbsp;&nbsp;If this upgrade didn't resolve the problem, add the backports repo for debian buster : 
+If you run the image on an armhf host (linux/arm/v7), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
+This may be resolved by upgrading the `libseccomp2` library (docker dependency).  
+First you should try to upgrade your system by using the usual method.  
+If this upgrade didn't resolve the problem, add the backports repo for debian buster and update : 
 ``` 
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 04EE7237B7D453EC 648ACFD622F3D138  
 echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee -a /etc/apt/sources.list.d/buster-backports.list  
@@ -202,7 +203,7 @@ sudo apt install -t buster-backports libseccomp2
 
 ## Docker privileges
 
-&nbsp;&nbsp;If nothing worked and many internal commands fail, your container may lack some privileges and you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
+If nothing worked and many internal commands fail, your container may lack some privileges and you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
 
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
