@@ -22,15 +22,6 @@ There is no embedded graphical interface, you should manage your downloads throu
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
-# Pre-steps
-
-You need to create the configuration and downloads directories by yourself to have ownership on them.  
-Otherwise the directories will be created by docker and the root user will have the ownership as user and group, and Jdownloader (started as your user) may not be able to write in these directories.
-<pre>
-mkdir <b>&#60;DOWNLOADS-PATH&#62;</b>
-mkdir <b>&#60;CONFIG-PATH&#62;</b>
-</pre>
-
 # Docker run
 
 [docker run (official documentation)](https://docs.docker.com/engine/reference/run)
@@ -75,7 +66,7 @@ Name | Type | Description | Optional (default)
 docker run -d \
         --name <b>jdownloader</b> \
         --restart <b>on-failure:10</b> \
-        --user <b>1000:1000</b> \
+        --user <b>1000:100</b> \
     -v <b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads \
         -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
         -v <b>/mnt/hdd/Apps/JDownloader/logs</b>:/jdownloader/logs \
@@ -119,7 +110,7 @@ services:
     image: antlafarge/jdownloader<b>:latest</b>
     container_name: <b>jdownloader</b> # optional
     restart: <b>on-failure:10</b> # optional
-    user: <b>1000:1000</b> # optional
+    user: <b>1000:100</b> # optional
     volumes:
       - "<b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads"
       - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional
@@ -136,9 +127,14 @@ services:
 
 ## Setup
 
-- Go to [my.jdownloader.org](https://my.jdownloader.org).
-- Create an account.
-- If you want to run the image as an unprivileged user, check the permissions of the files and directories you mount as volumes, and use the `user` parameter.
+- Go to [my.jdownloader.org](https://my.jdownloader.org) and create an account.
+- If you want to run the image as an unprivileged user, check the permissions of the files and directories you mount as volumes, and use the `user` parameter
+    - Create the downloads directory : `mkdir /path/to/downloads`
+    - Setup the user and group owners : `sudo chown -R 1000:100 /path/to/downloads`
+        - You can get your User ID (UID) by using : `id -u`
+        - You can get your User Group ID (GID) by using : `id -g`
+        - I recommend to use `100` as GID (`users` group), because every users should be in this group, and it will be easier to manage multi-users privileges.
+    - Setup the access rights : `sudo chmod -R 770 /path/to/downloads`
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
 
