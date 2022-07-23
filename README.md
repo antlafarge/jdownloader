@@ -37,7 +37,7 @@ docker run -d &#92;
     -e "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" &#92;  
     -e "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
         -e "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" &#92;  
-        -e "JAVA_OPTIONS=<b>&#60;-Xms128m -Xmx1g&#62;</b>" &#92;  
+        -e "JAVA_OPTIONS=<b>&#60;JAVA-OPTIONS&#62;</b>" &#92;  
         -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
     antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
 </pre>
@@ -99,7 +99,7 @@ services:
       - "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>"
       - "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>"
       - "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" # optional
-      - "JAVA_OPTIONS=<b>&#60;-Xms128m -Xmx1g&#62;</b>" &#92;  
+      - "JAVA_OPTIONS=<b>&#60;JAVA-OPTIONS&#62;</b>" # optional
     ports:
       - "<b>&#60;PORT&#62;</b>:3129" # optional
 </pre>
