@@ -142,7 +142,7 @@ services:
 
 ## Update JDownloader
 
-JDownloader will update itself automatically when it is idle, so you have nothing to do.  
+JDownloader will update itself automatically when it is idle (every 12 hours), so you have nothing to do.  
 To disable the automatic upates, go to your JD instance on [my.jdownloader.org](https://my.jdownloader.org), and go to `Settings` / `Event Scripter` and switch from `Enabled` to `Disabled`.
 
 ## Update the image
