@@ -6,7 +6,8 @@ ENV JD_EMAIL="" \
     JD_PASSWORD="" \
     JD_DEVICENAME="" \
     LANG="C.UTF-8" \
-    LC_ALL="C.UTF-8"
+    LC_ALL="C.UTF-8" \
+    JAVA_OPTIONS=""
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

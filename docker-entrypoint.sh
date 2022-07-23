@@ -41,6 +41,8 @@ log "Java version is $JAVA_VERSION"
 
 # Check environment variables
 
+log "JAVA_OPTIONS=`$JAVA_OPTIONS`"
+
 if [ -z "$JD_EMAIL" ]
 then
     log "WARNING" "Environment variable 'JD_EMAIL' is not set"
@@ -105,7 +107,7 @@ cp "./$autoUpdateEventScripterScript" "./cfg/$autoUpdateEventScripterScript"
 log "Start JDownloader"
 
 # Start JDownloader in a background process
-java -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &
+java $JAVA_OPTIONS -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &
 pid=$!
 lastPid=""
 

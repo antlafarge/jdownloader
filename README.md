@@ -37,6 +37,7 @@ docker run -d &#92;
     -e "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" &#92;  
     -e "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
         -e "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" &#92;  
+        -e "JAVA_OPTIONS=<b>&#60;-Xms128m -Xmx1g&#62;</b>" &#92;  
         -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
     antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
 </pre>
@@ -57,6 +58,7 @@ Name | Type | Description | Optional (default)
 **`<JD-EMAIL>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) email. | **REQUIRED**
 **`<JD-PASSWORD>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) password. | **REQUIRED**
 **`<JD-DEVICENAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional (hostname)
+**`<JAVA-OPTIONS>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Optional Java options to use.<br>*Use `-Xms128m -Xmx1g` to change initial and max memory.* | Optional (no options)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
 **`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- `latest` : Same as `ubuntu` tag.<br>- `ubuntu` : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- `alpine` : Use [alpine:latest](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
 
@@ -97,6 +99,7 @@ services:
       - "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>"
       - "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>"
       - "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" # optional
+      - "JAVA_OPTIONS=<b>&#60;-Xms128m -Xmx1g&#62;</b>" &#92;  
     ports:
       - "<b>&#60;PORT&#62;</b>:3129" # optional
 </pre>
