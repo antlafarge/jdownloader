@@ -100,7 +100,7 @@ services:
       - "JD_EMAIL=<b>&#60;JD_EMAIL&#62;</b>"
       - "JD_PASSWORD=<b>&#60;JD_PASSWORD&#62;</b>"
       - "JD_DEVICENAME=<b>&#60;JD_DEVICENAME&#62;</b>" # optional
-      - "JAVA_OPTIONS=-Xms128m -Xmx1g" # optional
+      - "JAVA_OPTIONS=<b>&#60;JAVA_OPTIONS&#62;</b>" # optional
     ports:
       - "<b>&#60;PORT&#62;</b>:3129" # optional
 </pre>
@@ -121,7 +121,7 @@ services:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"
       - "JD_DEVICENAME=<b>JD-DOCKER</b>" # optional
-      - "JAVA_OPTIONS=<b>&#60;JAVA_OPTIONS&#62;</b>" # optional
+      - "JAVA_OPTIONS=-Xms128m -Xmx1g" # optional
     ports:
       - "<b>3129</b>:3129" # optional
 </pre>
