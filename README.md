@@ -74,7 +74,6 @@ docker run -d \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
-        -e "JAVA_OPTIONS=-Xms128m -Xmx1g" \
         -p <b>3129</b>:3129 \
     antlafarge/jdownloader:<b>latest</b>
 </pre>
@@ -121,7 +120,6 @@ services:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"
       - "JD_DEVICENAME=<b>JD-DOCKER</b>" # optional
-      - "JAVA_OPTIONS=-Xms128m -Xmx1g" # optional
     ports:
       - "<b>3129</b>:3129" # optional
 </pre>
