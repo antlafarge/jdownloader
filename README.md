@@ -1,7 +1,4 @@
-JDownloader
-===========
-
-# Description
+# JDownloader
 
 Docker JDownloader 2 headless image with automatic updates.
 
