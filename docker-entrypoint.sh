@@ -41,7 +41,7 @@ log "Java version is $JAVA_VERSION"
 
 # Check environment variables
 
-log "JAVA_OPTIONS=`$JAVA_OPTIONS`"
+log "JAVA_OPTIONS=\"$JAVA_OPTIONS\""
 
 if [ -z "$JD_EMAIL" ]
 then
