@@ -66,8 +66,8 @@ docker run -d \
         --name <b>jdownloader</b> \
         --restart <b>on-failure:10</b> \
         --user <b>1000:100</b> \
-    -v <b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads \
-        -v <b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg \
+    -v <b>/mnt/hdd/JDownloader/downloads</b>:/jdownloader/downloads \
+        -v <b>/mnt/hdd/JDownloader/cfg</b>:/jdownloader/cfg \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
@@ -111,8 +111,8 @@ services:
     restart: <b>on-failure:10</b> # optional
     user: <b>1000:100</b> # optional
     volumes:
-      - "<b>/mnt/hdd/Apps/JDownloader/downloads</b>:/jdownloader/downloads"
-      - "<b>/mnt/hdd/Apps/JDownloader/cfg</b>:/jdownloader/cfg" # optional
+      - "<b>/mnt/hdd/JDownloader/downloads</b>:/jdownloader/downloads"
+      - "<b>/mnt/hdd/JDownloader/cfg</b>:/jdownloader/cfg" # optional
     environment:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"
@@ -151,11 +151,11 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
     - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`
     - Restart the container : `docker start jdownloader`
 - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method :
-    - Stop the current container : `docker-compose stop jdownloader`
-    - Remove the current container : `docker-compose rm -f jdownloader`
-    - Update the image : `docker-compose pull jdownloader`
+    - Stop the current container : `docker compose stop jdownloader`
+    - Remove the current container : `docker compose rm -f jdownloader`
+    - Update the image : `docker compose pull jdownloader`
     - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`
-    - Restart the container : `docker-compose up -d`
+    - Restart the container : `docker compose up -d`
 
 ## Change your email or password
 
@@ -165,7 +165,7 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
     - Run the **setup** script in the running container : `docker exec jdownloader /jdownloader/setup.sh "my@email.fr" "MyNewPassword" "JD-DOCKER"`.
     - Restart the container :
         - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method : `docker restart jdownloader`.
-        - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method : `docker-compose restart`.
+        - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method : `docker compose restart jdownloader`.
 
 ## Special characters in password
 
@@ -253,12 +253,12 @@ docker rmi antlafarge/jdownloader:<b>latest</b>
 
 <pre>
 cd /path/to/docker-compose.yml/directory/
-docker-compose up -d
+docker compose up -d
 </pre>
 
 ## Compose stop
 
 <pre>
 cd /path/to/docker-compose.yml/directory/
-docker-compose down
+docker compose down
 </pre>
