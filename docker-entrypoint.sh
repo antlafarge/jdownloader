@@ -26,6 +26,10 @@ log "________________________________________ CONTAINER STARTED ________________
 
 # Detect OS (ubuntu or alpine)
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
+OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=\"(.+)\"$/\1/p")
+log "OS = \"$OS_prettyName\""
+
+# JAVA version
 
 if [ "$OS" = "alpine" ]
 then
@@ -33,15 +37,11 @@ then
 else
     JAVA_VERSION=$(dpkg -l | grep openjdk | cut -d" " -f4)
 fi
-
-# Log OS pretty name
-OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=\"(.+)\"$/\1/p")
-log "OS is $OS_prettyName"
-log "Java version is $JAVA_VERSION"
+log "JAVA version = \"$JAVA_VERSION\""
 
 # Check environment variables
 
-log "JAVA_OPTIONS=\"$JAVA_OPTIONS\""
+log "JAVA options = \"$JAVA_OPTIONS\""
 
 if [ -z "$JD_EMAIL" ]
 then
@@ -93,6 +93,9 @@ if [ $setupShExitCode -ne 0 ]
 then
     fatal "setup.sh exited with code '$setupShExitCode'"
 fi
+
+unset JD_EMAIL
+unset JD_PASSWORD
 
 # Request eventscripter install
 mkdir -p ./update/versioninfo/JD
