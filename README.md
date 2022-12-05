@@ -1,8 +1,8 @@
-# JDownloader
+# JDownloader 2
 
 Docker JDownloader 2 headless image with automatic updates.
 
-There is no embedded graphical interface, you should manage your downloads through a web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
+There is no embedded graphical interface, you should manage your downloads through the official JDownloader web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
 
 # Architectures
 
@@ -135,6 +135,7 @@ services:
     - Setup the access rights : `sudo chmod -R 770 /path/to/downloads`
     - Do the same for the config directory
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
+    - You can check the container logs : `docker logs --follow --tail 100 jdownloader` (`CTRL + C` to quit)
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
 
 ## Update JDownloader
@@ -146,7 +147,7 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
 
 - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method :
     - Stop the current container : `docker stop jdownloader`
-    - Remove the current container : `docker rm -f jdownloader`
+    - Remove the current container : `docker rm jdownloader`
     - Update the image : `docker pull antlafarge/jdownloader:latest`
     - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`
     - Restart the container : `docker start jdownloader`
@@ -211,6 +212,8 @@ sudo apt install -t buster-backports libseccomp2
 ## Docker privileges
 
 If nothing worked and many internal commands fail, your container may lack some privileges and you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
+
+## Nothing worked / another issue
 
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
