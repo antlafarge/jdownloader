@@ -1,6 +1,11 @@
 FROM alpine:latest
 
-STOPSIGNAL SIGTERM
+LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader"
+LABEL github="https://github.com/antlafarge/jdownloader"
+LABEL maintainer.name="Antoine Lafarge"
+LABEL maintainer.email="ant.lafarge@gmail.com"
+LABEL maintainer.github="https://github.com/antlafarge"
+LABEL maintainer.dockerhub="https://hub.docker.com/u/antlafarge"
 
 ENV JD_EMAIL="" \
     JD_PASSWORD="" \
