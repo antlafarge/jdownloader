@@ -66,8 +66,8 @@ docker run -d \
         --name <b>jdownloader</b> \
         --restart <b>on-failure:10</b> \
         --user <b>1000:100</b> \
-    -v <b>/mnt/hdd/JDownloader/downloads</b>:/jdownloader/downloads \
-        -v <b>/mnt/hdd/JDownloader/cfg</b>:/jdownloader/cfg \
+    -v "<b>/mnt/hdd/JDownloader/downloads</b>:/jdownloader/downloads" \
+        -v "<b>/mnt/hdd/JDownloader/cfg</b>:/jdownloader/cfg" \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
