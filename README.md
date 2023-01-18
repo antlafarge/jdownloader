@@ -28,9 +28,9 @@ docker run -d &#92;
         --name <b>&#60;CONTAINER-NAME&#62;</b> &#92;  
         --restart <b>&#60;RESTART&#62;</b> &#92;  
         --user <b>&#60;UID&#62;:&#60;GID&#62;</b> &#92;  
-    -v "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads" &#92;  
-        -v "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg" &#92;  
-        -v "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs" &#92;  
+    -v "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads/" &#92;  
+        -v "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg/" &#92;  
+        -v "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs/" &#92;  
     -e "JD_EMAIL=<b>&#60;JD_EMAIL&#62;</b>" &#92;  
     -e "JD_PASSWORD=<b>&#60;JD_PASSWORD&#62;</b>" &#92;  
         -e "JD_DEVICENAME=<b>&#60;JD_DEVICENAME&#62;</b>" &#92;  
@@ -66,8 +66,8 @@ docker run -d \
         --name <b>jdownloader</b> \
         --restart <b>on-failure:10</b> \
         --user <b>1000:100</b> \
-    -v "<b>/mnt/hdd/JDownloader/downloads</b>:/jdownloader/downloads" \
-        -v "<b>/mnt/hdd/JDownloader/cfg</b>:/jdownloader/cfg" \
+    -v "<b>/mnt/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/" \
+        -v "<b>/mnt/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
@@ -89,9 +89,9 @@ services:
     restart: <b>&#60;RESTART&#62;</b> # optional
     user: <b>&#60;UID&#62;:&#60;GID&#62;</b> # optional
     volumes:
-      - "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads"
-      - "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg" # optional
-      - "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs" # optional
+      - "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads/"
+      - "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg/" # optional
+      - "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs/" # optional
     environment:
       - "JD_EMAIL=<b>&#60;JD_EMAIL&#62;</b>"
       - "JD_PASSWORD=<b>&#60;JD_PASSWORD&#62;</b>"
@@ -111,8 +111,8 @@ services:
     restart: <b>on-failure:10</b> # optional
     user: <b>1000:100</b> # optional
     volumes:
-      - "<b>/mnt/hdd/JDownloader/downloads</b>:/jdownloader/downloads"
-      - "<b>/mnt/hdd/JDownloader/cfg</b>:/jdownloader/cfg" # optional
+      - "<b>/mnt/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
+      - "<b>/mnt/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" # optional
     environment:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"
@@ -127,12 +127,12 @@ services:
 
 - Go to [my.jdownloader.org](https://my.jdownloader.org) and create an account.
 - If you want to run the image as an unprivileged user, check the permissions of the directories you mount as volumes, and use the `user` parameter
-    - Create the downloads directory : `mkdir /path/to/downloads`
-    - Setup the user and group owners : `sudo chown -R 1000:100 /path/to/downloads`
+    - Create the downloads directory : `mkdir /path/to/downloads/`
+    - Setup the user and group owners : `sudo chown -R 1000:100 /path/to/downloads/`
         - You can get your User ID (UID) by using : `id -u`
         - You can get your User Group ID (GID) by using : `id -g`
         - I recommend to use `100` as GID (`users` group), because every users should be in this group, and it will be easier to manage multi-users privileges.
-    - Setup the access rights : `sudo chmod -R 770 /path/to/downloads`
+    - Setup the access rights : `sudo chmod -R 770 /path/to/downloads/`
     - Do the same for the config directory
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
     - You can check the container logs : `docker logs --follow --tail 100 jdownloader` (`CTRL + C` to quit)
@@ -198,7 +198,7 @@ Or run the container as root (remove `user` option).
 
 ## Armhf libseccomp2 issue
 
-If you run the image on an armhf host (linux/arm/v7), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
+If you run the image on an armhf host (`linux/arm/v7`), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
 This may be resolved by upgrading the `libseccomp2` library (docker dependency).  
 First you should try to upgrade your system by using the usual method.  
 If this upgrade didn't resolve the problem, add the backports repo for debian buster and update : 
