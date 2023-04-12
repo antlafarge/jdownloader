@@ -21,11 +21,21 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 # Versions
 
+## 1.1
+
+Upgrade to OpenJDK 17. This upgrade required the removal of platforms `linux/386`, `linux/arm/v6`, `linux/arm/v7`, `linux/ppc64le` on alpine, and platforms `linux/ppc64le` on ubuntu.
+
+### Tags :
+
+- [`1.1`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1) [`1.1-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-ubuntu)
+- [`1.1-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-alpine)
+
 ## 1.0
 
 This version uses OpenJDK version 8 for greater platform compatibility.
 
 ### Tags :
+
 - [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) [`1.0`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0) [`1.0-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-ubuntu)
 - [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) [`1.0-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-alpine)
 
