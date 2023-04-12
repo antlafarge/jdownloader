@@ -19,6 +19,20 @@ There is no embedded graphical interface, you should manage your downloads throu
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
+# Versions
+
+## 1.0
+
+This version uses OpenJDK version 8 for greater platform compatibility.
+
+### Tags :
+- [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest)
+- [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)
+- [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)
+- [`1.0`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0)
+- [`1.0-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-ubuntu)
+- [`1.0-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-alpine)
+
 # Docker run
 
 [docker run (official documentation)](https://docs.docker.com/engine/reference/run)
