@@ -35,6 +35,7 @@ docker run -d &#92;
     -e "JD_PASSWORD=<b>&#60;JD_PASSWORD&#62;</b>" &#92;  
         -e "JD_DEVICENAME=<b>&#60;JD_DEVICENAME&#62;</b>" &#92;  
         -e "JAVA_OPTIONS=<b>&#60;JAVA_OPTIONS&#62;</b>" &#92;  
+        -e "LOG_FILE=<b>&#60;LOG_FILE&#62;</b>" &#92;  
         -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
     antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
 </pre>
@@ -55,6 +56,7 @@ Name | Type | Description | Optional (default)
 **`<JD_EMAIL>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) email. | **REQUIRED**
 **`<JD_PASSWORD>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) password. | **REQUIRED**
 **`<JD_DEVICENAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional (hostname)
+**`<LOG_FILE>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Write JDownloader logs from `java` command in a file.<br>You should create activate the volume parameter **`<LOGS-PATH>`** to access this log file from the host machine.<br>Useful if you have any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"` | Optional (`/dev/null`)
 **`<JAVA_OPTIONS>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional (no options)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
 **`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- `latest` : Same as `ubuntu` tag.<br>- `ubuntu` : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- `alpine` : Use [alpine:latest](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
@@ -97,6 +99,7 @@ services:
       - "JD_PASSWORD=<b>&#60;JD_PASSWORD&#62;</b>"
       - "JD_DEVICENAME=<b>&#60;JD_DEVICENAME&#62;</b>" # optional
       - "JAVA_OPTIONS=<b>&#60;JAVA_OPTIONS&#62;</b>" # optional
+      - "LOG_FILE=<b>&#60;LOG_FILE&#62;</b>" # optional
     ports:
       - "<b>&#60;PORT&#62;</b>:3129" # optional
 </pre>

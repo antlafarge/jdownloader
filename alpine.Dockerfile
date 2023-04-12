@@ -12,6 +12,7 @@ ENV JD_EMAIL="" \
     JD_DEVICENAME="" \
     LANG="C.UTF-8" \
     LC_ALL="C.UTF-8" \
+    LOG_FILE="/dev/null" \
     JAVA_OPTIONS=""
 
 RUN apk -U upgrade \

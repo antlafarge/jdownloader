@@ -59,7 +59,7 @@ then
 fi
 
 JDownloaderJarFile="JDownloader.jar"
-JDownloaderJarUrl="http://installer.jdownloader.org/$JDownloaderJarFile"
+JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"
 
 # Check JDownloader application integrity
@@ -75,14 +75,28 @@ fi
 # If the JDownloader jar file does not exist
 if [ ! -f "./$JDownloaderJarFile" ]
 then
-    log "Download $JDownloaderJarFile"
+    log "Download https://$JDownloaderJarUrl"
 
-    curl -s -O "$JDownloaderJarUrl"
+    curl -s -O "https://$JDownloaderJarUrl"
     curlExitCode=$?
 
     if [ $curlExitCode -ne 0 ]
     then
-        fatal "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
+        log "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
+        
+        # If https download failed, we try the http link
+        if [ ! -f "./$JDownloaderJarFile" ]
+        then
+            log "Download http://$JDownloaderJarUrl"
+
+            curl -s -O "http://$JDownloaderJarUrl"
+            curlExitCode=$?
+
+            if [ $curlExitCode -ne 0 ]
+            then
+                fatal "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
+            fi
+        fi
     fi
 fi
 
@@ -109,8 +123,14 @@ cp "./$autoUpdateEventScripterScript" "./cfg/$autoUpdateEventScripterScript"
 
 log "Start JDownloader"
 
+# Create logs dir if needed
+if [ ! -d "/jdownloader/logs/" ]
+then
+    mkdir -p "/jdownloader/logs/"
+fi
+
 # Start JDownloader in a background process
-java $JAVA_OPTIONS -Djava.awt.headless=true -jar $JDownloaderJarFile &> /dev/null &
+java $JAVA_OPTIONS -Djava.awt.headless=true -jar $JDownloaderJarFile &> "$LOG_FILE" &
 pid=$!
 lastPid=""
 

@@ -15,7 +15,7 @@ fatal()
 
     log "FATAL ERROR" "$fatal_log"
     log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
-    log "_________________________________________ CONTAINER EXITED _________________________________________"
+    log "________________________________________ CONTAINER EXITED __________________________________________"
     exit 1
 }
 
