@@ -6,7 +6,7 @@ There is no embedded graphical interface, you should manage your downloads throu
 
 # Architectures
 
-| arch \ tag | **ubuntu<br>(latest)** | **alpine** |
+| arch \ tag | [ [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) ]<br>[ [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) ] | [ [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) ] |
 | :--------: | :--------------------: | :--------: |
 | **amd64** | OK | OK |
 | **arm64** | OK | OK |
@@ -26,12 +26,8 @@ You can send feedback and discuss the project in the [github discussions](https:
 This version uses OpenJDK version 8 for greater platform compatibility.
 
 ### Tags :
-- [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest)
-- [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)
-- [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)
-- [`1.0`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0)
-- [`1.0-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-ubuntu)
-- [`1.0-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-alpine)
+- [ [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) ] [ [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) ] [ [`1.0`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0) ] [ [`1.0-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-ubuntu) ]
+- [ [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) ] [ [`1.0-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-alpine) ]
 
 # Docker run
 
