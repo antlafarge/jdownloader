@@ -19,7 +19,7 @@ RUN apk -U upgrade \
     && apk add --no-cache \
         bash \
         curl \
-        openjdk8-jre \
+        openjdk17-jre-headless \
         ffmpeg \
         unzip
 
