@@ -13,7 +13,7 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 ## 1.1
 
-Upgrade to OpenJDK 17. This upgrade required the removal of platforms `linux/386`, `linux/arm/v6`, `linux/arm/v7`, `linux/ppc64le` on alpine, and platforms `linux/ppc64le` on ubuntu.
+Upgrade to OpenJDK 17. This upgrade required the removal of platforms `386`, `arm/v6`, `arm/v7`, `ppc64le` on alpine, and platforms `ppc64le` on ubuntu.
 
 | arch \ tags | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)<br>[`1.1`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1) [`1.1-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-ubuntu) | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)<br>[`1.1-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-alpine) |
 | :--------: | :--------------------: | :--------: |
@@ -221,7 +221,7 @@ Or run the container as root (remove `user` option).
 
 ## Armhf libseccomp2 issue
 
-If you run the image on an armhf host (`linux/arm/v7`), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
+If you run the image on an armhf host (`arm/v7`), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
 This may be resolved by upgrading the `libseccomp2` library (docker dependency).  
 First you should try to upgrade your system by using the usual method.  
 If this upgrade didn't resolve the problem, add the backports repo for debian buster and update : 
