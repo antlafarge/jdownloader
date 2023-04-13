@@ -6,16 +6,6 @@ There is no embedded graphical interface, you should manage your downloads throu
 
 # Architectures
 
-| arch \ tag | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest)<br>[`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) |
-| :--------: | :--------------------: | :--------: |
-| **amd64** | OK | OK |
-| **arm64** | OK | OK |
-| **arm/v7** | OK | Avoid<br>[Issue 4](https://github.com/antlafarge/jdownloader/issues/4), [Issue 11](https://github.com/antlafarge/jdownloader/issues/11) |
-| **arm/v6** | - | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
-| **386** | - | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
-| **ppc64le** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
-| **s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
-
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
@@ -25,19 +15,29 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 Upgrade to OpenJDK 17. This upgrade required the removal of platforms `linux/386`, `linux/arm/v6`, `linux/arm/v7`, `linux/ppc64le` on alpine, and platforms `linux/ppc64le` on ubuntu.
 
-### Tags :
-
-- [`1.1`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1) [`1.1-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-ubuntu)
-- [`1.1-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-alpine)
+| arch \ tags | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)<br>[`1.1`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1) [`1.1-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-ubuntu) | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)<br>[`1.1-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-alpine) |
+| :--------: | :--------------------: | :--------: |
+| **amd64** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| **arm64** | OK | OK |
+| **arm/v7** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | NA |
+| **arm/v6** | NA | NA |
+| **386** | NA | NA |
+| **ppc64le** | NA | NA |
+| **s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
 
 ## 1.0
 
 This version uses OpenJDK version 8 for greater platform compatibility.
 
-### Tags :
-
-- [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) [`1.0`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0) [`1.0-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-ubuntu)
-- [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) [`1.0-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-alpine)
+| arch \ tags | [`1.0`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0) [`1.0-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-ubuntu) | [`1.0-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.0-alpine) |
+| :--------: | :--------------------: | :--------: |
+| **amd64** | OK | OK |
+| **arm64** | OK | OK |
+| **arm/v7** | OK | Avoid<br>[Issue 4](https://github.com/antlafarge/jdownloader/issues/4), [Issue 11](https://github.com/antlafarge/jdownloader/issues/11) |
+| **arm/v6** | NA | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| **386** | NA | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| **ppc64le** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| **s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
 
 # Docker run
 
@@ -79,7 +79,7 @@ Name | Type | Description | Optional (default)
 **`<LOG_FILE>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Write JDownloader logs from `java` command in a file.<br>You should create activate the volume parameter **`<LOGS-PATH>`** to access this log file from the host machine.<br>Useful if you have any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"` | Optional (`/dev/null`)
 **`<JAVA_OPTIONS>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional (no options)
 **`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
-**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag.<br>- `latest` : Same as `ubuntu` tag.<br>- `ubuntu` : Use [ubuntu:latest](https://hub.docker.com/_/ubuntu?tab=tags&page=1&ordering=last_updated&name=latest) as base image (more stable).<br>- `alpine` : Use [alpine:latest](https://hub.docker.com/_/alpine?tab=tags&page=1&ordering=last_updated&name=3.12) as base image (smaller). | Optional (`latest`)
+**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag. | Optional (`latest`)
 
 ## Example
 
@@ -94,7 +94,7 @@ docker run -d \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
         -p <b>3129</b>:3129 \
-    antlafarge/jdownloader:<b>latest</b>
+    antlafarge/jdownloader:<b>1.1</b>
 </pre>
 
 *Note : Parameters indented twice are optional.*
@@ -129,7 +129,7 @@ services:
 <pre>
 services:
   jdownloader:
-    image: antlafarge/jdownloader<b>:latest</b>
+    image: antlafarge/jdownloader<b>:1.1</b>
     container_name: <b>jdownloader</b> # optional
     restart: <b>on-failure:10</b> # optional
     user: <b>1000:100</b> # optional
@@ -171,7 +171,7 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
 - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method :
     - Stop the current container : `docker stop jdownloader`
     - Remove the current container : `docker rm jdownloader`
-    - Update the image : `docker pull antlafarge/jdownloader:latest`
+    - Update the image : `docker pull antlafarge/jdownloader:1.1`
     - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`
     - Restart the container : `docker start jdownloader`
 - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method :
@@ -272,7 +272,7 @@ docker rm -f <b>jdownloader</b>
 ## Image delete
 
 <pre>
-docker rmi antlafarge/jdownloader:<b>latest</b>
+docker rmi antlafarge/jdownloader:<b>1.1</b>
 </pre>
 
 ## Compose start
