@@ -4,8 +4,6 @@ Docker JDownloader 2 headless image with automatic updates.
 
 There is no embedded graphical interface, you should manage your downloads through the official JDownloader web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
 
-# Architectures
-
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
@@ -13,7 +11,7 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 ## 1.1
 
-Upgrade to OpenJDK 17. This upgrade required the removal of platforms `386`, `arm/v6`, `arm/v7`, `ppc64le` on alpine, and platforms `ppc64le` on ubuntu.
+Upgrade to OpenJDK 17. This upgrade required the removal of platforms `386`, `arm/v6`, `arm/v7`, `ppc64le` on alpine, and platform `ppc64le` on ubuntu.
 
 | arch \ tags | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)<br>[`1.1`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1) [`1.1-ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-ubuntu) | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)<br>[`1.1-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=1.1-alpine) |
 | :--------: | :--------------------: | :--------: |
