@@ -21,23 +21,20 @@ RUN apk -U upgrade \
         curl \
         openjdk17-jre-headless \
         ffmpeg \
-        unzip
+        unzip \
+		jq
 
 WORKDIR /jdownloader
 
 COPY docker-entrypoint.sh \
     functions.sh \
-    setup.sh \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
+    setup.sh
     ./
 
 RUN chmod 777 \
     . \
     docker-entrypoint.sh \
     functions.sh \
-    setup.sh \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json
+    setup.sh
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
