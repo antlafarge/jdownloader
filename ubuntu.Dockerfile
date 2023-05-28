@@ -23,6 +23,7 @@ RUN apt-get update \
         openjdk-17-jre-headless \
         ffmpeg \
         unzip \
+        jq \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader
