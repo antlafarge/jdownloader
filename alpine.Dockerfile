@@ -22,7 +22,7 @@ RUN apk -U upgrade \
         openjdk17-jre-headless \
         ffmpeg \
         unzip \
-		jq
+        jq
 
 WORKDIR /jdownloader
 
