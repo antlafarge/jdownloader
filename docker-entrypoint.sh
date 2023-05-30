@@ -116,14 +116,18 @@ mkdir -p ./update/versioninfo/JD
 echo '["eventscripter"]' > ./update/versioninfo/JD/extensions.requestedinstalls.json
 
 # Setup autoupdate script
-cfgDir="./cfg/"
+cfgDir="./cfg"
 
 autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
-jq '.freshinstall = false | .enabled = true' $cfgDir$autoUpdateEventScripterSettings > temp.json && mv temp.json $cfgDir$autoUpdateEventScripterSettings
+cp -n "./$autoUpdateEventScripterSettings" "$cfgDir/$autoUpdateEventScripterSettings"
+log "Modify JSON for EventScripter settings"
+jq '.freshinstall = false | .enabled = true' "$cfgDir/$autoUpdateEventScripterSettings" > temp.json && mv temp.json "$cfgDir/$autoUpdateEventScripterSettings"
 
 autoUpdateEventScripterScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
 autoUpdateEventScripterScriptFilter='if any(.[]; .name == "Auto-Update") then . else . + [{"eventTrigger": "INTERVAL", "enabled": true, "name": "Auto-Update", "script": "disablePermissionChecks(); if (callAPI(\"update\", \"isUpdateAvailable\") && isDownloadControllerIdle() && !callAPI(\"linkcrawler\", \"isCrawling\") && !callAPI(\"linkgrabberv2\", \"isCollecting\") && !callAPI(\"extraction\", \"getQueue\").length > 0) { callAPI(\"update\", \"restartAndUpdate\"); }", "eventTriggerSettings": {"lastFire": 1594799412187, "interval": 43200000, "isSynchronous": false}, "id": 1594796988140}] end'
-jq "$autoUpdateEventScripterScriptFilter" $cfgDir$autoUpdateEventScripterScript > temp.json && mv temp.json $cfgDir$autoUpdateEventScripterScript
+cp -n "./$autoUpdateEventScripterScript" "$cfgDir/$autoUpdateEventScripterScript"
+log "Modify JSON for EventScripter scripts"
+jq "$autoUpdateEventScripterScriptFilter" "$cfgDir/$autoUpdateEventScripterScript" > temp.json && mv temp.json "$cfgDir/$autoUpdateEventScripterScript"
 
 log "Start JDownloader"
 

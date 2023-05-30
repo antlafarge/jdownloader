@@ -2,7 +2,7 @@
   "eventTrigger": "INTERVAL",
   "enabled": true,
   "name": "Auto-Update",
-  "script": "disablePermissionChecks(); if (callAPI(\"update\", \"isUpdateAvailable\") && isDownloadControllerIdle() && !callAPI(\"linkcrawler\", \"isCrawling\") && !callAPI(\"linkgrabberv2\", \"isCollecting\") && !callAPI(\"extraction\", \"getQueue\").length > 0) { callAPI(\"update\", \"restartAndUpdate\"); }"
+  "script": "disablePermissionChecks(); if (callAPI(\"update\", \"isUpdateAvailable\") && isDownloadControllerIdle() && !callAPI(\"linkcrawler\", \"isCrawling\") && !callAPI(\"linkgrabberv2\", \"isCollecting\") && !callAPI(\"extraction\", \"getQueue\").length > 0) { callAPI(\"update\", \"restartAndUpdate\"); }",
   "eventTriggerSettings": {
     "lastFire": 1594799412187,
     "interval": 43200000,
