@@ -1,11 +1,11 @@
 FROM alpine:latest
 
-LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader"
-LABEL github="https://github.com/antlafarge/jdownloader"
-LABEL maintainer.name="Antoine Lafarge"
-LABEL maintainer.email="ant.lafarge@gmail.com"
-LABEL maintainer.github="https://github.com/antlafarge"
-LABEL maintainer.dockerhub="https://hub.docker.com/u/antlafarge"
+LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader" \
+      github="https://github.com/antlafarge/jdownloader" \
+      maintainer.name="Antoine Lafarge" \
+      maintainer.email="ant.lafarge@gmail.com" \
+      maintainer.github="https://github.com/antlafarge" \
+      maintainer.dockerhub="https://hub.docker.com/u/antlafarge"
 
 ENV JD_EMAIL="" \
     JD_PASSWORD="" \
