@@ -106,9 +106,13 @@ echo '["eventscripter"]' > ./update/versioninfo/JD/extensions.requestedinstalls.
 
 # Put setup autoupdate script
 autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
+if [ ! -f "./cfg/$autoUpdateEventScripterSettings" ]; then
+    cp "./$autoUpdateEventScripterSettings" "./cfg/$autoUpdateEventScripterSettings"
+fi
 autoUpdateEventScripterScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
-cp "./$autoUpdateEventScripterSettings" "./cfg/$autoUpdateEventScripterSettings"
-cp "./$autoUpdateEventScripterScript" "./cfg/$autoUpdateEventScripterScript"
+if [ ! -f "./cfg/$autoUpdateEventScripterScript" ]; then
+    cp "./$autoUpdateEventScripterScript" "./cfg/$autoUpdateEventScripterScript"
+fi
 
 log "Start JDownloader"
 
