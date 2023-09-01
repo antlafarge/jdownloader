@@ -9,8 +9,7 @@ handleSignal()
 {
     handleSignal_signalCode=$1
     log "Kill signal $handleSignal_signalCode received"
-    if [ -n "$pid" ] # If java process found
-    then
+    if [ -n "$pid" ]; then # If java process found
         stop=true
         killProcess $pid
     else
@@ -31,8 +30,7 @@ log "OS = \"$OS_prettyName\""
 
 # JAVA version
 
-if [ "$OS" = "alpine" ]
-then
+if [ "$OS" = "alpine" ]; then
     JAVA_VERSION=$(apk -vv info | grep "openjdk.*jre")
 else
     JAVA_VERSION=$(dpkg -l | grep "openjdk.*jre")
@@ -43,18 +41,15 @@ log "JAVA version = \"$JAVA_VERSION\""
 
 log "JAVA options = \"$JAVA_OPTIONS\""
 
-if [ -z "$JD_EMAIL" ]
-then
+if [ -z "$JD_EMAIL" ]; then
     log "WARNING" "Environment variable 'JD_EMAIL' is not set"
 fi
 
-if [ -z "$JD_PASSWORD" ]
-then
+if [ -z "$JD_PASSWORD" ]; then
     log "WARNING" "Environment variable 'JD_PASSWORD' is not set"
 fi
 
-if [ -z "$JD_DEVICENAME" ]
-then
+if [ -z "$JD_DEVICENAME" ]; then
     JD_DEVICENAME=$(uname -n)
 fi
 
@@ -66,34 +61,29 @@ JDownloaderPidFile="JDownloader.pid"
 unzip -t $JDownloaderJarFile &> /dev/null
 unzipExitCode=$?
 
-if [ "$unzipExitCode" -ne 0 ]
-then
+if [ "$unzipExitCode" -ne 0 ]; then
     log "Delete any existing JDownloader installation files"
     rm -f -r $JDownloaderJarFile Core.jar ./tmp ./update
 fi
 
 # If the JDownloader jar file does not exist
-if [ ! -f "./$JDownloaderJarFile" ]
-then
+if [ ! -f "./$JDownloaderJarFile" ]; then
     log "Download https://$JDownloaderJarUrl"
 
     curl -s -O "https://$JDownloaderJarUrl"
     curlExitCode=$?
 
-    if [ $curlExitCode -ne 0 ]
-    then
+    if [ $curlExitCode -ne 0 ]; then
         log "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
         
         # If https download failed, we try the http link
-        if [ ! -f "./$JDownloaderJarFile" ]
-        then
+        if [ ! -f "./$JDownloaderJarFile" ]; then
             log "Download http://$JDownloaderJarUrl"
 
             curl -s -O "http://$JDownloaderJarUrl"
             curlExitCode=$?
 
-            if [ $curlExitCode -ne 0 ]
-            then
+            if [ $curlExitCode -ne 0 ]; then
                 fatal "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
             fi
         fi
@@ -103,8 +93,7 @@ fi
 ./setup.sh "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
 setupShExitCode=$?
 
-if [ $setupShExitCode -ne 0 ]
-then
+if [ $setupShExitCode -ne 0 ]; then
     fatal "setup.sh exited with code '$setupShExitCode'"
 fi
 
@@ -124,8 +113,7 @@ cp "./$autoUpdateEventScripterScript" "./cfg/$autoUpdateEventScripterScript"
 log "Start JDownloader"
 
 # Create logs dir if needed
-if [ ! -d "/jdownloader/logs/" ]
-then
+if [ ! -d "/jdownloader/logs/" ]; then
     mkdir -p "/jdownloader/logs/"
 fi
 
@@ -134,15 +122,13 @@ java $JAVA_OPTIONS -Djava.awt.headless=true -jar $JDownloaderJarFile &> "$LOG_FI
 pid=$!
 lastPid=""
 
-while [ -n "$pid" ]
-do
+while [ -n "$pid" ]; do
     jdrev=$(cat update/versioninfo/JD/rev 2> /dev/null)
     jdurev=$(cat update/versioninfo/JDU/rev 2> /dev/null)
 
     log "JDownloader ${lastPid:+re}started (${jdurev:+JDU-REV=$jdurev }${jdrev:+JD-REV=$jdrev }PID=$pid)"
 
-    if [[ $stop ]]
-    then
+    if [[ $stop ]]; then
         killProcess $pid
     fi
 
