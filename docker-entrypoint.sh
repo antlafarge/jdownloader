@@ -33,7 +33,8 @@ log "OS = \"$OS_prettyName\""
 if [ "$OS" = "alpine" ]; then
     JAVA_VERSION=$(apk -vv info | grep "openjdk.*jre")
 else
-    JAVA_VERSION=$(dpkg -l | grep "openjdk.*jre")
+    dpkgLine=$(dpkg -l | grep "openjdk.*jre")
+    JAVA_VERSION="$($dpkgLine | cut -d" " -f3) $($dpkgLine | cut -d" " -f4)"
 fi
 log "JAVA version = \"$JAVA_VERSION\""
 
