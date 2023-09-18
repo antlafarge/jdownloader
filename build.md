@@ -37,11 +37,11 @@ https://www.docker.com/blog/multi-arch-images
 
 ### alpine
 
-    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:1.1-alpine -t antlafarge/jdownloader:alpine -f alpine.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:1.2-alpine -t antlafarge/jdownloader:alpine -f alpine.Dockerfile --push .
 
 ### ubuntu (and latest because more stable)
 
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:1.1-ubuntu -t antlafarge/jdownloader:1.1 -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f ubuntu.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:1.2-ubuntu -t antlafarge/jdownloader:1.2 -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f ubuntu.Dockerfile --push .
 
 ## Debug container
 
