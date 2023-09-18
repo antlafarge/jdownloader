@@ -25,17 +25,14 @@ waitProcess()
     waitProcess_pids=$@
 
     # Wait processes
-    if ! wait $waitProcess_pids 2> /dev/null
-    then
+    if ! wait $waitProcess_pids 2> /dev/null; then
         # If a pid is not a child process
         # Wait processes with a sleep loop
-        while kill -0 $waitProcess_pids 2> /dev/null
-        do
+        while kill -0 $waitProcess_pids 2> /dev/null; do
             sleep 1
             sleepExitCode=$?
 
-            if [ $sleepExitCode -ne 0 ]
-            then
+            if [ $sleepExitCode -ne 0 ]; then
                 fatal "sleep exited with code '$sleepExitCode'"
             fi
         done
