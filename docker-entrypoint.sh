@@ -31,10 +31,9 @@ log "OS = \"$OS_prettyName\""
 # JAVA version
 
 if [ "$OS" = "alpine" ]; then
-    JAVA_VERSION=$(apk -vv info | grep "openjdk.*jre")
+    JAVA_VERSION="$(apk -vv info | grep "openjdk.*jre" | cut -d" " -f1)"
 else
-    dpkgLine=$(dpkg -l | grep "openjdk.*jre")
-    JAVA_VERSION="$($dpkgLine | cut -d" " -f3) $($dpkgLine | cut -d" " -f4)"
+    JAVA_VERSION="$(dpkg -l | grep "openjdk.*jre" | cut -d" " -f3,4)"
 fi
 log "JAVA version = \"$JAVA_VERSION\""
 
@@ -131,7 +130,7 @@ while [ -n "$pid" ]; do
     jdrev=$(cat update/versioninfo/JD/rev 2> /dev/null)
     jdurev=$(cat update/versioninfo/JDU/rev 2> /dev/null)
 
-    log "JDownloader ${lastPid:+re}started (${jdurev:+JDU-REV=$jdurev }${jdrev:+JD-REV=$jdrev }PID=$pid)"
+    log "JDownloader ${lastPid:+re}started [PID=$pid]${jdurev:+ [JDU-REV=$jdurev]}${jdrev:+ [JD-REV=$jdrev]}"
 
     if [[ $stop ]]; then
         killProcess $pid
