@@ -18,9 +18,6 @@ Upgrade to OpenJDK 17. This upgrade required the removal of platforms `386`, `ar
 | **amd64** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
 | **arm64** | OK | OK |
 | **arm/v7** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | NA |
-| **arm/v6** | NA | NA |
-| **386** | NA | NA |
-| **ppc64le** | NA | NA |
 | **s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
 
 ## 1.0
