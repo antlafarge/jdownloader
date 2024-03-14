@@ -45,7 +45,7 @@ fi
 
 generalSettingsFile="${cfgDir}org.jdownloader.settings.GeneralSettings.json"
 
-# If JDownloader general settings file does not exist
+# If JDownloader general settings file doesn't exist
 if [ ! -f $generalSettingsFile ]; then
     log "Write JDownloader download path in settings file"
 
@@ -60,7 +60,7 @@ fi
 
 myJDownloaderSettingsFile="${cfgDir}org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json"
 
-# If myJDownloader settings file exists
+# If myJDownloader settings file doesn't exist
 if [ ! -f $myJDownloaderSettingsFile ]; then
     log "Write myJDownloader settings file"
 
