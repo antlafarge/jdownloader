@@ -15,7 +15,8 @@ ENV JD_EMAIL="" \
     LANG="C.UTF-8" \
     LC_ALL="C.UTF-8" \
     LOG_FILE="/dev/null" \
-    JAVA_OPTIONS=""
+    JAVA_OPTIONS="" \
+    UMASK=""
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

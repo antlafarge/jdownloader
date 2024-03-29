@@ -53,6 +53,11 @@ if [ -z "$JD_DEVICENAME" ]; then
     JD_DEVICENAME=$(uname -n)
 fi
 
+if [ -n "$UMASK" ]; then
+    log "Apply umask $UMASK"
+    umask $UMASK
+fi
+
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
 JDownloaderPidFile="JDownloader.pid"

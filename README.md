@@ -51,6 +51,7 @@ docker run -d &#92;
         -e "JD_DEVICENAME=<b>&#60;JD_DEVICENAME&#62;</b>" &#92;  
         -e "JAVA_OPTIONS=<b>&#60;JAVA_OPTIONS&#62;</b>" &#92;  
         -e "LOG_FILE=<b>&#60;LOG_FILE&#62;</b>" &#92;  
+        -e "UMASK="<b>&#60;UMASK&#62;</b>" &#92;  
         -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
     antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
 </pre>
@@ -62,7 +63,7 @@ docker run -d &#92;
 Name | Type | Description | Optional (default)
 ---- | ---- | ----------- | ------------------
 **`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/engine/reference/run/#name---name) | Container name. | Recommended (random)
-**`<RESTART>`** | [Restart](https://docs.docker.com/engine/reference/run/#restart-policies---restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.<br>Use `unless-stopped` if the container doesn't restart on system reboot.* | Recommended (`no`)
+**`<RESTART>`** | [Restart](https://docs.docker.com/config/containers/start-containers-automatically/) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.<br>Use `unless-stopped` if the container doesn't restart on system reboot.* | Recommended (`no`)
 **`<UID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (User ID) of the files and directories created.<br>*You can use the `id -u` command in your shell to get your current user id.* | Recommended (`0`)
 **`<GID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner (Group ID) of the files and directories created.<br>*You can use the `id -g` command in your shell to get your current groud id.* | Recommended (`0`)
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems) | Directory where your downloads will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | **REQUIRED**
@@ -72,8 +73,9 @@ Name | Type | Description | Optional (default)
 **`<JD_PASSWORD>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Your [myJDownloader](https://my.jdownloader.org) password. | **REQUIRED**
 **`<JD_DEVICENAME>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional (hostname)
 **`<LOG_FILE>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Write JDownloader logs from `java` command in a file.<br>You should create activate the volume parameter **`<LOGS-PATH>`** to access this log file from the host machine.<br>Useful if you have any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"` | Optional (`/dev/null`)
-**`<JAVA_OPTIONS>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional (no options)
-**`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional
+**`<JAVA_OPTIONS>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional (empty)
+**`<UMASK>`** | [Env](https://docs.docker.com/engine/reference/run/#env-environment-variables) | Change the *umask*. | Optional (no change)
+**`<PORT>`** | [Port](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) | Network port used for Direct connection mode. | Optional (not exposed)
 **`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#imagetag) | Docker hub tag. | Optional (`latest`)
 
 ## Example
@@ -83,8 +85,8 @@ docker run -d \
         --name <b>jdownloader</b> \
         --restart <b>on-failure:10</b> \
         --user <b>1000:100</b> \
-    -v "<b>/mnt/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/" \
-        -v "<b>/mnt/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" \
+    -v "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/" \
+        -v "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" \
     -e "JD_EMAIL=<b>my@email.fr</b>" \
     -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
         -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
@@ -115,6 +117,7 @@ services:
       - "JD_DEVICENAME=<b>&#60;JD_DEVICENAME&#62;</b>" # optional
       - "JAVA_OPTIONS=<b>&#60;JAVA_OPTIONS&#62;</b>" # optional
       - "LOG_FILE=<b>&#60;LOG_FILE&#62;</b>" # optional
+      - "UMASK=<b>&#60;UMASK&#62;</b>" # optional
     ports:
       - "<b>&#60;PORT&#62;</b>:3129" # optional
 </pre>
@@ -129,8 +132,8 @@ services:
     restart: <b>on-failure:10</b> # optional
     user: <b>1000:100</b> # optional
     volumes:
-      - "<b>/mnt/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
-      - "<b>/mnt/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" # optional
+      - "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
+      - "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" # optional
     environment:
       - "JD_EMAIL=<b>my@email.fr</b>"
       - "JD_PASSWORD=<b>MyGreatPassword</b>"

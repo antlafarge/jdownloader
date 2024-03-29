@@ -7,13 +7,16 @@ LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader" \
       maintainer.github="https://github.com/antlafarge" \
       maintainer.dockerhub="https://hub.docker.com/u/antlafarge"
 
+STOPSIGNAL SIGTERM
+
 ENV JD_EMAIL="" \
     JD_PASSWORD="" \
     JD_DEVICENAME="" \
     LANG="C.UTF-8" \
     LC_ALL="C.UTF-8" \
     LOG_FILE="/dev/null" \
-    JAVA_OPTIONS=""
+    JAVA_OPTIONS="" \
+    UMASK=""
 
 RUN apk -U upgrade \
     && apk add --no-cache \
