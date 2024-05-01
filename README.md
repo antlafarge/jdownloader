@@ -51,7 +51,7 @@ docker run -d &#92;
         -e "JD_DEVICENAME=<b>&#60;JD_DEVICENAME&#62;</b>" &#92;  
         -e "JAVA_OPTIONS=<b>&#60;JAVA_OPTIONS&#62;</b>" &#92;  
         -e "LOG_FILE=<b>&#60;LOG_FILE&#62;</b>" &#92;  
-        -e "UMASK="<b>&#60;UMASK&#62;</b>" &#92;  
+        -e "UMASK=<b>&#60;UMASK&#62;</b>" &#92;  
         -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
     antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
 </pre>
