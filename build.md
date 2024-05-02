@@ -8,7 +8,7 @@
 
 ### ubuntu
 
-    docker build -t openjdk17-ubuntu -f openjdk17-ubuntu.Dockerfile .
+    docker build -t ubuntu-openjdk17 -f ubuntu-openjdk17.Dockerfile .
 
 ### alpine
 
@@ -33,7 +33,7 @@ https://www.docker.com/blog/multi-arch-images
 
 #### dev-ubuntu
 
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-openjdk8-ubuntu -f openjdk8-ubuntu.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-ubuntu-openjdk8 -f ubuntu-openjdk8.Dockerfile --push .
 
 #### alpine
 
@@ -41,7 +41,7 @@ https://www.docker.com/blog/multi-arch-images
 
 #### ubuntu
 
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:openjdk8-ubuntu -t antlafarge/jdownloader:openjdk8 -f openjdk8-ubuntu.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:ubuntu-openjdk8 -t antlafarge/jdownloader:openjdk8 -f ubuntu-openjdk8.Dockerfile --push .
 
 ### OpenJDK 17
 
@@ -51,7 +51,7 @@ https://www.docker.com/blog/multi-arch-images
 
 #### dev-ubuntu
 
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:dev-openjdk17-ubuntu -f openjdk17-ubuntu.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:dev-ubuntu-openjdk17 -f ubuntu-openjdk17.Dockerfile --push .
 
 #### alpine
 
@@ -59,7 +59,7 @@ https://www.docker.com/blog/multi-arch-images
 
 #### ubuntu (and latest because more stable)
 
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:openjdk17-ubuntu -t antlafarge/jdownloader:openjdk17 -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f openjdk17-ubuntu.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:ubuntu-openjdk17 -t antlafarge/jdownloader:openjdk17 -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f ubuntu-openjdk17.Dockerfile --push .
 
 ## Debug container
 
