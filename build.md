@@ -12,7 +12,7 @@
 
 ### alpine
 
-    docker build -t openjdk17-alpine -f openjdk17-alpine.Dockerfile .
+    docker build -t alpine-openjdk17 -f alpine-openjdk17.Dockerfile .
 
 ## Build and push for all architectures
 
@@ -29,7 +29,7 @@ https://www.docker.com/blog/multi-arch-images
 
 #### dev-alpine
 
-    docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-openjdk8-alpine -f openjdk8-alpine.Dockerfile --push .
+    docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-alpine-openjdk8 -f alpine-openjdk8.Dockerfile --push .
 
 #### dev-ubuntu
 
@@ -37,7 +37,7 @@ https://www.docker.com/blog/multi-arch-images
 
 #### alpine
 
-    docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:openjdk8-alpine -f openjdk8-alpine.Dockerfile --push .
+    docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:alpine-openjdk8 -f alpine-openjdk8.Dockerfile --push .
 
 #### ubuntu
 
@@ -47,7 +47,7 @@ https://www.docker.com/blog/multi-arch-images
 
 #### dev-alpine
 
-    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:dev-openjdk17-alpine -f openjdk17-alpine.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:dev-alpine-openjdk17 -f alpine-openjdk17.Dockerfile --push .
 
 #### dev-ubuntu
 
@@ -55,7 +55,7 @@ https://www.docker.com/blog/multi-arch-images
 
 #### alpine
 
-    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:openjdk17-alpine -t antlafarge/jdownloader:alpine -f openjdk17-alpine.Dockerfile --push .
+    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/s390x -t antlafarge/jdownloader:alpine-openjdk17 -t antlafarge/jdownloader:alpine -f alpine-openjdk17.Dockerfile --push .
 
 #### ubuntu (and latest because more stable)
 
