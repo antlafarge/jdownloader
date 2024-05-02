@@ -24,7 +24,7 @@ More recent OpenJDK version.
 
 Greater platforms compatibility.
 
-| arch \ tags | [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8)<br>[`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8) | [`openjdk8-alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8-alpine) |
+| arch \ tags | [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8)<br>[`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8) | [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) |
 | :--------: | :--------------------: | :--------: |
 | **amd64** | OK | OK |
 | **arm64** | OK | OK |
