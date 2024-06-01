@@ -214,7 +214,7 @@ If you have special characters in your password, you have 2 solutions :
 ## Files permissions issue
 
 Check your user can read and write the directories you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).  
-Read carefully the [Setup guide](https://github.com/antlafarge/jdownloader#docker-compose) and follow the steps.  
+Read carefully the [Setup guide](https://github.com/antlafarge/jdownloader#setup) and follow the steps.  
 Or run the container as root (remove `user` option).
 
 ## Armhf libseccomp2 issue
