@@ -37,16 +37,30 @@ else
 fi
 log "JAVA version = \"$JAVA_VERSION\""
 
+# Read secrets from files
+
+if [ -f "/run/secrets/JD_EMAIL" ]; then
+    JD_EMAIL=$(cat /run/secrets/JD_EMAIL)
+fi
+
+if [ -f "/run/secrets/JD_PASSWORD" ]; then
+    JD_PASSWORD=$(cat /run/secrets/JD_PASSWORD)
+fi
+
+if [ -f "/run/secrets/JD_DEVICENAME" ]; then
+    JD_DEVICENAME=$(cat /run/secrets/JD_DEVICENAME)
+fi
+
 # Check environment variables
 
 log "JAVA options = \"$JAVA_OPTIONS\""
 
 if [ -z "$JD_EMAIL" ]; then
-    log "WARNING" "Environment variable 'JD_EMAIL' is not set"
+    log "WARNING" "'JD_EMAIL' Secret file or environment variable is not found"
 fi
 
 if [ -z "$JD_PASSWORD" ]; then
-    log "WARNING" "Environment variable 'JD_PASSWORD' is not set"
+    log "WARNING" "'JD_PASSWORD' Secret file or environment variable is not found"
 fi
 
 if [ -z "$JD_DEVICENAME" ]; then
@@ -104,12 +118,13 @@ fi
 
 unset JD_EMAIL
 unset JD_PASSWORD
+unset JD_DEVICENAME
 
 # Request eventscripter install
 mkdir -p ./update/versioninfo/JD
 echo '["eventscripter"]' > ./update/versioninfo/JD/extensions.requestedinstalls.json
 
-# Put setup autoupdate script
+# Put setup auto-update script
 autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
 if [ ! -f "./cfg/$autoUpdateEventScripterSettings" ]; then
     cp "./$autoUpdateEventScripterSettings" "./cfg/$autoUpdateEventScripterSettings"
