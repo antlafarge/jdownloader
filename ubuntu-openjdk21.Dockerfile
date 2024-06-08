@@ -24,7 +24,7 @@ RUN apt-get update \
     curl \
     ffmpeg \
     unzip \
-    openjdk-8-jre-headless \
+    openjdk-21-jre-headless \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader

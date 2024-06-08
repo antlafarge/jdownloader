@@ -19,12 +19,13 @@ ENV JD_EMAIL="" \
     UMASK=""
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        curl \
-        openjdk-17-jre-headless \
-        ffmpeg \
-        unzip \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+ && apt-get upgrade -y \
+ && apt-get install -y --no-install-recommends \
+    curl \
+    ffmpeg \
+    unzip \
+    openjdk-17-jre-headless \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader
 

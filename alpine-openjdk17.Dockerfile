@@ -18,29 +18,30 @@ ENV JD_EMAIL="" \
     JAVA_OPTIONS="" \
     UMASK=""
 
-RUN apk -U upgrade \
-    && apk add --no-cache \
-        bash \
-        curl \
-        openjdk17-jre-headless \
-        ffmpeg \
-        unzip
+RUN apk update \
+ && apk -U upgrade \
+ && apk add --no-cache \
+    bash \
+    curl \
+    ffmpeg \
+    unzip \
+    openjdk17-jre-headless
 
 WORKDIR /jdownloader
 
 COPY docker-entrypoint.sh \
-    functions.sh \
-    setup.sh \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
-    ./
+     functions.sh \
+     setup.sh \
+     org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
+     org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
+     ./
 
 RUN chmod 777 \
-    . \
-    docker-entrypoint.sh \
-    functions.sh \
-    setup.sh \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json
+        . \
+        docker-entrypoint.sh \
+        functions.sh \
+        setup.sh \
+        org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
+        org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]

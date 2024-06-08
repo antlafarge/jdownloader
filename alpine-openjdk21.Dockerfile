@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
 LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader" \
       github="https://github.com/antlafarge/jdownloader" \
@@ -18,30 +18,30 @@ ENV JD_EMAIL="" \
     JAVA_OPTIONS="" \
     UMASK=""
 
-RUN apt-get update \
- && apt-get upgrade -y \
- && apt-get install -y --no-install-recommends \
+RUN apk update \
+ && apk -U upgrade \
+ && apk add --no-cache \
+    bash \
     curl \
     ffmpeg \
     unzip \
-    openjdk-8-jre-headless \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
+    openjdk21-jre-headless --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/
 
 WORKDIR /jdownloader
 
 COPY docker-entrypoint.sh \
-    functions.sh \
-    setup.sh \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
-    ./
+     functions.sh \
+     setup.sh \
+     org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
+     org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
+     ./
 
 RUN chmod 777 \
-    . \
-    docker-entrypoint.sh \
-    functions.sh \
-    setup.sh \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-    org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json
+        . \
+        docker-entrypoint.sh \
+        functions.sh \
+        setup.sh \
+        org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
+        org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
