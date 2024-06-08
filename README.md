@@ -75,8 +75,8 @@ Name | Type | Description | Optional (default)
 **`<JAVA-OPTIONS>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional (empty)
 **`<UMASK>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Change the *umask*. | Optional (no change)
 **`<LOG-FILE>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Write JDownloader logs from `java` command in a file.<br>You should create activate the volume parameter **`<LOGS-PATH>`** to access this log file from the host machine.<br>Useful if you have any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"` | Optional (`/dev/null`)
-**`<JD-EMAIL-FILE>`** | [Secret](https://docs.docker.com/reference/cli/docker/container/run/#env) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) e-mail is saved. | **REQUIRED**
-**`<JD-PASSWORD-FILE>`** | [Secret](https://docs.docker.com/reference/cli/docker/container/run/#env) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) password is saved. | **REQUIRED**
+**`<JD-EMAIL-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) e-mail is saved. | **REQUIRED**
+**`<JD-PASSWORD-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) password is saved. | **REQUIRED**
 **`<JD-DEVICENAME-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) device name is saved. | Optional (hostname)
 **`<PORT>`** | [Port](https://docs.docker.com/reference/cli/docker/container/run/#publish) | Network port used for Direct connection mode. | Optional (not exposed)
 **`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#image-references) | Docker hub tag. | Optional (`latest`)
