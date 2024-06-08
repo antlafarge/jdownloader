@@ -19,7 +19,7 @@ Most recent OpenJDK version.
 | **linux/arm/v7** | OK | NA |
 | **linux/arm64/v8** | OK | OK |
 | **linux/ppc64le** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
-| **linux/riscv64** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| **linux/riscv64** | NA | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
 | **linux/s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
 
 ## OpenJDK 17
