@@ -21,11 +21,11 @@ ENV JD_EMAIL="" \
 RUN apk update \
  && apk -U upgrade \
  && apk add --no-cache \
-    bash \
-    curl \
-    ffmpeg \
-    unzip \
-    openjdk21-jre-headless --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/
+        bash \
+        curl \
+        ffmpeg \
+        unzip \
+        openjdk21-jre-headless --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/
 
 WORKDIR /jdownloader
 

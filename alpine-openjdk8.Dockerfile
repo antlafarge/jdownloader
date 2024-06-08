@@ -21,11 +21,11 @@ ENV JD_EMAIL="" \
 RUN apk update \
  && apk -U upgrade \
  && apk add --no-cache \
-    bash \
-    curl \
-    ffmpeg \
-    unzip \
-    openjdk8-jre
+        bash \
+        curl \
+        ffmpeg \
+        unzip \
+        openjdk8-jre
 
 WORKDIR /jdownloader
 

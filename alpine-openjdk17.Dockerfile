@@ -21,11 +21,11 @@ ENV JD_EMAIL="" \
 RUN apk update \
  && apk -U upgrade \
  && apk add --no-cache \
-    bash \
-    curl \
-    ffmpeg \
-    unzip \
-    openjdk17-jre-headless
+        bash \
+        curl \
+        ffmpeg \
+        unzip \
+        openjdk17-jre-headless
 
 WORKDIR /jdownloader
 
