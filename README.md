@@ -4,8 +4,8 @@ Docker JDownloader 2 headless image with automatic updates.
 
 There is no embedded graphical interface, you should manage your downloads through the official JDownloader web interface here : [https://my.jdownloader.org](https://my.jdownloader.org).
 
-Dockerhub repository : [https://hub.docker.com/r/antlafarge/jdownloader](https://hub.docker.com/r/antlafarge/jdownloader)
-Github repository : [https://github.com/antlafarge/jdownloader](https://github.com/antlafarge/jdownloader)
+Dockerhub repository : [https://hub.docker.com/r/antlafarge/jdownloader](https://hub.docker.com/r/antlafarge/jdownloader).  
+Github repository : [https://github.com/antlafarge/jdownloader](https://github.com/antlafarge/jdownloader).  
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
