@@ -1,0 +1,66 @@
+name: Dockerhub-release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Release:
+    strategy:
+      matrix:
+        max-parallel: [1]
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: alpine-openjdk8
+        run: |
+          docker pull antlafarge/jdownloader:dev-alpine-openjdk8
+          docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk8 -t antlafarge/jdownloader:alpine-openjdk8
+      -
+        name: ubuntu-openjdk8, openjdk8
+        run: |
+          docker pull antlafarge/jdownloader:dev-ubuntu-openjdk8
+          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk8 -t antlafarge/jdownloader:ubuntu-openjdk8
+          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk8 -t antlafarge/jdownloader:openjdk8
+      -
+        name: alpine-openjdk17
+        run: |
+          docker pull antlafarge/jdownloader:dev-alpine-openjdk17
+          docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk17 -t antlafarge/jdownloader:alpine-openjdk17
+      -
+        name: ubuntu-openjdk17, openjdk17
+        run: |
+          docker pull antlafarge/jdownloader:dev-ubuntu-openjdk17
+          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk17 -t antlafarge/jdownloader:ubuntu-openjdk17
+          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk17 -t antlafarge/jdownloader:openjdk17
+      -
+        name: alpine-openjdk21
+        run: |
+          docker pull antlafarge/jdownloader:dev-alpine-openjdk21
+          docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk21 -t antlafarge/jdownloader:alpine-openjdk21
+      -
+        name: ubuntu-openjdk21, openjdk21
+        run: |
+          docker pull antlafarge/jdownloader:dev-ubuntu-openjdk21
+          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:ubuntu-openjdk21
+          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:openjdk21
+      -
+        name: ubuntu, alpine and latest
+        run: |
+          docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk21 -t antlafarge/jdownloader:alpine
+          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:ubuntu
+          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:latest
+      -
+        name: Logout from Docker Hub
+        run: docker logout
