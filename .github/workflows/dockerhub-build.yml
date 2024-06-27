@@ -28,66 +28,42 @@ jobs:
   Build:
     strategy:
       matrix:
-        max-parallel: [1]
+        include:
+          - name: alpine-openjdk8
+            file: alpine-openjdk8.Dockerfile
+            platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          - name: ubuntu-openjdk8
+            file: ubuntu-openjdk8.Dockerfile
+            platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          - name: alpine-openjdk17
+            file: alpine-openjdk17.Dockerfile
+            platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x
+          - name: ubuntu-openjdk17
+            file: ubuntu-openjdk17.Dockerfile
+            platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          - name: alpine-openjdk21
+            file: alpine-openjdk21.Dockerfile
+            platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
+          - name: ubuntu-openjdk21
+            file: ubuntu-openjdk21.Dockerfile
+            platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: dev-alpine-openjdk8
+      - name: ${{ matrix.name }}
         uses: docker/build-push-action@v6
         with:
-          file: alpine-openjdk8.Dockerfile
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          tags: ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8
+          file: ${{ matrix.file }}
+          platforms: ${{ matrix.platforms }}
+          tags: ${{ env.IMAGE_NAME }}:dev-${{ matrix.name }}
           push: true
-      -
-        name: dev-ubuntu-openjdk8
-        uses: docker/build-push-action@v6
-        with:
-          file: ubuntu-openjdk8.Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          tags: ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
-          push: true
-      -
-        name: dev-alpine-openjdk17
-        uses: docker/build-push-action@v6
-        with:
-          file: alpine-openjdk17.Dockerfile
-          platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x
-          tags: ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17
-          push: true
-      -
-        name: dev-ubuntu-openjdk17
-        uses: docker/build-push-action@v6
-        with:
-          file: ubuntu-openjdk17.Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          tags: ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17
-          push: true
-      -
-        name: dev-alpine-openjdk21
-        uses: docker/build-push-action@v6
-        with:
-          file: alpine-openjdk21.Dockerfile
-          platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
-          tags: ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21
-          push: true
-      -
-        name: dev-ubuntu-openjdk21
-        uses: docker/build-push-action@v6
-        with:
-          file: ubuntu-openjdk21.Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          tags: ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21
-          push: true
+      - name: Logout from Docker Hub
+        uses: docker/logout-action@v3
