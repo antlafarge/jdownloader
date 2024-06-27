@@ -44,4 +44,4 @@ jobs:
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:latest
       - name: Logout from Docker Hub
-        uses: docker/logout-action@v3
+        run: docker logout

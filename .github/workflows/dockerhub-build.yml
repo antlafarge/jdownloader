@@ -66,4 +66,4 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:dev-${{ matrix.name }}
           push: true
       - name: Logout from Docker Hub
-        uses: docker/logout-action@v3
+        run: docker logout
