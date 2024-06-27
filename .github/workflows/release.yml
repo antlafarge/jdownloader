@@ -1,5 +1,8 @@
 name: Dockerhub-release
 
+env:
+  IMAGE_NAME: antlafarge/jdownloader
+
 on:
   workflow_dispatch:
 
@@ -25,42 +28,42 @@ jobs:
       -
         name: alpine-openjdk8
         run: |
-          docker pull antlafarge/jdownloader:dev-alpine-openjdk8
-          docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk8 -t antlafarge/jdownloader:alpine-openjdk8
+          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 -t ${{ env.IMAGE_NAME }}:alpine-openjdk8
       -
         name: ubuntu-openjdk8, openjdk8
         run: |
-          docker pull antlafarge/jdownloader:dev-ubuntu-openjdk8
-          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk8 -t antlafarge/jdownloader:ubuntu-openjdk8
-          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk8 -t antlafarge/jdownloader:openjdk8
+          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk8
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8 -t ${{ env.IMAGE_NAME }}:openjdk8
       -
         name: alpine-openjdk17
         run: |
-          docker pull antlafarge/jdownloader:dev-alpine-openjdk17
-          docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk17 -t antlafarge/jdownloader:alpine-openjdk17
+          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 -t ${{ env.IMAGE_NAME }}:alpine-openjdk17
       -
         name: ubuntu-openjdk17, openjdk17
         run: |
-          docker pull antlafarge/jdownloader:dev-ubuntu-openjdk17
-          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk17 -t antlafarge/jdownloader:ubuntu-openjdk17
-          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk17 -t antlafarge/jdownloader:openjdk17
+          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk17
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 -t ${{ env.IMAGE_NAME }}:openjdk17
       -
         name: alpine-openjdk21
         run: |
-          docker pull antlafarge/jdownloader:dev-alpine-openjdk21
-          docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk21 -t antlafarge/jdownloader:alpine-openjdk21
+          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine-openjdk21
       -
         name: ubuntu-openjdk21, openjdk21
         run: |
-          docker pull antlafarge/jdownloader:dev-ubuntu-openjdk21
-          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:ubuntu-openjdk21
-          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:openjdk21
+          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk21
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:openjdk21
       -
         name: ubuntu, alpine and latest
         run: |
-          docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk21 -t antlafarge/jdownloader:alpine
-          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:ubuntu
-          docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:latest
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:latest
       -
         name: Logout from Docker Hub
         run: docker logout
