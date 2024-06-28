@@ -109,7 +109,7 @@ services:
     environment:
       - "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" # optional (better to use secrets)
       - "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" # optional (better to use secrets)
-      - "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" # optional (better to use secrets)
+      - "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" # optional
       - "UMASK=<b>&#60;UMASK&#62;</b>" # optional
       - "JAVA_OPTIONS=<b>&#60;JAVA-OPTIONS&#62;</b>" # optional
       - "LOG_FILE=<b>&#60;LOG-FILE&#62;</b>" # optional
@@ -125,8 +125,6 @@ secrets:
         file: "&#60;JD-EMAIL-FILE&#62;"
     JD_PASSWORD:
         file: "&#60;JD-PASSWORD-FILE&#62;"
-    JD_DEVICENAME: # optional
-        file: "&#60;JD-DEVICENAME-FILE&#62;"
 </pre>
 
 ## Example
@@ -141,10 +139,11 @@ services:
     volumes:
       - "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
       - "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" # optional
+    environment:
+      - "JD_DEVICENAME=<b>JDownloader</b>" # optional
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
-        - JD_DEVICENAME # optional
     ports:
       - "<b>3129</b>:3129" # optional
 
@@ -153,8 +152,6 @@ secrets:
         file: "<b>/hdd/JDownloader/secrets/JD_EMAIL.txt</b>" # Put your email in this file
     JD_PASSWORD:
         file: "<b>/hdd/JDownloader/secrets/JD_PASSWORD.txt</b>" # Put your password in this file
-    JD_DEVICENAME: # optional
-        file: "<b>/hdd/JDownloader/secrets/JD_DEVICENAME.txt</b>" # Put your device name in this file
 </pre>
 
 # Guides
