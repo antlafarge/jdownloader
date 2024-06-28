@@ -116,7 +116,6 @@ services:
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
-        - JD_DEVICENAME # optional
     ports:
       - "<b>&#60;PORT&#62;</b>:3129" # optional
 
