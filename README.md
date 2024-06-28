@@ -141,10 +141,6 @@ services:
     volumes:
       - "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
       - "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" # optional
-    environment:
-      - "JD_EMAIL=<b>my@email.fr</b>" # optional (better to use secrets)
-      - "JD_PASSWORD=<b>MyGreatPassword</b>" # optional (better to use secrets)
-      - "JD_DEVICENAME=<b>JD-DOCKER</b>" # optional (better to use secrets)
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
@@ -154,11 +150,11 @@ services:
 
 secrets:
     JD_EMAIL:
-        file: "/hdd/JDownloader/secrets/JD_EMAIL.txt"
+        file: "/hdd/JDownloader/secrets/JD_EMAIL.txt" # Put your email in this file
     JD_PASSWORD:
-        file: "/hdd/JDownloader/secrets/JD_PASSWORD.txt"
+        file: "/hdd/JDownloader/secrets/JD_PASSWORD.txt" # Put your password in this file
     JD_DEVICENAME: # optional
-        file: "/hdd/JDownloader/secrets/JD_DEVICENAME.txt"
+        file: "/hdd/JDownloader/secrets/JD_DEVICENAME.txt" # Put your device name in this file
 </pre>
 
 # Guides
