@@ -150,11 +150,11 @@ services:
 
 secrets:
     JD_EMAIL:
-        file: "/hdd/JDownloader/secrets/JD_EMAIL.txt" # Put your email in this file
+        file: "<b>/hdd/JDownloader/secrets/JD_EMAIL.txt</b>" # Put your email in this file
     JD_PASSWORD:
-        file: "/hdd/JDownloader/secrets/JD_PASSWORD.txt" # Put your password in this file
+        file: "<b>/hdd/JDownloader/secrets/JD_PASSWORD.txt</b>" # Put your password in this file
     JD_DEVICENAME: # optional
-        file: "/hdd/JDownloader/secrets/JD_DEVICENAME.txt" # Put your device name in this file
+        file: "<b>/hdd/JDownloader/secrets/JD_DEVICENAME.txt</b>" # Put your device name in this file
 </pre>
 
 # Guides
