@@ -47,10 +47,6 @@ if [ -f "/run/secrets/JD_PASSWORD" ]; then
     JD_PASSWORD=$(cat /run/secrets/JD_PASSWORD)
 fi
 
-if [ -f "/run/secrets/JD_DEVICENAME" ]; then
-    JD_DEVICENAME=$(cat /run/secrets/JD_DEVICENAME)
-fi
-
 # Check environment variables
 
 log "JAVA options = \"$JAVA_OPTIONS\""
