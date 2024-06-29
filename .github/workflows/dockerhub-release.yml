@@ -26,18 +26,28 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: alpine-${{ matrix.openjdkVersion }}, ubuntu-${{ matrix.openjdkVersion }}, ${{ matrix.openjdkVersion }}
+      - name: Re-tag dev images
         run: |
-          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-${{ matrix.openjdkVersion }}
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-${{ matrix.openjdkVersion }} -t ${{ env.IMAGE_NAME }}:alpine-${{ matrix.openjdkVersion }}
-          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-${{ matrix.openjdkVersion }}
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-${{ matrix.openjdkVersion }} -t ${{ env.IMAGE_NAME }}:ubuntu-${{ matrix.openjdkVersion }}
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-${{ matrix.openjdkVersion }} -t ${{ env.IMAGE_NAME }}:${{ matrix.openjdkVersion }}
-      - name: alpine, ubuntu, latest
-        if: ${{ matrix.openjdkVersion == 'openjdk21' }}
-        run: |
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-${{ matrix.openjdkVersion }} -t ${{ env.IMAGE_NAME }}:alpine
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-${{ matrix.openjdkVersion }} -t ${{ env.IMAGE_NAME }}:ubuntu
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-${{ matrix.openjdkVersion }} -t ${{ env.IMAGE_NAME }}:latest
+          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 -t ${{ env.IMAGE_NAME }}:alpine-openjdk8
+          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk8
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8 -t ${{ env.IMAGE_NAME }}:openjdk8
+
+          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 -t ${{ env.IMAGE_NAME }}:alpine-openjdk17
+          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk17
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 -t ${{ env.IMAGE_NAME }}:openjdk17
+
+          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine-openjdk21
+          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk21
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:openjdk21
+          
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:latest
       - name: Logout from Docker Hub
         run: docker logout
