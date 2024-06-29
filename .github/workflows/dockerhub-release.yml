@@ -12,9 +12,6 @@ concurrency:
 
 jobs:
   Release:
-    strategy:
-      matrix:
-        openjdkVersion: [openjdk8, openjdk17, openjdk21]
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -45,7 +42,7 @@ jobs:
           docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:openjdk21
-          
+
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:latest
