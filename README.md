@@ -159,7 +159,7 @@ docker run -d \
 ## Setup
 
 - Go to [my.jdownloader.org](https://my.jdownloader.org) and create an account.
-- If you want to run the image as an unprivileged user, use the `user` parameter and check the access permissions of the directories you mount as volumes
+- If you want to run the container as an unprivileged user, use the `user` parameter and check the access permissions of the directories you mount as volumes
     - Create the downloads directory : `mkdir /path/to/jdownloader/downloads/`
     - Setup the user and group owners : `sudo chown -R 1000:100 /path/to/jdownloader/downloads/`
         - You can get your User ID (UID) by using : `id -u`
@@ -227,9 +227,9 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
 
 ## Files permissions issue
 
-Check your user can read and write the directories you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).  
+Check the user you use to run the container (with `user` parameter) can read and write the directories you created and you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).  
 Read carefully the [Setup guide](https://github.com/antlafarge/jdownloader#setup) and follow the steps.  
-Or run the container as root (remove `user` option).
+Or run the container as root (remove `user` parameter).
 
 ## Armhf libseccomp2 issue
 
@@ -246,7 +246,7 @@ sudo apt install -t buster-backports libseccomp2
 
 ## Docker privileges
 
-If nothing worked and many internal commands fail, your container may lack some privileges and you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
+If many internal commands fail, your container may lack some privileges and you can try the [--privileged](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) flag.
 
 ## Nothing worked / another issue
 
