@@ -26,7 +26,7 @@ You can send feedback and discuss the project in the [github discussions](https:
 - [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8)
 - [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) (use this tag for architectures **linux/386** and **linux/arm/v6**)
 
-# [Docker Compose)](https://docs.docker.com/compose)
+# [Docker Compose](https://docs.docker.com/compose)
 
 <pre>
 services:
@@ -59,6 +59,33 @@ secrets:
         file: "<b>&#60;JD-PASSWORD-FILE&#62;</b>" # Put your password in this file
 </pre>
 
+<details>
+<summary>See example</summary>
+<pre>
+services:
+  jdownloader:
+    image: antlafarge/jdownloader<b>:latest</b>
+    container_name: <b>jdownloader</b>
+    restart: <b>on-failure:10</b>
+    user: <b>1000:100</b>
+    volumes:
+      - "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
+      - "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/"
+    environment:
+      - "JD_DEVICENAME=<b>JDownloader</b>"
+    secrets:
+        - JD_EMAIL
+        - JD_PASSWORD
+    ports:
+      - "<b>3129</b>:3129"
+secrets:
+    JD_EMAIL:
+        file: "<b>/hdd/JDownloader/secrets/JD_EMAIL.txt</b>"
+    JD_PASSWORD:
+        file: "<b>/hdd/JDownloader/secrets/JD_PASSWORD.txt</b>"
+</pre>
+</details>
+
 ## Parameters
 
 Name | Type | Description | Optional | Default
@@ -81,35 +108,11 @@ Name | Type | Description | Optional | Default
 **`<LOG-FILE>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Write JDownloader logs from `java` command in a file.<br>You should use the volume parameter **`<LOGS-PATH>`** to access these log files from the host machine.<br>Useful if you want to investigate any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"`. | Not recommended | `/dev/null`
 **`<PORT>`** | [Port](https://docs.docker.com/reference/cli/docker/container/run/#publish) | Network port used for Direct connection mode. | Optional | Not exposed
 
-## Example
+# Docker run
 
-<pre>
-services:
-  jdownloader:
-    image: antlafarge/jdownloader<b>:latest</b>
-    container_name: <b>jdownloader</b>
-    restart: <b>on-failure:10</b>
-    user: <b>1000:100</b>
-    volumes:
-      - "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
-      - "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/"
-    environment:
-      - "JD_DEVICENAME=<b>JDownloader</b>"
-    secrets:
-        - JD_EMAIL
-        - JD_PASSWORD
-    ports:
-      - "<b>3129</b>:3129"
-
-secrets:
-    JD_EMAIL:
-        file: "<b>/hdd/JDownloader/secrets/JD_EMAIL.txt</b>"
-    JD_PASSWORD:
-        file: "<b>/hdd/JDownloader/secrets/JD_PASSWORD.txt</b>"
-</pre>
-
-# [Docker run](https://docs.docker.com/engine/reference/run)
-
+<details>
+<summary>See Docker run</summary>
+[Documentation](https://docs.docker.com/engine/reference/run)
 <pre>
 docker run -d &#92;  
         --name <b>&#60;CONTAINER-NAME&#62;</b> &#92;  
@@ -129,6 +132,23 @@ docker run -d &#92;
 </pre>
 
 *Note : Parameters indented twice are optional.*
+
+Example :
+
+<pre>
+docker run -d \
+        --name <b>jdownloader</b> \
+        --restart <b>on-failure:10</b> \
+        --user <b>1000:100</b> \
+    -v "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/" \
+        -v "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" \
+    -e "JD_EMAIL=<b>my@email.fr</b>" \
+    -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
+        -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
+        -p <b>3129</b>:3129 \
+    antlafarge/jdownloader:<b>latest</b>
+</pre>
+</details>
 
 # Guides
 
