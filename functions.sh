@@ -90,17 +90,17 @@ handleSignal()
 # Usage : replaceJsonValue file field value
 replaceJsonValue()
 {
-    file=$1
-    field=$(printf "%s" "$2" | sed -e 's/\\/\\\\/g' -e 's/[]\/$*.^[]/\\&/g') # this field will be compared to a value from a json file, so we need to double escape the backslashes \\\\    And this field will be used in a sed regex, so we escape regex special characters ]\/$*.^[
-    newValue=$(printf "%s" "$3" | sed -e 's/[\/&]/\\&/g' -e 's/"/\\\\"/g') # this value will be used in a sed replace, so we escape replace special characters \/&    And this value will be stored in a json file, so finally we double escape the quotes \\\\"
+    replaceJsonValue_file=$1
+    replaceJsonValue_field=$(printf "%s" "$2" | sed -e 's/\\/\\\\/g' -e 's/[]\/$*.^[]/\\&/g') # this field will be compared to a value from a json file, so we need to double escape the backslashes \\\\    And this field will be used in a sed regex, so we escape regex special characters ]\/$*.^[
+    replaceJsonValue_newValue=$(printf "%s" "$3" | sed -e 's/[\/&]/\\&/g' -e 's/"/\\\\"/g') # this value will be used in a sed replace, so we escape replace special characters \/&    And this value will be stored in a json file, so finally we double escape the quotes \\\\"
 
-    fieldPart="\($field\)" # match the field
+    fieldPart="\($replaceJsonValue_field\)" # match the field
     valuePart="\([^\\\"]\|\\\\.\)*" # match the value. This looks complicated because it can contain escaped quotes \" because of json format.
 
     search="\"$fieldPart\"\s*:\s*\"$valuePart\""
-    replace="\"\1\":\"$newValue\""
+    replace="\"\1\":\"$replaceJsonValue_newValue\""
 
-    sed -i "s/$search/$replace/g" $file
+    sed -i "s/$search/$replace/g" $replaceJsonValue_file
     sedExitCode=$?
 
     if [ $sedExitCode -ne 0 ]; then
@@ -112,6 +112,10 @@ replaceJsonValue()
 # Setup JDownloader email, password and devicename
 setup()
 {
+    setup_email="$1"
+    setup_password="$2"
+    setup_devicename="$3"
+
     cfgDir="./cfg/"
 
     # If JDownloader cfg directory does not exist
@@ -150,18 +154,18 @@ setup()
         fi
     fi
 
-    if [ -n "$email" ]; then
+    if [ -n "$setup_email" ]; then
         log "Replace JDownloader email in myJDownloader settings file"
-        replaceJsonValue $myJDownloaderSettingsFile "email" "$email"
+        replaceJsonValue $myJDownloaderSettingsFile "email" "$setup_email"
     fi
 
-    if [ -n "$password" ]; then
+    if [ -n "$setup_password" ]; then
         log "Replace JDownloader password in myJDownloader settings file"
-        replaceJsonValue $myJDownloaderSettingsFile "password" "$password"
+        replaceJsonValue $myJDownloaderSettingsFile "password" "$setup_password"
     fi
 
-    if [ -n "$devicename" ]; then
+    if [ -n "$setup_devicename" ]; then
         log "Replace JDownloader devicename in myJDownloader settings file"
-        replaceJsonValue $myJDownloaderSettingsFile "devicename" "$devicename"
+        replaceJsonValue $myJDownloaderSettingsFile "devicename" "$setup_devicename"
     fi
 }

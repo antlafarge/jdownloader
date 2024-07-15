@@ -66,10 +66,23 @@ if [ -n "$UMASK" ]; then
     umask $UMASK
 fi
 
+group "Setup JDownloader"
+setup "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
+setupExitCode=$?
+if [ $setupExitCode -ne 0 ]; then
+    groupEnd
+    fatal $setupExitCode "setup.sh exited with code \"$setupExitCode\""
+fi
+groupEnd
+
+unset JD_EMAIL
+unset JD_PASSWORD
+unset JD_DEVICENAME
+
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
 
-group "Verify $JDownloaderJarFile"
+group "Check \"$JDownloaderJarFile\""
 
 # Check JDownloader application integrity
 unzip -t $JDownloaderJarFile &> /dev/null
@@ -106,19 +119,6 @@ if [ ! -f "./$JDownloaderJarFile" ]; then
 fi
 
 groupEnd
-
-group "Setup"
-setup "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
-setupExitCode=$?
-if [ $setupExitCode -ne 0 ]; then
-    groupEnd
-    fatal $setupExitCode "setup.sh exited with code \"$setupExitCode\""
-fi
-groupEnd
-
-unset JD_EMAIL
-unset JD_PASSWORD
-unset JD_DEVICENAME
 
 # Request eventscripter install
 mkdir -p ./update/versioninfo/JD
