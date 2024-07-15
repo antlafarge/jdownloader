@@ -9,7 +9,7 @@ trap "handleSignal 1" SIGHUP
 trap "handleSignal 2" SIGINT
 trap "handleSignal 15" SIGTERM
 
-group "[CONTAINER STARTED]"
+group "CONTAINER STARTED"
 
 # Detect OS (ubuntu or alpine)
 
