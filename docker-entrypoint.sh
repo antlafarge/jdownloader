@@ -5,63 +5,61 @@ set +H
 
 source functions.sh
 
-handleSignal()
-{
-    handleSignal_signalCode=$1
-    log "Kill signal $handleSignal_signalCode received"
-    if [ -n "$pid" ]; then # If java process found
-        stop=true
-        killProcess $pid
-    else
-        log "________________________________________ CONTAINER KILLED __________________________________________"
-        exit $((128 + $handleSignal_signalCode))
-    fi
-}
 trap "handleSignal 1" SIGHUP
 trap "handleSignal 2" SIGINT
 trap "handleSignal 15" SIGTERM
 
-log "________________________________________ CONTAINER STARTED _________________________________________"
+group "[CONTAINER STARTED]"
 
 # Detect OS (ubuntu or alpine)
+
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=\"(.+)\"$/\1/p")
 log "OS = \"$OS_prettyName\""
 
-# JAVA version
+# JAVA
 
-if [ "$OS" = "alpine" ]; then
-    JAVA_VERSION="$(apk -vv info | grep "openjdk.*jre" | cut -d" " -f1)"
-else
+if [ "$OS" = "ubuntu" ]; then
     JAVA_VERSION="$(dpkg -l | grep "openjdk.*jre" | cut -d" " -f3,4)"
+else
+    JAVA_VERSION="$(apk -vv info | grep "openjdk.*jre" | cut -d" " -f1)"
 fi
+
 log "JAVA version = \"$JAVA_VERSION\""
 
-# Read secrets from files
+if [ -n "$JAVA_OPTIONS" ]; then
+    log "JAVA options = \"$JAVA_OPTIONS\""
+fi
+
+# Retrieve JD_EMAIL
 
 if [ -f "/run/secrets/JD_EMAIL" ]; then
     JD_EMAIL=$(cat /run/secrets/JD_EMAIL)
+elif [ -z "$JD_EMAIL" ]; then
+    log "WARNING" "Secret \"JD_EMAIL\" not found, use environment variable"
+else
+    log "WARNING" "\"JD_EMAIL\" not found"
 fi
+
+# Retrieve JD_PASSWORD
 
 if [ -f "/run/secrets/JD_PASSWORD" ]; then
     JD_PASSWORD=$(cat /run/secrets/JD_PASSWORD)
+elif [ -z "$JD_PASSWORD" ]; then
+    log "WARNING" "Secret \"JD_PASSWORD\" not found, use environment variable"
+else
+    log "WARNING" "\"JD_PASSWORD\" not found"
 fi
 
-# Check environment variables
+# Rerieve JD_DEVICENAME
 
-log "JAVA options = \"$JAVA_OPTIONS\""
-
-if [ -z "$JD_EMAIL" ]; then
-    log "WARNING" "'JD_EMAIL' Secret file or environment variable is not found"
-fi
-
-if [ -z "$JD_PASSWORD" ]; then
-    log "WARNING" "'JD_PASSWORD' Secret file or environment variable is not found"
-fi
-
-if [ -z "$JD_DEVICENAME" ]; then
+if [ -f "/run/secrets/JD_DEVICENAME" ]; then
+    JD_DEVICENAME=$(cat /run/secrets/JD_DEVICENAME)
+elif [ -z "$JD_DEVICENAME" ]; then
     JD_DEVICENAME=$(uname -n)
 fi
+
+# UMASK
 
 if [ -n "$UMASK" ]; then
     log "Apply umask $UMASK"
@@ -70,12 +68,12 @@ fi
 
 JDownloaderJarFile="JDownloader.jar"
 JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
-JDownloaderPidFile="JDownloader.pid"
+
+group "Verify $JDownloaderJarFile"
 
 # Check JDownloader application integrity
 unzip -t $JDownloaderJarFile &> /dev/null
 unzipExitCode=$?
-
 if [ "$unzipExitCode" -ne 0 ]; then
     log "Delete any existing JDownloader installation files"
     rm -f -r $JDownloaderJarFile Core.jar ./tmp ./update
@@ -89,7 +87,7 @@ if [ ! -f "./$JDownloaderJarFile" ]; then
     curlExitCode=$?
 
     if [ $curlExitCode -ne 0 ]; then
-        log "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
+        log "$JDownloaderJarFile download failed: curl exited with code \"$curlExitCode\""
         
         # If https download failed, we try the http link
         if [ ! -f "./$JDownloaderJarFile" ]; then
@@ -99,18 +97,24 @@ if [ ! -f "./$JDownloaderJarFile" ]; then
             curlExitCode=$?
 
             if [ $curlExitCode -ne 0 ]; then
-                fatal "$JDownloaderJarFile download failed: curl exited with code '$curlExitCode'"
+                groupEnd
+                groupEnd
+                fatal $curlExitCode "$JDownloaderJarFile download failed: curl exited with code \"$curlExitCode\""
             fi
         fi
     fi
 fi
 
-./setup.sh "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
-setupShExitCode=$?
+groupEnd
 
-if [ $setupShExitCode -ne 0 ]; then
-    fatal "setup.sh exited with code '$setupShExitCode'"
+group "Setup"
+./setup.sh "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
+setupExitCode=$?
+if [ $setupExitCode -ne 0 ]; then
+    groupEnd
+    fatal $setupExitCode "setup.sh exited with code \"$setupExitCode\""
 fi
+groupEnd
 
 unset JD_EMAIL
 unset JD_PASSWORD
@@ -118,7 +122,7 @@ unset JD_DEVICENAME
 
 # Request eventscripter install
 mkdir -p ./update/versioninfo/JD
-echo '["eventscripter"]' > ./update/versioninfo/JD/extensions.requestedinstalls.json
+echo "["eventscripter"]" > ./update/versioninfo/JD/extensions.requestedinstalls.json
 
 # Put setup auto-update script
 autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
@@ -130,7 +134,7 @@ if [ ! -f "./cfg/$autoUpdateEventScripterScript" ]; then
     cp "./$autoUpdateEventScripterScript" "./cfg/$autoUpdateEventScripterScript"
 fi
 
-log "Start JDownloader"
+group "Start JDownloader"
 
 # Create logs dir if needed
 if [ ! -d "/jdownloader/logs/" ]; then
@@ -141,6 +145,7 @@ fi
 java $JAVA_OPTIONS -Djava.awt.headless=true -jar $JDownloaderJarFile &> "$LOG_FILE" &
 pid=$!
 lastPid=""
+JDownloaderPidFile="JDownloader.pid"
 
 while [ -n "$pid" ]; do
     jdrev=$(cat update/versioninfo/JD/rev 2> /dev/null)
@@ -157,12 +162,16 @@ while [ -n "$pid" ]; do
 
     lastPid="$pid"
 
-    # Get the written JDownloader PID or another running Java PID
+    # Get the written JDownloader PID or another running java PID
     pid=$(pgrep -L -F $JDownloaderPidFile 2> /dev/null || pgrep -o java)
 done
 
 log "JDownloader stopped"
 
-log "________________________________________ CONTAINER STOPPED _________________________________________"
+groupEnd
+
+groupEnd
+
+log "CONTAINER STOPPED"
 
 exit $exitCode

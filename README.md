@@ -32,31 +32,34 @@ You can send feedback and discuss the project in the [github discussions](https:
 services:
   jdownloader:
     image: antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
-    container_name: <b>&#60;CONTAINER-NAME&#62;</b> # optional
-    restart: <b>&#60;RESTART&#62;</b> # optional
-    user: <b>&#60;UID&#62;:&#60;GID&#62;</b> # optional
+    container_name: <b>&#60;CONTAINER-NAME&#62;</b> # Optional
+    restart: <b>&#60;RESTART&#62;</b> # Optional
+    user: <b>&#60;UID&#62;:&#60;GID&#62;</b> # Optional
     volumes:
       - "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads/"
-      - "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg/" # optional
-      - "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs/" # optional
+      - "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg/" # Optional
+      - "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs/" # Optional
     environment:
-      - "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" # optional (better to use secrets)
-      - "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" # optional (better to use secrets)
-      - "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" # optional
-      - "UMASK=<b>&#60;UMASK&#62;</b>" # optional
-      - "JAVA_OPTIONS=<b>&#60;JAVA-OPTIONS&#62;</b>" # optional
-      - "LOG_FILE=<b>&#60;LOG-FILE&#62;</b>" # optional
+      - "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" # Optional (better to use secrets)
+      - "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" # Optional (better to use secrets)
+      - "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" # Optional
+      - "UMASK=<b>&#60;UMASK&#62;</b>" # Optional
+      - "JAVA_OPTIONS=<b>&#60;JAVA-OPTIONS&#62;</b>" # Optional
+      - "LOG_FILE=<b>&#60;LOG-FILE&#62;</b>" # Optional
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
+        - JD_DEVICENAME # Optional
     ports:
-      - "<b>&#60;PORT&#62;</b>:3129" # optional
+      - "<b>&#60;PORT&#62;</b>:3129" # Optional
 
 secrets:
     JD_EMAIL:
-        file: "<b>&#60;JD-EMAIL-FILE&#62;</b>" # Put your email in this file
+        file: "<b>&#60;JD-EMAIL-FILE&#62;</b>" # Put your myJD email in this file
     JD_PASSWORD:
-        file: "<b>&#60;JD-PASSWORD-FILE&#62;</b>" # Put your password in this file
+        file: "<b>&#60;JD-PASSWORD-FILE&#62;</b>" # Put your myJD password in this file
+    JD_DEVICENAME: # Optional
+        file: "<b>&#60;JD-DEVICENAME-FILE&#62;</b>" # Put your myJD device name in this file
 </pre>
 
 <details>
@@ -71,11 +74,10 @@ services:
     volumes:
       - "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
       - "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/"
-    environment:
-      - "JD_DEVICENAME=<b>JDownloader</b>"
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
+        - JD_DEVICENAME
     ports:
       - "<b>3129</b>:3129"
 secrets:
@@ -83,6 +85,8 @@ secrets:
         file: "<b>/hdd/JDownloader/secrets/JD_EMAIL.txt</b>"
     JD_PASSWORD:
         file: "<b>/hdd/JDownloader/secrets/JD_PASSWORD.txt</b>"
+    JD_DEVICENAME:
+        file: "<b>/hdd/JDownloader/secrets/JD_DEVICENAME.txt</b>"
 </pre>
 </details>
 
@@ -100,6 +104,7 @@ Name | Type | Description | Optional | Default
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where the JDownloader log files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Not recommended | In container
 **`<JD-EMAIL-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) e-mail is saved. | **REQUIRED** |
 **`<JD-PASSWORD-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) password is saved. | **REQUIRED** |
+**`<JD-DEVICENAME-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) device name is saved. | Optional | (hostname)
 **`<JAVA-OPTIONS>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional | Empty
 **`<UMASK>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Change the *umask*. | Optional | No change
 **`<JD-DEVICENAME>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional | Hostname
@@ -165,6 +170,7 @@ docker run -d \
     - Do the same for the secrets directory (`/path/to/jdownloader/secrets/`)
       - And create the secret file for your e-mail : `echo 'my@email.fr' > /path/to/jdownloader/secrets/JD_EMAIL.txt`
       - And create the secret file for your password : `echo 'MyGreatPassword' > /path/to/jdownloader/secrets/JD_PASSWORD.txt`
+      - And create the secret file for your device name : `echo 'JD-DOCKER' > /path/to/jdownloader/secrets/JD_DEVICENAME.txt`
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
     - You can check the container logs : `docker logs --follow --tail 100 jdownloader` (`CTRL + C` to quit)
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
