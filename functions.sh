@@ -20,7 +20,7 @@ group()
 # Decrement indent
 groupEnd()
 {
-    ((logIndent>0 ? logIndent-- : logIndent=0))
+    ((logIndent>0 ? logIndent-- : (logIndent=0)))
 }
 
 # Reset indent
