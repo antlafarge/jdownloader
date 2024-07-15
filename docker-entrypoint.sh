@@ -108,7 +108,7 @@ fi
 groupEnd
 
 group "Setup"
-./setup.sh "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
+setup "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
 setupExitCode=$?
 if [ $setupExitCode -ne 0 ]; then
     groupEnd
