@@ -159,18 +159,18 @@ docker run -d \
 ## Setup
 
 - Go to [my.jdownloader.org](https://my.jdownloader.org) and create an account.
-- If you want to run the image as an unprivileged user, check the permissions of the directories you mount as volumes, and use the `user` parameter
+- If you want to run the image as an unprivileged user, use the `user` parameter and check the access permissions of the directories you mount as volumes
     - Create the downloads directory : `mkdir /path/to/jdownloader/downloads/`
     - Setup the user and group owners : `sudo chown -R 1000:100 /path/to/jdownloader/downloads/`
         - You can get your User ID (UID) by using : `id -u`
         - You can get your User Group ID (GID) by using : `id -g`
-        - I recommend to use `100` as GID (`users` group), because every users should be in this group, and it will be easier to manage multi-users privileges.
-    - Setup the access rights : `sudo chmod -R 770 /path/to/jdownloader/downloads/`
-    - Do the same for the config directory (`/path/to/jdownloader/cfg/`)
-    - Do the same for the secrets directory (`/path/to/jdownloader/secrets/`)
-      - And create the secret file for your e-mail : `echo 'my@email.fr' > /path/to/jdownloader/secrets/JD_EMAIL.txt`
-      - And create the secret file for your password : `echo 'MyGreatPassword' > /path/to/jdownloader/secrets/JD_PASSWORD.txt`
-      - And create the secret file for your device name : `echo 'JD-DOCKER' > /path/to/jdownloader/secrets/JD_DEVICENAME.txt`
+            - I recommend to use `100` as GID (`users` group), because every users should be in this group, and it will be easier to manage multi-users privileges.
+    - Setup the downloads directory access permissions : `sudo chmod -R 770 /path/to/jdownloader/downloads/`
+    - Setup the config directory access permissions : `sudo chmod -R 770 /path/to/jdownloader/cfg/`
+    - Setup the secrets directory access permissions : `sudo chmod -R 770 /path/to/jdownloader/secrets/`
+        - Create the secret file for your JD e-mail : `echo 'my@email.fr' > /path/to/jdownloader/secrets/JD_EMAIL.txt`
+        - Create the secret file for your JD password : `echo 'MyGreatPassword' > /path/to/jdownloader/secrets/JD_PASSWORD.txt`
+        - Create the secret file for your JD device name : `echo 'JD-DOCKER' > /path/to/jdownloader/secrets/JD_DEVICENAME.txt`
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
     - You can check the container logs : `docker logs --follow --tail 100 jdownloader` (`CTRL + C` to quit)
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
@@ -182,18 +182,15 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
 
 ## Update the image
 
-- [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method :
-    - Stop the current container : `docker stop jdownloader`
-    - Remove the current container : `docker rm jdownloader`
-    - Update the image : `docker pull antlafarge/jdownloader:latest`
-    - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`
-    - Restart the container : `docker start jdownloader`
 - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method :
-    - Stop the current container : `docker compose stop jdownloader`
-    - Remove the current container : `docker compose rm -f jdownloader`
     - Update the image : `docker compose pull jdownloader`
-    - Remove the old untagged images : `docker rmi $(docker images --filter "dangling=true" -q --no-trunc)`
-    - Restart the container : `docker compose up -d`
+    - Recreate the container : `docker compose up --force-recreate -d jdownloader`
+    - Remove the old untagged images : `docker image prune -f`
+- [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method :
+    - Update the image : `docker pull antlafarge/jdownloader:latest`
+    - Remove the current container : `docker rm -f jdownloader`
+    - Start the container : `docker run ...`
+    - Remove the old untagged images : `docker image prune -f`
 
 ## Change your email or password
 
@@ -201,7 +198,7 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
 - If you started the container by setting the email and password environment variables :
   - You must follow the [Update the image](https://github.com/antlafarge/jdownloader#update-the-image) guide by setting the new email or password on the final step.
 - If you started the container without setting the email and password environment variables :
-    - Run the **setup** script in the running container : `docker exec jdownloader /jdownloader/setup.sh "my@email.fr" "MyNewPassword" "JD-DOCKER"`.
+    - Run the **setup.sh** script in the running container : `docker exec jdownloader /jdownloader/setup.sh "my@email.fr" "MyNewPassword" "JD-DOCKER"`.
     - Restart the container :
         - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method : `docker restart jdownloader`.
         - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method : `docker compose restart jdownloader`.

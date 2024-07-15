@@ -36,12 +36,8 @@ COPY docker-entrypoint.sh \
      org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
      ./
 
-RUN chmod 777 \
-        . \
-        docker-entrypoint.sh \
-        functions.sh \
-        setup.sh \
-        org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-        org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json
+RUN chown -R 1000:100 .
 
+RUN chmod -R 771 .
+     
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
