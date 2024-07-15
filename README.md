@@ -26,9 +26,7 @@ You can send feedback and discuss the project in the [github discussions](https:
 - [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8)
 - [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) (use this tag for architectures **linux/386** and **linux/arm/v6**)
 
-# Docker Compose
-
-[Docker Compose (official documentation)](https://docs.docker.com/compose)
+# [Docker Compose)](https://docs.docker.com/compose)
 
 <pre>
 services:
@@ -61,6 +59,28 @@ secrets:
         file: "<b>&#60;JD-PASSWORD-FILE&#62;</b>" # Put your password in this file
 </pre>
 
+## Parameters
+
+Name | Type | Description | Optional | Default
+---- | ---- | ----------- | -------- | -------
+**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#image-references) | Docker hub tag. | Optional | `latest`
+**`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/reference/cli/docker/container/run/#name) | Container name. | Recommended | Random
+**`<RESTART>`** | [Restart](https://docs.docker.com/reference/cli/docker/container/run/#restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Recommended | `no`
+**`<UID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner user ID of the files and directories created.<br>*Use the command `id -u` in your shell to get your current user id.* | Recommended | `0` (root)
+**`<GID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner group ID of the files and directories created.<br>*Use the command `id -g` in your shell to get your current groud id.* | Recommended | `0` (root)
+**`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where your downloads will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | **REQUIRED** |
+**`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where the JDownloader settings files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Recommended | In container
+**`<LOGS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where the JDownloader log files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Not recommended | In container
+**`<JD-EMAIL-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) e-mail is saved. | **REQUIRED** |
+**`<JD-PASSWORD-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) password is saved. | **REQUIRED** |
+**`<JAVA-OPTIONS>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional | Empty
+**`<UMASK>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Change the *umask*. | Optional | No change
+**`<JD-DEVICENAME>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional | Hostname
+**`<JD-EMAIL>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Your [myJDownloader](https://my.jdownloader.org) e-mail.<br>I recommend to use the docker secrets (cf. `<JD-EMAIL-FILE>`). | Not recommended |
+**`<JD-PASSWORD>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Your [myJDownloader](https://my.jdownloader.org) password.<br>I recommend to use the docker secrets (cf. `<JD-PASSWORD-FILE>`). | Not recommended |
+**`<LOG-FILE>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Write JDownloader logs from `java` command in a file.<br>You should use the volume parameter **`<LOGS-PATH>`** to access these log files from the host machine.<br>Useful if you want to investigate any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"`. | Not recommended | `/dev/null`
+**`<PORT>`** | [Port](https://docs.docker.com/reference/cli/docker/container/run/#publish) | Network port used for Direct connection mode. | Optional | Not exposed
+
 ## Example
 
 <pre>
@@ -88,31 +108,7 @@ secrets:
         file: "<b>/hdd/JDownloader/secrets/JD_PASSWORD.txt</b>"
 </pre>
 
-# Parameters
-
-Name | Type | Description | Optional | Default
----- | ---- | ----------- | -------- | -------
-**`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#image-references) | Docker hub tag. | Optional | `latest`
-**`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/reference/cli/docker/container/run/#name) | Container name. | Recommended | Random
-**`<RESTART>`** | [Restart](https://docs.docker.com/reference/cli/docker/container/run/#restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Recommended | `no`
-**`<UID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner user ID of the files and directories created.<br>*Use the command `id -u` in your shell to get your current user id.* | Recommended | `0` (root)
-**`<GID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner group ID of the files and directories created.<br>*Use the command `id -g` in your shell to get your current groud id.* | Recommended | `0` (root)
-**`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where your downloads will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | **REQUIRED** |
-**`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where the JDownloader settings files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Recommended | In container
-**`<LOGS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where the JDownloader log files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Not recommended | In container
-**`<JD-EMAIL-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) e-mail is saved. | **REQUIRED** |
-**`<JD-PASSWORD-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) password is saved. | **REQUIRED** |
-**`<JAVA-OPTIONS>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional | Empty
-**`<UMASK>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Change the *umask*. | Optional | No change
-**`<JD-DEVICENAME>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional | Hostname
-**`<JD-EMAIL>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Your [myJDownloader](https://my.jdownloader.org) e-mail.<br>I recommend to use the docker secrets (cf. `<JD-EMAIL-FILE>`). | Not recommended |
-**`<JD-PASSWORD>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Your [myJDownloader](https://my.jdownloader.org) password.<br>I recommend to use the docker secrets (cf. `<JD-PASSWORD-FILE>`). | Not recommended |
-**`<LOG-FILE>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Write JDownloader logs from `java` command in a file.<br>You should use the volume parameter **`<LOGS-PATH>`** to access these log files from the host machine.<br>Useful if you want to investigate any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"`. | Not recommended | `/dev/null`
-**`<PORT>`** | [Port](https://docs.docker.com/reference/cli/docker/container/run/#publish) | Network port used for Direct connection mode. | Optional | Not exposed
-
-# Docker run
-
-[docker run (official documentation)](https://docs.docker.com/engine/reference/run)
+# [Docker run](https://docs.docker.com/engine/reference/run)
 
 <pre>
 docker run -d &#92;  
