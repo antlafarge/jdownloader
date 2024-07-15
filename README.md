@@ -108,11 +108,10 @@ Name | Type | Description | Optional | Default
 **`<LOG-FILE>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Write JDownloader logs from `java` command in a file.<br>You should use the volume parameter **`<LOGS-PATH>`** to access these log files from the host machine.<br>Useful if you want to investigate any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"`. | Not recommended | `/dev/null`
 **`<PORT>`** | [Port](https://docs.docker.com/reference/cli/docker/container/run/#publish) | Network port used for Direct connection mode. | Optional | Not exposed
 
-# Docker run
+# [Docker run](https://docs.docker.com/engine/reference/run)
 
 <details>
 <summary>See Docker run</summary>
-[Documentation](https://docs.docker.com/engine/reference/run)
 <pre>
 docker run -d &#92;  
         --name <b>&#60;CONTAINER-NAME&#62;</b> &#92;  
