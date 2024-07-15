@@ -63,13 +63,12 @@ Name | Type | Description | Optional (default)
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where the JDownloader log files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Not recommended (in container)
 **`<JD-EMAIL>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Your [myJDownloader](https://my.jdownloader.org) e-mail.<br>But I recommend to use the docker secrets (cf. `<JD-EMAIL-FILE>`) | **REQUIRED**
 **`<JD-PASSWORD>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Your [myJDownloader](https://my.jdownloader.org) password.<br>But I recommend to use the docker secrets (cf. `<JD-PASSWORD-FILE>`) | **REQUIRED**
-**`<JD-DEVICENAME>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Device name in your [myJDownloader web interface](https://my.jdownloader.org).<br>But I recommend to use the docker secrets (cf. `<JD-DEVICENAME-FILE>`) | Optional (hostname)
+**`<JD-DEVICENAME>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Device name in your [myJDownloader web interface](https://my.jdownloader.org). | Optional (hostname)
 **`<JAVA-OPTIONS>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Java options.<br>*Use `-Xms128m -Xmx1g` to change initial and max Java heap size memory.* | Optional (empty)
 **`<UMASK>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Change the *umask*. | Optional (no change)
 **`<LOG-FILE>`** | [Env](https://docs.docker.com/reference/cli/docker/container/run/#env) | Write JDownloader logs from `java` command in a file.<br>You should create activate the volume parameter **`<LOGS-PATH>`** to access this log file from the host machine.<br>Useful if you have any issues with JDownloader.<br>Example : `"/jdownloader/logs/jd.docker.log"` | Optional (`/dev/null`)
 **`<JD-EMAIL-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) e-mail is saved. | **REQUIRED**
 **`<JD-PASSWORD-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) password is saved. | **REQUIRED**
-**`<JD-DEVICENAME-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) device name is saved. | Optional (hostname)
 **`<PORT>`** | [Port](https://docs.docker.com/reference/cli/docker/container/run/#publish) | Network port used for Direct connection mode. | Optional (not exposed)
 **`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#image-references) | Docker hub tag. | Optional (`latest`)
 
@@ -169,7 +168,6 @@ secrets:
     - Do the same for the secrets directory (`/path/to/jdownloader/secrets/`)
       - And create the secret file for your e-mail : `echo 'my@email.fr' > /path/to/jdownloader/secrets/JD_EMAIL.txt`
       - And create the secret file for your password : `echo 'MyGreatPassword' > /path/to/jdownloader/secrets/JD_PASSWORD.txt`
-      - And create the secret file for your device name : `echo 'JD-DOCKER' > /path/to/jdownloader/secrets/JD_DEVICENAME.txt`
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
     - You can check the container logs : `docker logs --follow --tail 100 jdownloader` (`CTRL + C` to quit)
 - Wait some minutes for JDownloader to update and be available in your [myJDownloader web interface](https://my.jdownloader.org).
