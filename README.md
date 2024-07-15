@@ -96,7 +96,7 @@ Name | Type | Description | Optional | Default
 ---- | ---- | ----------- | -------- | -------
 **`<TAG>`** | [Tag](https://docs.docker.com/engine/reference/run/#image-references) | Docker hub tag. | Optional | `latest`
 **`<CONTAINER-NAME>`** | [Name](https://docs.docker.com/reference/cli/docker/container/run/#name) | Container name. | Recommended | Random
-**`<RESTART>`** | [Restart](https://docs.docker.com/reference/cli/docker/container/run/#restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart JD`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Recommended | `no`
+**`<RESTART>`** | [Restart](https://docs.docker.com/reference/cli/docker/container/run/#restart) | Container restart policy.<br>*Use `on-failure` to have a correct behavior of `Restart`, `Close` and `Shutdown` buttons in the JDownloader settings.* | Recommended | `no`
 **`<UID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner user ID of the files and directories created.<br>*Use the command `id -u` in your shell to get your current user id.* | Recommended | `0` (root)
 **`<GID>`** | [User](https://docs.docker.com/engine/reference/run/#user) | Owner group ID of the files and directories created.<br>*Use the command `id -g` in your shell to get your current groud id.* | Recommended | `0` (root)
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where your downloads will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | **REQUIRED** |
