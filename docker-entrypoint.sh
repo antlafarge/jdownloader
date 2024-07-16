@@ -71,7 +71,7 @@ setup "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
 setupExitCode=$?
 if [ $setupExitCode -ne 0 ]; then
     groupEnd
-    fatal $setupExitCode "setup.sh exited with code \"$setupExitCode\""
+    fatal $setupExitCode "setup exited with code \"$setupExitCode\""
 fi
 groupEnd
 

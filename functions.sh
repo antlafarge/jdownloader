@@ -26,7 +26,7 @@ groupEnd()
 # Reset indent
 groupReset()
 {
-    ((logIndent=0))
+    logIndent=0
 }
 
 # Fatal error occured : log and exit
@@ -37,7 +37,7 @@ fatal()
 
     log "FATAL ERROR :" "$fatal_log"
     log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
-    groupEnd
+    groupReset
     log "CONTAINER TERMINATED"
     exit ${fatal_exitCode:-1}
 }
@@ -56,7 +56,7 @@ waitProcess()
             sleepExitCode=$?
 
             if [ $sleepExitCode -ne 0 ]; then
-                fatal "sleep exited with code \"$sleepExitCode\""
+                fatal $sleepExitCode "sleep exited with code \"$sleepExitCode\""
             fi
         done
     fi
@@ -80,7 +80,7 @@ handleSignal()
         stop=true
         killProcess $pid
     else
-        groupEnd
+        groupReset
         log "CONTAINER KILLED"
         exit $((128 + $handleSignal_signalCode))
     fi
@@ -105,7 +105,7 @@ replaceJsonValue()
 
     if [ $sedExitCode -ne 0 ]; then
         log "ERROR" "sed exited with code \"$sedExitCode\""
-        exit $sedExitCode
+        return $sedExitCode
     fi
 }
 
@@ -135,7 +135,7 @@ setup()
 
         if [ $printfExitCode -ne 0 ]; then
             log "ERROR" "printf exited with code '$printfExitCode'"
-            exit $printfExitCode
+            return $printfExitCode
         fi
     fi
 
@@ -150,7 +150,7 @@ setup()
 
         if [ $printfExitCode -ne 0 ]; then
             log "ERROR" "printf exited with code '$printfExitCode'"
-            exit $printfExitCode
+            return $printfExitCode
         fi
     fi
 
