@@ -25,17 +25,12 @@ RUN apk update \
         curl \
         ffmpeg \
         unzip \
-        openjdk8-jre
+        openjdk21-jre-headless --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/
 
 WORKDIR /jdownloader
 
-COPY docker-entrypoint.sh \
-     functions.sh \
-     setup.sh \
-     org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-     org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
-     ./
+COPY src .
 
-RUN chown -R 1000:100 . && chmod -R 775 .
+RUN chown -R 1000:100 . && chmod -R 777 .
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]

@@ -34,8 +34,9 @@ fatal()
 {
     fatal_exitCode="$1"
     fatal_log="$2"
+    fatal_log2="$3"
 
-    log "FATAL ERROR :" "$fatal_log"
+    log "FATAL ERROR :" "$fatal_log" "$fatal_log2"
     log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
     groupReset
     log "CONTAINER TERMINATED"
@@ -106,66 +107,5 @@ replaceJsonValue()
     if [ $sedExitCode -ne 0 ]; then
         log "ERROR" "sed exited with code \"$sedExitCode\""
         return $sedExitCode
-    fi
-}
-
-# Setup JDownloader email, password and devicename
-setup()
-{
-    setup_email="$1"
-    setup_password="$2"
-    setup_devicename="$3"
-
-    cfgDir="./cfg/"
-
-    # If JDownloader cfg directory does not exist
-    if [ ! -d $cfgDir ]; then
-        log "Create cfg directory"
-        mkdir -p cfg
-    fi
-
-    generalSettingsFile="${cfgDir}org.jdownloader.settings.GeneralSettings.json"
-
-    # If JDownloader general settings file doesn't exist
-    if [ ! -f $generalSettingsFile ]; then
-        log "Write JDownloader download path in settings file"
-
-        printf "{\n\t\"defaultdownloadfolder\":\"/jdownloader/downloads\"\n}" > $generalSettingsFile
-        printfExitCode=$?
-
-        if [ $printfExitCode -ne 0 ]; then
-            log "ERROR" "printf exited with code '$printfExitCode'"
-            return $printfExitCode
-        fi
-    fi
-
-    myJDownloaderSettingsFile="${cfgDir}org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json"
-
-    # If myJDownloader settings file doesn't exist
-    if [ ! -f $myJDownloaderSettingsFile ]; then
-        log "Write myJDownloader settings file"
-
-        printf "{\n\t\"email\":\"\",\n\t\"password\":\"\",\n\t\"devicename\":\"\",\n\t\"autoconnectenabledv2\":true\n}" > $myJDownloaderSettingsFile
-        printfExitCode=$?
-
-        if [ $printfExitCode -ne 0 ]; then
-            log "ERROR" "printf exited with code '$printfExitCode'"
-            return $printfExitCode
-        fi
-    fi
-
-    if [ -n "$setup_email" ]; then
-        log "Replace JDownloader email in myJDownloader settings file"
-        replaceJsonValue $myJDownloaderSettingsFile "email" "$setup_email"
-    fi
-
-    if [ -n "$setup_password" ]; then
-        log "Replace JDownloader password in myJDownloader settings file"
-        replaceJsonValue $myJDownloaderSettingsFile "password" "$setup_password"
-    fi
-
-    if [ -n "$setup_devicename" ]; then
-        log "Replace JDownloader devicename in myJDownloader settings file"
-        replaceJsonValue $myJDownloaderSettingsFile "devicename" "$setup_devicename"
     fi
 }

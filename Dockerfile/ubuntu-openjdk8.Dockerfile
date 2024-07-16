@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
 LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader" \
       github="https://github.com/antlafarge/jdownloader" \
@@ -18,24 +18,19 @@ ENV JD_EMAIL="" \
     JAVA_OPTIONS="" \
     UMASK=""
 
-RUN apk update \
- && apk -U upgrade \
- && apk add --no-cache \
-        bash \
+RUN apt-get update \
+ && apt-get upgrade -y \
+ && apt-get install -y --no-install-recommends \
         curl \
         ffmpeg \
         unzip \
-        openjdk17-jre-headless
+        openjdk-8-jre-headless \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader
 
-COPY docker-entrypoint.sh \
-     functions.sh \
-     setup.sh \
-     org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-     org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
-     ./
+COPY src .
 
-RUN chown -R 1000:100 . && chmod -R 775 .
+RUN chown -R 1000:100 . && chmod -R 777 .
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]

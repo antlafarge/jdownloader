@@ -24,18 +24,13 @@ RUN apt-get update \
         curl \
         ffmpeg \
         unzip \
-        openjdk-21-jre-headless \
+        openjdk-17-jre-headless \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader
 
-COPY docker-entrypoint.sh \
-     functions.sh \
-     setup.sh \
-     org.jdownloader.extensions.eventscripter.EventScripterExtension.json \
-     org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json \
-     ./
+COPY src .
 
-RUN chown -R 1000:100 . && chmod -R 775 .
+RUN chown -R 1000:100 . && chmod -R 777 .
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]

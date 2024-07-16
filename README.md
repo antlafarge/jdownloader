@@ -189,19 +189,14 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
 - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method :
     - Update the image : `docker pull antlafarge/jdownloader:latest`
     - Remove the current container : `docker rm -f jdownloader`
-    - Start the container : `docker run ...`
     - Remove the old untagged images : `docker image prune -f`
+    - Start the container : `docker run ...`
 
 ## Change your email or password
 
 - If you used the docker secrets, just change it in the secrets files and restart your docker container.
 - If you started the container by setting the email and password environment variables :
   - You must follow the [Update the image](https://github.com/antlafarge/jdownloader#update-the-image) guide by setting the new email or password on the final step.
-- If you started the container without setting the email and password environment variables :
-    - Run the **setup.sh** script in the running container : `docker exec jdownloader /jdownloader/setup.sh "my@email.fr" "MyNewPassword" "JD-DOCKER"`.
-    - Restart the container :
-        - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method : `docker restart jdownloader`.
-        - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method : `docker compose restart jdownloader`.
 
 ## Special characters in password
 

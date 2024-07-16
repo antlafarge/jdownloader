@@ -67,12 +67,66 @@ if [ -n "$UMASK" ]; then
 fi
 
 group "Setup JDownloader"
-setup "$JD_EMAIL" "$JD_PASSWORD" "$JD_DEVICENAME"
-setupExitCode=$?
-if [ $setupExitCode -ne 0 ]; then
-    groupEnd
-    fatal $setupExitCode "setup exited with code \"$setupExitCode\""
+
+cfgDir="./cfg/"
+
+# If JDownloader cfg directory does not exist
+if [ ! -d "$cfgDir" ]; then
+    log "Create cfg directory"
+    mkdir -p "$cfgDir"
 fi
+
+# Put setup auto-update script
+autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
+if [ ! -f "${cfgDir}${autoUpdateEventScripterSettings}" ]; then
+    cp "./$autoUpdateEventScripterSettings" "${cfg}${autoUpdateEventScripterSettings}"
+fi
+autoUpdateEventScripterScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
+if [ ! -f "${cfgDir}${autoUpdateEventScripterScript}" ]; then
+    cp "./$autoUpdateEventScripterScript" "${cfgDir}${autoUpdateEventScripterScript}"
+fi
+
+generalSettingsFileName="org.jdownloader.settings.GeneralSettings.json"
+generalSettingsFile="${cfgDir}${generalSettingsFileName}"
+
+# If JDownloader general settings file doesn't exist
+if [ ! -f $generalSettingsFile ]; then
+    log "Write JDownloader download path in settings file"
+    cp $generalSettingsFileName $generalSettingsFile
+    cpExitCode=$?
+    if [ $cpExitCode -ne 0 ]; then
+        fatal $cpExitCode "cp \"$generalSettingsFileName\" exited with code \"$cpExitCode\""
+    fi
+fi
+
+myJDownloaderSettingsFileName="org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json"
+myJDownloaderSettingsFile="${cfgDir}${myJDownloaderSettingsFileName}"
+
+# If myJDownloader settings file doesn't exist
+if [ ! -f $myJDownloaderSettingsFile ]; then
+    log "Write myJDownloader settings file"
+    cp myJDownloaderSettingsFileName $myJDownloaderSettingsFile
+    cpExitCode=$?
+    if [ $cpExitCode -ne 0 ]; then
+        fatal $cpExitCode "cp \"$myJDownloaderSettingsFileName\" exited with code \"$cpExitCode\""
+    fi
+fi
+
+if [ -n "$setup_email" ]; then
+    log "Replace JDownloader email in myJDownloader settings file"
+    replaceJsonValue $myJDownloaderSettingsFile "email" "$setup_email"
+fi
+
+if [ -n "$setup_password" ]; then
+    log "Replace JDownloader password in myJDownloader settings file"
+    replaceJsonValue $myJDownloaderSettingsFile "password" "$setup_password"
+fi
+
+if [ -n "$setup_devicename" ]; then
+    log "Replace JDownloader devicename in myJDownloader settings file"
+    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$setup_devicename"
+fi
+
 groupEnd
 
 unset JD_EMAIL
@@ -120,25 +174,11 @@ fi
 
 groupEnd
 
-# Request eventscripter install
-mkdir -p ./update/versioninfo/JD
-echo "["eventscripter"]" > ./update/versioninfo/JD/extensions.requestedinstalls.json
-
-# Put setup auto-update script
-autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
-if [ ! -f "./cfg/$autoUpdateEventScripterSettings" ]; then
-    cp "./$autoUpdateEventScripterSettings" "./cfg/$autoUpdateEventScripterSettings"
-fi
-autoUpdateEventScripterScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
-if [ ! -f "./cfg/$autoUpdateEventScripterScript" ]; then
-    cp "./$autoUpdateEventScripterScript" "./cfg/$autoUpdateEventScripterScript"
-fi
-
 group "Start JDownloader"
 
 # Create logs dir if needed
-if [ ! -d "/jdownloader/logs/" ]; then
-    mkdir -p "/jdownloader/logs/"
+if [ ! -d "./logs/" ]; then
+    mkdir -p "./logs/"
 fi
 
 # Start JDownloader in a background process
