@@ -17,7 +17,7 @@ OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_N
 log "OS = \"$OS_prettyName\""
 
 # Log user ID and group ID
-log "USER = \"${id -u}:${id -g}\""
+log "USER = \"$(id -u):$(id -g)\""
 
 # JAVA
 if [ "$OS" = "ubuntu" ]; then
