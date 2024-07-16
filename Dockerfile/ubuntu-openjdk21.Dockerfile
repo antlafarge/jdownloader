@@ -31,6 +31,6 @@ WORKDIR /jdownloader
 
 COPY src .
 
-RUN chown -R 1000:100 . && chmod -R 777 .
+RUN chown -R 1000:100 . && chmod 777 . && chmod 775 *.sh && chmod 774 *.json
 
 CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
