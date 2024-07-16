@@ -72,17 +72,19 @@ cfgDir="./cfg/"
 
 # If JDownloader cfg directory does not exist
 if [ ! -d "$cfgDir" ]; then
-    log "Create cfg directory"
+    log "Create directory \"$cfgDir\""
     mkdir -p "$cfgDir"
 fi
 
-# Put setup auto-update script
+# Enable auto-update
 autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
 if [ ! -f "${cfgDir}${autoUpdateEventScripterSettings}" ]; then
+    log "cp" "./$autoUpdateEventScripterSettings" "${cfg}${autoUpdateEventScripterSettings}"
     cp "./$autoUpdateEventScripterSettings" "${cfg}${autoUpdateEventScripterSettings}"
 fi
 autoUpdateEventScripterScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
 if [ ! -f "${cfgDir}${autoUpdateEventScripterScript}" ]; then
+    log "cp" "./$autoUpdateEventScripterScript" "${cfgDir}${autoUpdateEventScripterScript}"
     cp "./$autoUpdateEventScripterScript" "${cfgDir}${autoUpdateEventScripterScript}"
 fi
 
@@ -92,7 +94,7 @@ generalSettingsFile="${cfgDir}${generalSettingsFileName}"
 # If JDownloader general settings file doesn't exist
 if [ ! -f $generalSettingsFile ]; then
     log "Write JDownloader download path in settings file"
-    cp $generalSettingsFileName $generalSettingsFile
+    cp "./$generalSettingsFileName" "$generalSettingsFile"
     cpExitCode=$?
     if [ $cpExitCode -ne 0 ]; then
         fatal $cpExitCode "cp \"$generalSettingsFileName\" exited with code \"$cpExitCode\""
@@ -105,7 +107,7 @@ myJDownloaderSettingsFile="${cfgDir}${myJDownloaderSettingsFileName}"
 # If myJDownloader settings file doesn't exist
 if [ ! -f $myJDownloaderSettingsFile ]; then
     log "Write myJDownloader settings file"
-    cp myJDownloaderSettingsFileName $myJDownloaderSettingsFile
+    cp "./$myJDownloaderSettingsFileName" "$myJDownloaderSettingsFile"
     cpExitCode=$?
     if [ $cpExitCode -ne 0 ]; then
         fatal $cpExitCode "cp \"$myJDownloaderSettingsFileName\" exited with code \"$cpExitCode\""
@@ -178,6 +180,7 @@ group "Start JDownloader"
 
 # Create logs dir if needed
 if [ ! -d "./logs/" ]; then
+    log "Create directory \"./logs/\""
     mkdir -p "./logs/"
 fi
 
