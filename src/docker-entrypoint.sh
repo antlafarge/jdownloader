@@ -9,30 +9,28 @@ trap "handleSignal 1" SIGHUP
 trap "handleSignal 2" SIGINT
 trap "handleSignal 15" SIGTERM
 
-group "CONTAINER STARTED"
+group "Container started"
 
 # Detect OS (ubuntu or alpine)
-
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=\"(.+)\"$/\1/p")
 log "OS = \"$OS_prettyName\""
 
-# JAVA
+# Log user ID and group ID
+log "USER = \"${id -u}:${id -g}\""
 
+# JAVA
 if [ "$OS" = "ubuntu" ]; then
     JAVA_VERSION="$(dpkg -l | grep "openjdk.*jre" | cut -d" " -f3,4)"
 else
     JAVA_VERSION="$(apk -vv info | grep "openjdk.*jre" | cut -d" " -f1)"
 fi
-
 log "JAVA version = \"$JAVA_VERSION\""
-
 if [ -n "$JAVA_OPTIONS" ]; then
     log "JAVA options = \"$JAVA_OPTIONS\""
 fi
 
 # Retrieve JD_EMAIL
-
 if [ -f "/run/secrets/JD_EMAIL" ]; then
     JD_EMAIL=$(cat /run/secrets/JD_EMAIL)
 elif [ -z "$JD_EMAIL" ]; then
@@ -42,7 +40,6 @@ else
 fi
 
 # Retrieve JD_PASSWORD
-
 if [ -f "/run/secrets/JD_PASSWORD" ]; then
     JD_PASSWORD=$(cat /run/secrets/JD_PASSWORD)
 elif [ -z "$JD_PASSWORD" ]; then
@@ -52,7 +49,6 @@ else
 fi
 
 # Rerieve JD_DEVICENAME
-
 if [ -f "/run/secrets/JD_DEVICENAME" ]; then
     JD_DEVICENAME=$(cat /run/secrets/JD_DEVICENAME)
 elif [ -z "$JD_DEVICENAME" ]; then
@@ -60,7 +56,6 @@ elif [ -z "$JD_DEVICENAME" ]; then
 fi
 
 # UMASK
-
 if [ -n "$UMASK" ]; then
     log "Apply umask $UMASK"
     umask $UMASK
@@ -103,13 +98,9 @@ if [ ! -d "./logs/" ]; then
 fi
 
 installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.json" "./cfg/"
-
 installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json" "./cfg/"
-
 installFile "org.jdownloader.settings.GeneralSettings.json" "./cfg/"
-
 installFile "org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "./cfg/"
-
 installFile "extensions.requestedinstalls.json" "./update/versioninfo/JD/"
 
 if [ -n "$JD_EMAIL" ]; then
@@ -117,7 +108,7 @@ if [ -n "$JD_EMAIL" ]; then
     replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "email" "$JD_EMAIL"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
-        fatal $exitCode "Set JD email failed"
+        fatal $exitCode "Set JDownloader email failed"
     fi
 fi
 
@@ -126,7 +117,7 @@ if [ -n "$JD_PASSWORD" ]; then
     replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "password" "$JD_PASSWORD"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
-        fatal $exitCode "Set JD password failed"
+        fatal $exitCode "Set JDownloader password failed"
     fi
 fi
 
@@ -135,7 +126,7 @@ if [ -n "$JD_DEVICENAME" ]; then
     replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "devicename" "$JD_DEVICENAME"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
-        fatal $exitCode "Set JD device name failed"
+        fatal $exitCode "Set JDownloader device name failed"
     fi
 fi
 
@@ -175,9 +166,8 @@ done
 log "JDownloader stopped"
 
 groupEnd
-
 groupEnd
 
-log "CONTAINER STOPPED"
+log "Container stopped"
 
 exit $exitCode

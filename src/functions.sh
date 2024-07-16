@@ -38,7 +38,7 @@ fatal()
     log "FATAL ERROR :" "$log1" "$log2"
     log "Get more informations here : https://github.com/antlafarge/jdownloader#troubleshooting"
     groupReset
-    log "CONTAINER TERMINATED"
+    log "Container terminated"
     exit ${exitCode:-1}
 }
 
@@ -78,7 +78,7 @@ handleSignal()
         killProcess $pid
     else
         groupReset
-        log "CONTAINER KILLED"
+        log "Container killed"
         exit $((128 + $signalCode))
     fi
 }
