@@ -79,12 +79,10 @@ fi
 # Enable auto-update
 autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
 if [ ! -f "${cfgDir}${autoUpdateEventScripterSettings}" ]; then
-    log "cp" "./$autoUpdateEventScripterSettings" "${cfg}${autoUpdateEventScripterSettings}"
-    cp "./$autoUpdateEventScripterSettings" "${cfg}${autoUpdateEventScripterSettings}"
+    cp "./$autoUpdateEventScripterSettings" "${cfgDir}${autoUpdateEventScripterSettings}"
 fi
 autoUpdateEventScripterScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
 if [ ! -f "${cfgDir}${autoUpdateEventScripterScript}" ]; then
-    log "cp" "./$autoUpdateEventScripterScript" "${cfgDir}${autoUpdateEventScripterScript}"
     cp "./$autoUpdateEventScripterScript" "${cfgDir}${autoUpdateEventScripterScript}"
 fi
 
