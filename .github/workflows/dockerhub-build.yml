@@ -61,7 +61,7 @@ jobs:
       - name: ${{ matrix.name }}
         uses: docker/build-push-action@v6
         with:
-          file: ${{ matrix.file }}
+          file: Dockerfile/${{ matrix.file }}
           platforms: ${{ matrix.platforms }}
           tags: ${{ env.IMAGE_NAME }}:dev-${{ matrix.name }}
           push: true
