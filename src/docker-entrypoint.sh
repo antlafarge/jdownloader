@@ -66,6 +66,9 @@ if [ -n "$UMASK" ]; then
     umask $UMASK
 fi
 
+JDownloaderJarFile="JDownloader.jar"
+JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
+
 group "Check \"$JDownloaderJarFile\""
 
 # Check JDownloader application integrity
@@ -138,9 +141,6 @@ groupEnd
 unset JD_EMAIL
 unset JD_PASSWORD
 unset JD_DEVICENAME
-
-JDownloaderJarFile="JDownloader.jar"
-JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
 
 group "Start JDownloader"
 
