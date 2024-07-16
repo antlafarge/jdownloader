@@ -66,76 +66,6 @@ if [ -n "$UMASK" ]; then
     umask $UMASK
 fi
 
-group "Setup JDownloader"
-
-cfgDir="./cfg/"
-
-# If JDownloader cfg directory does not exist
-if [ ! -d "$cfgDir" ]; then
-    log "Create directory \"$cfgDir\""
-    mkdir -p "$cfgDir"
-fi
-
-# Enable auto-update
-autoUpdateEventScripterSettings="org.jdownloader.extensions.eventscripter.EventScripterExtension.json"
-if [ ! -f "${cfgDir}${autoUpdateEventScripterSettings}" ]; then
-    cp "./$autoUpdateEventScripterSettings" "${cfgDir}${autoUpdateEventScripterSettings}"
-fi
-autoUpdateEventScripterScript="org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json"
-if [ ! -f "${cfgDir}${autoUpdateEventScripterScript}" ]; then
-    cp "./$autoUpdateEventScripterScript" "${cfgDir}${autoUpdateEventScripterScript}"
-fi
-
-generalSettingsFileName="org.jdownloader.settings.GeneralSettings.json"
-generalSettingsFile="${cfgDir}${generalSettingsFileName}"
-
-# If JDownloader general settings file doesn't exist
-if [ ! -f $generalSettingsFile ]; then
-    log "Write JDownloader download path in settings file"
-    cp "./$generalSettingsFileName" "$generalSettingsFile"
-    cpExitCode=$?
-    if [ $cpExitCode -ne 0 ]; then
-        fatal $cpExitCode "cp \"$generalSettingsFileName\" exited with code \"$cpExitCode\""
-    fi
-fi
-
-myJDownloaderSettingsFileName="org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json"
-myJDownloaderSettingsFile="${cfgDir}${myJDownloaderSettingsFileName}"
-
-# If myJDownloader settings file doesn't exist
-if [ ! -f $myJDownloaderSettingsFile ]; then
-    log "Write myJDownloader settings file"
-    cp "./$myJDownloaderSettingsFileName" "$myJDownloaderSettingsFile"
-    cpExitCode=$?
-    if [ $cpExitCode -ne 0 ]; then
-        fatal $cpExitCode "cp \"$myJDownloaderSettingsFileName\" exited with code \"$cpExitCode\""
-    fi
-fi
-
-if [ -n "$JD_EMAIL" ]; then
-    log "Replace JDownloader email in myJDownloader settings file"
-    replaceJsonValue $myJDownloaderSettingsFile "email" "$JD_EMAIL"
-fi
-
-if [ -n "$JD_PASSWORD" ]; then
-    log "Replace JDownloader password in myJDownloader settings file"
-    replaceJsonValue $myJDownloaderSettingsFile "password" "$JD_PASSWORD"
-fi
-
-if [ -n "$JD_DEVICENAME" ]; then
-    log "Replace JDownloader devicename in myJDownloader settings file"
-    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$JD_DEVICENAME"
-fi
-
-groupEnd
-
-unset JD_EMAIL
-unset JD_PASSWORD
-unset JD_DEVICENAME
-
-JDownloaderJarFile="JDownloader.jar"
-JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
-
 group "Check \"$JDownloaderJarFile\""
 
 # Check JDownloader application integrity
@@ -148,39 +78,71 @@ fi
 
 # If the JDownloader jar file does not exist
 if [ ! -f "./$JDownloaderJarFile" ]; then
-    log "Download https://$JDownloaderJarUrl"
-
-    curl -s -O "https://$JDownloaderJarUrl"
-    curlExitCode=$?
-
-    if [ $curlExitCode -ne 0 ]; then
-        log "$JDownloaderJarFile download failed: curl exited with code \"$curlExitCode\""
-        
-        # If https download failed, we try the http link
-        if [ ! -f "./$JDownloaderJarFile" ]; then
-            log "Download http://$JDownloaderJarUrl"
-
-            curl -s -O "http://$JDownloaderJarUrl"
-            curlExitCode=$?
-
-            if [ $curlExitCode -ne 0 ]; then
-                groupEnd
-                groupEnd
-                fatal $curlExitCode "$JDownloaderJarFile download failed: curl exited with code \"$curlExitCode\""
-            fi
+    downloadFile "https://$JDownloaderJarUrl" "$JDownloaderJarFile"
+    downloadFileExitCode=$?
+    if [ $downloadFileExitCode -ne 0 ]; then
+        downloadFile "http://$JDownloaderJarUrl" "$JDownloaderJarFile"
+        downloadFileExitCode=$?
+        if [ $downloadFileExitCode -ne 0 ]; then
+            fatal $downloadFileExitCode "Download JDownloader failed"
         fi
     fi
 fi
 
 groupEnd
 
-group "Start JDownloader"
+group "Setup JDownloader"
 
-# Create logs dir if needed
+# Create directory logs if applicable
 if [ ! -d "./logs/" ]; then
     log "Create directory \"./logs/\""
     mkdir -p "./logs/"
 fi
+
+installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.json" "./cfg/"
+
+installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json" "./cfg/"
+
+installFile "org.jdownloader.settings.GeneralSettings.json" "./cfg/"
+
+installFile "org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "./cfg/"
+
+installFile "extensions.requestedinstalls.json" "./update/versioninfo/JD/"
+
+if [ -n "$JD_EMAIL" ]; then
+    log "Set JDownloader email"
+    replaceJsonValue $myJDownloaderSettingsFile "email" "$JD_EMAIL"
+    if [ $exitCode -ne 0 ]; then
+        fatal $exitCode "Set JD email failed"
+    fi
+fi
+
+if [ -n "$JD_PASSWORD" ]; then
+    log "Set JDownloader password"
+    replaceJsonValue $myJDownloaderSettingsFile "password" "$JD_PASSWORD"
+    if [ $exitCode -ne 0 ]; then
+        fatal $exitCode "Set JD password failed"
+    fi
+fi
+
+if [ -n "$JD_DEVICENAME" ]; then
+    log "Set JDownloader devicename"
+    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$JD_DEVICENAME"
+    if [ $exitCode -ne 0 ]; then
+        fatal $exitCode "Set JD device name failed"
+    fi
+fi
+
+groupEnd
+
+unset JD_EMAIL
+unset JD_PASSWORD
+unset JD_DEVICENAME
+
+JDownloaderJarFile="JDownloader.jar"
+JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
+
+group "Start JDownloader"
 
 # Start JDownloader in a background process
 java $JAVA_OPTIONS -Djava.awt.headless=true -jar $JDownloaderJarFile &> "$LOG_FILE" &
