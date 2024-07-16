@@ -114,7 +114,7 @@ installFile "extensions.requestedinstalls.json" "./update/versioninfo/JD/"
 
 if [ -n "$JD_EMAIL" ]; then
     log "Set JDownloader email"
-    replaceJsonValue $myJDownloaderSettingsFile "email" "$JD_EMAIL"
+    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "email" "$JD_EMAIL"
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JD email failed"
     fi
@@ -122,7 +122,7 @@ fi
 
 if [ -n "$JD_PASSWORD" ]; then
     log "Set JDownloader password"
-    replaceJsonValue $myJDownloaderSettingsFile "password" "$JD_PASSWORD"
+    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "password" "$JD_PASSWORD"
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JD password failed"
     fi
@@ -130,7 +130,7 @@ fi
 
 if [ -n "$JD_DEVICENAME" ]; then
     log "Set JDownloader devicename"
-    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$JD_DEVICENAME"
+    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "devicename" "$JD_DEVICENAME"
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JD device name failed"
     fi
