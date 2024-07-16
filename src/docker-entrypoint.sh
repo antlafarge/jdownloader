@@ -112,19 +112,19 @@ if [ ! -f $myJDownloaderSettingsFile ]; then
     fi
 fi
 
-if [ -n "$setup_email" ]; then
+if [ -n "$JD_EMAIL" ]; then
     log "Replace JDownloader email in myJDownloader settings file"
-    replaceJsonValue $myJDownloaderSettingsFile "email" "$setup_email"
+    replaceJsonValue $myJDownloaderSettingsFile "email" "$JD_EMAIL"
 fi
 
-if [ -n "$setup_password" ]; then
+if [ -n "$JD_PASSWORD" ]; then
     log "Replace JDownloader password in myJDownloader settings file"
-    replaceJsonValue $myJDownloaderSettingsFile "password" "$setup_password"
+    replaceJsonValue $myJDownloaderSettingsFile "password" "$JD_PASSWORD"
 fi
 
-if [ -n "$setup_devicename" ]; then
+if [ -n "$JD_DEVICENAME" ]; then
     log "Replace JDownloader devicename in myJDownloader settings file"
-    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$setup_devicename"
+    replaceJsonValue $myJDownloaderSettingsFile "devicename" "$JD_DEVICENAME"
 fi
 
 groupEnd
