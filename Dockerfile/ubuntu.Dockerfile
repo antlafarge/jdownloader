@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
 LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader" \
       github="https://github.com/antlafarge/jdownloader" \
@@ -18,14 +18,16 @@ ENV JD_EMAIL="" \
     JAVA_OPTIONS="" \
     UMASK=""
 
-RUN apk update \
- && apk -U upgrade \
- && apk add --no-cache \
-        bash \
+ARG OPENJDK="openjdk-21-jre-headless"
+
+RUN apt-get update \
+ && apt-get upgrade -y \
+ && apt-get install -y --no-install-recommends \
         curl \
         ffmpeg \
         unzip \
-        openjdk8-jre
+        ${OPENJDK} \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /jdownloader
 
