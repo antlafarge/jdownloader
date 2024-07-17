@@ -29,30 +29,31 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: alpine-openjdk8
-            file: alpine.Dockerfile
-            openjdk: openjdk8-jre
-            platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          - name: ubuntu-openjdk8
-            file: ubuntu.Dockerfile
-            openjdk: openjdk-8-jre-headless
-            platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          - name: alpine-openjdk17
-            file: alpine.Dockerfile
-            openjdk: openjdk17-jre-headless
-            platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x
-          - name: ubuntu-openjdk17
-            file: ubuntu.Dockerfile
-            openjdk: openjdk-17-jre-headless
-            platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          # - name: alpine-openjdk21
+          # - name: alpine-openjdk8
           #   file: alpine.Dockerfile
-          #   openjdk: openjdk21-jre-headless --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/
-          #   platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
-          - name: ubuntu-openjdk21
-            file: ubuntu.Dockerfile
-            openjdk: openjdk-21-jre-headless
-            platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          #   openjdk: openjdk8-jre
+          #   platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          # - name: ubuntu-openjdk8
+          #   file: ubuntu.Dockerfile
+          #   openjdk: openjdk-8-jre-headless
+          #   platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          # - name: alpine-openjdk17
+          #   file: alpine.Dockerfile
+          #   openjdk: openjdk17-jre-headless
+          #   platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x
+          # - name: ubuntu-openjdk17
+          #   file: ubuntu.Dockerfile
+          #   openjdk: openjdk-17-jre-headless
+          #   platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          - name: alpine-openjdk21
+            file: alpine.Dockerfile
+            openjdk: "openjdk21-jre-headless --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/"
+            platforms: linux/arm64/v8
+            # platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
+          # - name: ubuntu-openjdk21
+          #   file: ubuntu.Dockerfile
+          #   openjdk: openjdk-21-jre-headless
+          #   platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
