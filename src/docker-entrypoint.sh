@@ -33,7 +33,7 @@ fi
 # Retrieve JD_EMAIL
 if [ -f "/run/secrets/JD_EMAIL" ]; then
     JD_EMAIL=$(cat /run/secrets/JD_EMAIL)
-elif [ -z "$JD_EMAIL" ]; then
+elif [ -n "$JD_EMAIL" ]; then
     log "WARNING" "Secret \"JD_EMAIL\" not found, use environment variable"
 else
     log "WARNING" "\"JD_EMAIL\" not found"
@@ -42,7 +42,7 @@ fi
 # Retrieve JD_PASSWORD
 if [ -f "/run/secrets/JD_PASSWORD" ]; then
     JD_PASSWORD=$(cat /run/secrets/JD_PASSWORD)
-elif [ -z "$JD_PASSWORD" ]; then
+elif [ -n "$JD_PASSWORD" ]; then
     log "WARNING" "Secret \"JD_PASSWORD\" not found, use environment variable"
 else
     log "WARNING" "\"JD_PASSWORD\" not found"

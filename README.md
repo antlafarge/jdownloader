@@ -40,18 +40,18 @@ services:
       - "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg/" # Optional
       - "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs/" # Optional
     environment:
-      - "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" # Optional (better to use secrets)
-      - "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" # Optional (better to use secrets)
-      - "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" # Optional
-      - "UMASK=<b>&#60;UMASK&#62;</b>" # Optional
-      - "JAVA_OPTIONS=<b>&#60;JAVA-OPTIONS&#62;</b>" # Optional
-      - "LOG_FILE=<b>&#60;LOG-FILE&#62;</b>" # Optional
+      JD_EMAIL: "<b>&#60;JD-EMAIL&#62;</b>" # Optional (better to use secrets)
+      JD_PASSWORD: "<b>&#60;JD-PASSWORD&#62;</b>" # Optional (better to use secrets)
+      JD_DEVICENAME: "<b>&#60;JD-DEVICENAME&#62;</b>" # Optional
+      UMASK: "<b>&#60;UMASK&#62;</b>" # Optional
+      JAVA_OPTIONS: "<b>&#60;JAVA-OPTIONS&#62;</b>" # Optional
+      LOG_FILE: "<b>&#60;LOG-FILE&#62;</b>" # Optional
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
         - JD_DEVICENAME # Optional
     ports:
-      - "<b>&#60;PORT&#62;</b>:3129" # Optional
+      - <b>&#60;PORT&#62;</b>:3129 # Optional
 
 secrets:
     JD_EMAIL:
@@ -69,7 +69,7 @@ services:
   jdownloader:
     image: antlafarge/jdownloader<b>:latest</b>
     container_name: <b>jdownloader</b>
-    restart: <b>on-failure:10</b>
+    restart: <b>on-failure:3</b>
     user: <b>1000:100</b>
     volumes:
       - "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
@@ -79,7 +79,7 @@ services:
         - JD_PASSWORD
         - JD_DEVICENAME
     ports:
-      - "<b>3129</b>:3129"
+      - <b>3129</b>:3129
 secrets:
     JD_EMAIL:
         file: "<b>/hdd/JDownloader/secrets/JD_EMAIL.txt</b>"
@@ -125,30 +125,36 @@ docker run -d &#92;
     -v "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads/" &#92;  
         -v "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg/" &#92;  
         -v "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs/" &#92;  
-    -e "JD_EMAIL=<b>&#60;JD-EMAIL&#62;</b>" &#92;  
-    -e "JD_PASSWORD=<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
-        -e "JD_DEVICENAME=<b>&#60;JD-DEVICENAME&#62;</b>" &#92;  
-        -e "JAVA_OPTIONS=<b>&#60;JAVA-OPTIONS&#62;</b>" &#92;  
-        -e "LOG_FILE=<b>&#60;LOG-FILE&#62;</b>" &#92;  
-        -e "UMASK=<b>&#60;UMASK&#62;</b>" &#92;  
-        -p "<b>&#60;PORT&#62;</b>:3129" &#92;  
+    -v "<b>&#60;JD-EMAIL-FILE&#62;</b>:/run/secrets/JD_EMAIL" &#92;  
+    -v "<b>&#60;JD-PASSWORD-FILE&#62;</b>:/run/secrets/JD_PASSWORD" &#92;  
+        -e JD_EMAIL="<b>&#60;JD-EMAIL&#62;</b>" &#92;  
+        -e JD_PASSWORD="<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
+        -e JD_DEVICENAME="<b>&#60;JD-DEVICENAME&#62;</b>" &#92;  
+        -e JAVA_OPTIONS="<b>&#60;JAVA-OPTIONS&#62;</b>" &#92;  
+        -e LOG_FILE="<b>&#60;LOG-FILE&#62;</b>" &#92;  
+        -e UMASK="<b>&#60;UMASK&#62;</b>" &#92;  
+        -p <b>&#60;PORT&#62;</b>:3129 &#92;  
     antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
 </pre>
 
-*Note : Parameters indented twice are optional.*
+*Note : Parameters indented twice are optional.*  
+*Volumes are used to simulate secrets without the need to create docker swarm secrets.*
 
 Example :
 
 <pre>
+echo "<b>my@email.com</b>" > ./JD_EMAIL.txt
+echo "<b>MyPassword</b>" > ./JD_PASSWORD.txt
+
 docker run -d \
         --name <b>jdownloader</b> \
-        --restart <b>on-failure:10</b> \
+        --restart <b>on-failure:3</b> \
         --user <b>1000:100</b> \
     -v "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/" \
         -v "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" \
-    -e "JD_EMAIL=<b>my@email.fr</b>" \
-    -e "JD_PASSWORD=<b>MyGreatPassword</b>" \
-        -e "JD_DEVICENAME=<b>JD-DOCKER</b>" \
+    -v "<b>./JD_EMAIL.txt</b>:/run/secrets/JD_EMAIL" \
+    -v "<b>./JD_PASSWORD.txt</b>:/run/secrets/JD_PASSWORD" \
+        -e JD_DEVICENAME="<b>JD-DOCKER</b>" \
         -p <b>3129</b>:3129 \
     antlafarge/jdownloader:<b>latest</b>
 </pre>
@@ -168,7 +174,7 @@ docker run -d \
     - Setup the downloads directory access permissions : `sudo chmod -R 770 /path/to/jdownloader/downloads/`
     - Setup the config directory access permissions : `sudo chmod -R 770 /path/to/jdownloader/cfg/`
     - Setup the secrets directory access permissions : `sudo chmod -R 770 /path/to/jdownloader/secrets/`
-        - Create the secret file for your JD e-mail : `echo 'my@email.fr' > /path/to/jdownloader/secrets/JD_EMAIL.txt`
+        - Create the secret file for your JD e-mail : `echo 'my@email.com' > /path/to/jdownloader/secrets/JD_EMAIL.txt`
         - Create the secret file for your JD password : `echo 'MyGreatPassword' > /path/to/jdownloader/secrets/JD_PASSWORD.txt`
         - Create the secret file for your JD device name : `echo 'JD-DOCKER' > /path/to/jdownloader/secrets/JD_DEVICENAME.txt`
 - Run the container by choosing the [docker run](https://github.com/antlafarge/jdownloader#docker-run) or [docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method and customize the parameters by using your [myJDownloader](https://my.jdownloader.org) credentials.
@@ -182,9 +188,10 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
 
 ## Update the image
 
+The dockerhub image is rebuilt monthly to get last OS and packages security updates.
 - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method :
     - Update the image : `docker compose pull jdownloader`
-    - Recreate the container : `docker compose up --force-recreate -d jdownloader`
+    - Recreate the container : `docker compose up -d --force-recreate jdownloader`
     - Remove the old untagged images : `docker image prune -f`
 - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method :
     - Update the image : `docker pull antlafarge/jdownloader:latest`
@@ -192,30 +199,28 @@ To disable the automatic upates, go to your JD instance on [my.jdownloader.org](
     - Remove the old untagged images : `docker image prune -f`
     - Start the container : `docker run ...`
 
-## Change your email or password
-
-- If you used the docker secrets, just change it in the secrets files and restart your docker container.
-- If you started the container by setting the email and password environment variables :
-  - You must follow the [Update the image](https://github.com/antlafarge/jdownloader#update-the-image) guide by setting the new email or password on the final step.
-
 ## Special characters in password
 
-1. If you used the docker secrets, put the raw password in the secret file without escaping any character.
-
-2. If you want to use environment variables, modify your [docker run](https://github.com/antlafarge/jdownloader#docker-run) command or [docker-compose.yml](https://github.com/antlafarge/jdownloader#docker-compose) file :
-    - If you have exclamation marks (`!`) in your password and you use a **bash** shell, this special character corresponds to commands history substitution. You might need to disable it by using the command `set +H` in your bash shell.
-    - If your password contains double quotes (`"`), escape it with backslashes (`\`) in the [docker run](https://github.com/antlafarge/jdownloader#docker-run) command or [docker-compose.yml](https://github.com/antlafarge/jdownloader#docker-compose) file. ``"JD_PASSWORD=My\"Great`Password"``
-        - If you use the [docker run](https://github.com/antlafarge/jdownloader#docker-run) method, also escape backticks (`` ` ``) with backslashes (`\`). ``"JD_PASSWORD=My\"Great\`Password"``
-    - Start the container.
-
-3. If you want to put your password manually in the settings file :
-    - Modify your [docker run](https://github.com/antlafarge/jdownloader#docker-run) command or [docker-compose.yml](https://github.com/antlafarge/jdownloader#docker-compose) file parameters :
-        - Set an empty `<JD_PASSWORD>` (for disabling password replacement on container start). `"JD_PASSWORD="`
-        - Set a `<CONFIG-PATH>` volume to access the JDownloader settings files.
+- If you used the docker secrets, put the raw password in the secret file without escaping any character.
+- If you want to use environment variables.
+    - [Docker-compose.yml](https://github.com/antlafarge/jdownloader#docker-compose) file :
+        - Escape double quotes (`"`) with backslashes (`\`)
+            - ``JD_PASSWORD="My\"Great`Password"``
+    - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) command :
+        - If you have exclamation marks (`!`) in your password and you use a **bash** shell, this special character corresponds to commands history substitution. You might need to disable it :
+            - Type the command `set +H` in your bash shell.
+        - Escape double quotes (`"`) or backticks (`` ` ``) with backslashes (`\`)
+            - ``JD_PASSWORD="My\"Great\`Password"``
+- If you want to put your password manually in the settings file :
+    - Modify your [docker-compose.yml](https://github.com/antlafarge/jdownloader#docker-compose) file or [docker run](https://github.com/antlafarge/jdownloader#docker-run) command parameters :
+        - Set an empty `<JD_PASSWORD>` *(for disabling password replacement on container start)* :
+            - `JD_PASSWORD=""`
+        - Set a `<CONFIG-PATH>` volume to have an access to the JDownloader settings files.
     - Start the container.
     - Go to your config directory and open the settings file named `org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json`.
     - Search for the password field and place your password in the empty double quotes. `"password":"MyGreatPassword",`
-    - If your password contains double quotes (`"`), escape it with backslashes (`\`). ``"password":"My\"Great`Password",``
+        - Escape double quotes (`"`) with backslashes (`\`).
+            - ``"password":"My\"Great`Password",``
     - Save the file and restart the container. `docker restart jdownloader`
 
 # Troubleshooting
