@@ -28,66 +28,67 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 # [Docker Compose](https://docs.docker.com/compose)
 
-<pre>
+```yml
 services:
   jdownloader:
-    image: antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
-    container_name: <b>&#60;CONTAINER-NAME&#62;</b> # Optional
-    restart: <b>&#60;RESTART&#62;</b> # Optional
-    user: <b>&#60;UID&#62;:&#60;GID&#62;</b> # Optional
+    image: antlafarge/jdownloader:<TAG>
+    container_name: <CONTAINER-NAME> # Optional
+    restart: <RESTART> # Optional
+    user: <UID>:<GID> # Optional
     volumes:
-      - "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads/"
-      - "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg/" # Optional
-      - "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs/" # Optional
+      - "<DOWNLOADS-PATH>:/jdownloader/downloads/"
+      - "<CONFIG-PATH>:/jdownloader/cfg/" # Optional
+      - "<LOGS-PATH>:/jdownloader/logs/" # Optional
     environment:
-      JD_EMAIL: "<b>&#60;JD-EMAIL&#62;</b>" # Optional (better to use secrets)
-      JD_PASSWORD: "<b>&#60;JD-PASSWORD&#62;</b>" # Optional (better to use secrets)
-      JD_DEVICENAME: "<b>&#60;JD-DEVICENAME&#62;</b>" # Optional
-      UMASK: "<b>&#60;UMASK&#62;</b>" # Optional
-      JAVA_OPTIONS: "<b>&#60;JAVA-OPTIONS&#62;</b>" # Optional
-      LOG_FILE: "<b>&#60;LOG-FILE&#62;</b>" # Optional
+      JD_EMAIL: "<JD-EMAIL>" # Optional (better to use secrets)
+      JD_PASSWORD: "<JD-PASSWORD>" # Optional (better to use secrets)
+      JD_DEVICENAME: "<JD-DEVICENAME>" # Optional
+      UMASK: "<UMASK>" # Optional
+      JAVA_OPTIONS: "<JAVA-OPTIONS>" # Optional
+      LOG_FILE: "<LOG-FILE>" # Optional
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
         - JD_DEVICENAME # Optional
     ports:
-      - <b>&#60;PORT&#62;</b>:3129 # Optional
+      - <PORT>:3129 # Optional
 
 secrets:
     JD_EMAIL:
-        file: "<b>&#60;JD-EMAIL-FILE&#62;</b>" # Put your myJD email in this file
+        file: "<JD-EMAIL-FILE>" # Put your myJD email in this file
     JD_PASSWORD:
-        file: "<b>&#60;JD-PASSWORD-FILE&#62;</b>" # Put your myJD password in this file
+        file: "<JD-PASSWORD-FILE>" # Put your myJD password in this file
     JD_DEVICENAME: # Optional
-        file: "<b>&#60;JD-DEVICENAME-FILE&#62;</b>" # Put your myJD device name in this file
-</pre>
+        file: "<JD-DEVICENAME-FILE>" # Put your myJD device name in this file
+```
 
 <details>
 <summary>See example</summary>
-<pre>
+
+```yml
 services:
   jdownloader:
-    image: antlafarge/jdownloader<b>:latest</b>
-    container_name: <b>jdownloader</b>
-    restart: <b>on-failure:3</b>
-    user: <b>1000:100</b>
+    image: antlafarge/jdownloader:latest
+    container_name: jdownloader
+    restart: on-failure:3
+    user: 1000:100
     volumes:
-      - "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/"
-      - "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/"
+      - "/hdd/JDownloader/downloads/:/jdownloader/downloads/"
+      - "/hdd/JDownloader/cfg/:/jdownloader/cfg/"
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
         - JD_DEVICENAME
     ports:
-      - <b>3129</b>:3129
+      - 3129:3129
 secrets:
     JD_EMAIL:
-        file: "<b>/hdd/JDownloader/secrets/JD_EMAIL.txt</b>"
+        file: "/hdd/JDownloader/secrets/JD_EMAIL.txt"
     JD_PASSWORD:
-        file: "<b>/hdd/JDownloader/secrets/JD_PASSWORD.txt</b>"
+        file: "/hdd/JDownloader/secrets/JD_PASSWORD.txt"
     JD_DEVICENAME:
-        file: "<b>/hdd/JDownloader/secrets/JD_DEVICENAME.txt</b>"
-</pre>
+        file: "/hdd/JDownloader/secrets/JD_DEVICENAME.txt"
+```
 </details>
 
 ## Parameters
@@ -116,48 +117,48 @@ Name | Type | Description | Optional | Default
 # [Docker run](https://docs.docker.com/engine/reference/run)
 
 <details>
-<summary>See Docker run</summary>
-<pre>
-docker run -d &#92;  
-        --name <b>&#60;CONTAINER-NAME&#62;</b> &#92;  
-        --restart <b>&#60;RESTART&#62;</b> &#92;  
-        --user <b>&#60;UID&#62;:&#60;GID&#62;</b> &#92;  
-    -v "<b>&#60;DOWNLOADS-PATH&#62;</b>:/jdownloader/downloads/" &#92;  
-        -v "<b>&#60;CONFIG-PATH&#62;</b>:/jdownloader/cfg/" &#92;  
-        -v "<b>&#60;LOGS-PATH&#62;</b>:/jdownloader/logs/" &#92;  
-    -v "<b>&#60;JD-EMAIL-FILE&#62;</b>:/run/secrets/JD_EMAIL" &#92;  
-    -v "<b>&#60;JD-PASSWORD-FILE&#62;</b>:/run/secrets/JD_PASSWORD" &#92;  
-        -e JD_EMAIL="<b>&#60;JD-EMAIL&#62;</b>" &#92;  
-        -e JD_PASSWORD="<b>&#60;JD-PASSWORD&#62;</b>" &#92;  
-        -e JD_DEVICENAME="<b>&#60;JD-DEVICENAME&#62;</b>" &#92;  
-        -e JAVA_OPTIONS="<b>&#60;JAVA-OPTIONS&#62;</b>" &#92;  
-        -e LOG_FILE="<b>&#60;LOG-FILE&#62;</b>" &#92;  
-        -e UMASK="<b>&#60;UMASK&#62;</b>" &#92;  
-        -p <b>&#60;PORT&#62;</b>:3129 &#92;  
-    antlafarge/jdownloader:<b>&#60;TAG&#62;</b>
-</pre>
+<summary>See Docker run</summary>=
+
+```yml
+docker run -d \
+        --name <CONTAINER-NAME> \
+        --restart <RESTART> \
+        --user <UID>:<GID> \
+    -v "<DOWNLOADS-PATH>:/jdownloader/downloads/" \
+        -v "<CONFIG-PATH>:/jdownloader/cfg/" \
+        -v "<LOGS-PATH>:/jdownloader/logs/" \
+    -v "<JD-EMAIL-FILE>:/run/secrets/JD_EMAIL" \
+    -v "<JD-PASSWORD-FILE>:/run/secrets/JD_PASSWORD" \
+        -e JD_EMAIL="<JD-EMAIL>" \
+        -e JD_PASSWORD="<JD-PASSWORD>" \
+        -e JD_DEVICENAME="<JD-DEVICENAME>" \
+        -e JAVA_OPTIONS="<JAVA-OPTIONS>" \
+        -e LOG_FILE="<LOG-FILE>" \
+        -e UMASK="<UMASK>" \
+        -p <PORT>:3129 \
+    antlafarge/jdownloader:<TAG>
+```
 
 *Note : Parameters indented twice are optional.*  
 *Volumes are used to simulate secrets without the need to create docker swarm secrets.*
 
 Example :
-
-<pre>
-echo "<b>my@email.com</b>" > ./JD_EMAIL.txt
-echo "<b>MyPassword</b>" > ./JD_PASSWORD.txt
+```yml
+echo "my@email.com" > ./JD_EMAIL.txt
+echo "MyPassword" > ./JD_PASSWORD.txt
 
 docker run -d \
-        --name <b>jdownloader</b> \
-        --restart <b>on-failure:3</b> \
-        --user <b>1000:100</b> \
-    -v "<b>/hdd/JDownloader/downloads/</b>:/jdownloader/downloads/" \
-        -v "<b>/hdd/JDownloader/cfg/</b>:/jdownloader/cfg/" \
-    -v "<b>./JD_EMAIL.txt</b>:/run/secrets/JD_EMAIL" \
-    -v "<b>./JD_PASSWORD.txt</b>:/run/secrets/JD_PASSWORD" \
-        -e JD_DEVICENAME="<b>JD-DOCKER</b>" \
-        -p <b>3129</b>:3129 \
-    antlafarge/jdownloader:<b>latest</b>
-</pre>
+        --name jdownloader \
+        --restart on-failure:3 \
+        --user 1000:100 \
+    -v "/hdd/JDownloader/downloads/:/jdownloader/downloads/" \
+        -v "/hdd/JDownloader/cfg/:/jdownloader/cfg/" \
+    -v "./JD_EMAIL.txt:/run/secrets/JD_EMAIL" \
+    -v "./JD_PASSWORD.txt:/run/secrets/JD_PASSWORD" \
+        -e JD_DEVICENAME="JD-DOCKER" \
+        -p 3129:3129 \
+    antlafarge/jdownloader:latest
+```
 </details>
 
 # Guides
@@ -256,47 +257,40 @@ You can send feedback and discuss the project in the [github discussions](https:
 # Docker commands reminder
 
 ## Container stop
-
-<pre>
-docker stop <b>jdownloader</b>
-</pre>
+```
+docker stop jdownloader
+```
 
 ## Container restart
-
-<pre>
-docker restart <b>jdownloader</b>
-</pre>
+```
+docker restart jdownloader
+```
 
 ## Container logs
-
-<pre>
-docker logs --follow --tail 100 <b>jdownloader</b>
-</pre>
+```
+docker logs --follow --tail 100 jdownloader
+```
 
 *Note: To access the JDownloader log files, you have to set the `<LOGS-PATH>` volume.*
 
 ## Container delete
-
-<pre>
-docker rm -f <b>jdownloader</b>
-</pre>
+```
+docker rm -f jdownloader
+```
 
 ## Image delete
-
-<pre>
-docker rmi antlafarge/jdownloader:<b>openjdk17</b>
-</pre>
+```
+docker rmi antlafarge/jdownloader:openjdk17
+```
 
 ## Compose start
-
-<pre>
+```
 cd /path/to/docker-compose.yml/directory/
 docker compose up -d
-</pre>
+```
 
 ## Compose stop
-
-<pre>
+```
 cd /path/to/docker-compose.yml/directory/
 docker compose down
-</pre>
+```
