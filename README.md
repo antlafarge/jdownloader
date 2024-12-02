@@ -81,6 +81,7 @@ services:
         - JD_DEVICENAME
     ports:
       - 3129:3129
+
 secrets:
     JD_EMAIL:
         file: "/hdd/JDownloader/secrets/JD_EMAIL.txt"
