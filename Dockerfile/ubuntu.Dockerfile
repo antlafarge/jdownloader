@@ -1,38 +1,33 @@
 FROM ubuntu:latest
 
-LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader" \
-      github="https://github.com/antlafarge/jdownloader" \
-      maintainer.name="Antoine Lafarge" \
-      maintainer.email="ant.lafarge@gmail.com" \
-      maintainer.github="https://github.com/antlafarge" \
-      maintainer.dockerhub="https://hub.docker.com/u/antlafarge"
+LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader"
+LABEL github="https://github.com/antlafarge/jdownloader"
+LABEL maintainer.name="Antoine Lafarge"
+LABEL maintainer.email="ant.lafarge@gmail.com"
+LABEL maintainer.github="https://github.com/antlafarge"
+LABEL maintainer.dockerhub="https://hub.docker.com/u/antlafarge"
 
-STOPSIGNAL SIGTERM
-
-ENV JD_EMAIL="" \
-    JD_PASSWORD="" \
-    JD_DEVICENAME="" \
-    LANG="C.UTF-8" \
-    LC_ALL="C.UTF-8" \
-    LOG_FILE="/dev/null" \
-    JAVA_OPTIONS="" \
-    UMASK=""
+ENV JD_EMAIL=""
+ENV JD_PASSWORD=""
+ENV JD_DEVICENAME=""
+ENV LANG="C.UTF-8"
+ENV LC_ALL="C.UTF-8"
+ENV LOG_FILE="/dev/null"
+ENV JAVA_OPTIONS=""
+ENV UMASK=""
 
 ARG OPENJDK="openjdk-21-jre-headless"
 
-RUN apt-get update \
- && apt-get upgrade -y \
- && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        bash \
         curl \
         ffmpeg \
         unzip \
         ${OPENJDK} \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
+ && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-WORKDIR /jdownloader
+WORKDIR /jdownloader/
 
-COPY src .
+COPY --chown=1000:100 --chmod=777 src .
 
-RUN chown -R 1000:100 . && chmod 777 . && chmod 775 *.sh && chmod 774 *.json
-
-CMD ["/bin/bash", "-c", "./docker-entrypoint.sh"]
+ENTRYPOINT ["./docker-entrypoint.sh"]

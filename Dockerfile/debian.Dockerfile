@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM debian:stable-slim
 
 LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader"
 LABEL github="https://github.com/antlafarge/jdownloader"
@@ -16,15 +16,15 @@ ENV LOG_FILE="/dev/null"
 ENV JAVA_OPTIONS=""
 ENV UMASK=""
 
-ARG OPENJDK="openjdk21-jre-headless"
+ARG OPENJDK="openjdk-17-jre-headless"
 
-RUN apk add --no-cache --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
         bash \
         curl \
         ffmpeg \
         unzip \
         ${OPENJDK} \
-        --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/
+ && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 WORKDIR /jdownloader/
 

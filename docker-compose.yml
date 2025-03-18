@@ -1,0 +1,23 @@
+services:
+  jdownloader:
+    image: antlafarge/jdownloader:latest
+    container_name: jdownloader
+    restart: on-failure:3
+    user: 1000:100
+    volumes:
+      - "/hdd/JDownloader/downloads/:/jdownloader/downloads/"
+      - "/hdd/JDownloader/cfg/:/jdownloader/cfg/"
+    secrets:
+        - JD_EMAIL
+        - JD_PASSWORD
+        - JD_DEVICENAME
+    ports:
+      - 3129:3129
+
+secrets:
+    JD_EMAIL:
+        file: "/hdd/JDownloader/secrets/JD_EMAIL.txt"
+    JD_PASSWORD:
+        file: "/hdd/JDownloader/secrets/JD_PASSWORD.txt"
+    JD_DEVICENAME:
+        file: "/hdd/JDownloader/secrets/JD_DEVICENAME.txt"
