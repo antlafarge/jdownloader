@@ -18,13 +18,16 @@ ENV UMASK=""
 
 ARG OPENJDK="openjdk-17-jre-headless"
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+        procps \
         bash \
         curl \
         ffmpeg \
         unzip \
         ${OPENJDK} \
- && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 WORKDIR /jdownloader/
 

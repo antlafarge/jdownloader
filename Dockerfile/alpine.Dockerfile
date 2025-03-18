@@ -19,12 +19,12 @@ ENV UMASK=""
 ARG OPENJDK="openjdk21-jre-headless"
 
 RUN apk add --no-cache --no-install-recommends \
+        --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/ \
         bash \
         curl \
         ffmpeg \
         unzip \
-        ${OPENJDK} \
-        --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/
+        ${OPENJDK}
 
 WORKDIR /jdownloader/
 

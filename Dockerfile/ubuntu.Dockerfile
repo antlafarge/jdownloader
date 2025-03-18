@@ -18,13 +18,15 @@ ENV UMASK=""
 
 ARG OPENJDK="openjdk-21-jre-headless"
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
         bash \
         curl \
         ffmpeg \
         unzip \
         ${OPENJDK} \
- && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 WORKDIR /jdownloader/
 
