@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e -u
+# set -x
 
 # Disable bash history substitution
 set +H
@@ -20,10 +22,10 @@ log "OS = \"$OS_prettyName\""
 log "USER = \"$(id -u):$(id -g)\""
 
 # JAVA
-if [ "$OS" = "ubuntu" ]; then
-    JAVA_VERSION="$(dpkg -l | grep "openjdk.*jre" | cut -d" " -f3,4)"
-else
+if [ "$OS" = "alpine" ]; then
     JAVA_VERSION="$(apk -vv info | grep "openjdk.*jre" | cut -d" " -f1)"
+else
+    JAVA_VERSION="$(dpkg -l | grep "openjdk.*jre" | cut -d" " -f3,4)"
 fi
 log "JAVA version = \"$JAVA_VERSION\""
 if [ -n "$JAVA_OPTIONS" ]; then
