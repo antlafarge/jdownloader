@@ -35,6 +35,8 @@ jobs:
 
           docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 -t ${{ env.IMAGE_NAME }}:alpine-openjdk17
+          docker pull ${{ env.IMAGE_NAME }}:dev-debian-openjdk17
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk17 -t ${{ env.IMAGE_NAME }}:debian-openjdk17
           docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk17
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 -t ${{ env.IMAGE_NAME }}:openjdk17
