@@ -26,8 +26,8 @@ RUN apk add --no-cache --no-install-recommends \
         unzip \
         ${OPENJDK}
 
-WORKDIR /jdownloader/
+COPY --chown=1000:100 --chmod=777 ./src/ /jdownloader/
 
-COPY --chown=1000:100 --chmod=777 src .
+WORKDIR /jdownloader/
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
