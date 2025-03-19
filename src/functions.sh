@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e -u
-# set -x
 
 # Useful functions
 

@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e -u
-# set -x
 
 # Disable bash history substitution
 set +H
