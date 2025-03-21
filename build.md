@@ -78,3 +78,44 @@ https://www.docker.com/blog/multi-arch-images
 ## Remove not tagged images
 
     docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+
+# Docker commands reminder
+
+## Container stop
+```
+docker stop jdownloader
+```
+
+## Container restart
+```
+docker restart jdownloader
+```
+
+## Container logs
+```
+docker logs --follow --tail 100 jdownloader
+```
+
+*Note: To access the JDownloader log files, you have to set the `<LOGS-PATH>` volume.*
+
+## Container delete
+```
+docker rm -f jdownloader
+```
+
+## Image delete
+```
+docker rmi antlafarge/jdownloader:openjdk17
+```
+
+## Compose start
+```
+cd /path/to/docker-compose.yml/directory/
+docker compose up -d
+```
+
+## Compose stop
+```
+cd /path/to/docker-compose.yml/directory/
+docker compose down
+```

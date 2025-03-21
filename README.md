@@ -11,20 +11,26 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 # Supported architectures and Tags
 
-| arch \ tags | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest)<br>[`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)<br>[`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21)<br>[`openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk21) | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)<br>[`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) |
-| :--------: | :--------------------: | :--------: |
-| **linux/amd64** | OK | OK |
-| **linux/arm/v7** | OK | NA |
-| **linux/arm64/v8** | OK | OK |
-| **linux/ppc64le** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
-| **linux/riscv64** | NA | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
-| **linux/s390x** | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) | [*Need feedback*](https://github.com/antlafarge/jdownloader/discussions) |
+| arch \ tags | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest)<br>[`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)<br>[`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21)<br>[`openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk21) | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)<br>[`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) | [`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian)<br>[`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian)<br> |
+| :- | :---: | :---: | :---: |
+| **linux/386** | | | ✓ |
+| **linux/amd64** | ✓ | ✓ | ✓ |
+| **linux/arm/v5** | | | ✓ |
+| **linux/arm/v6** | | | |
+| **linux/arm/v7** | ✓ | | ✓ |
+| **linux/arm64/v8** | ✓ | ✓ | ✓ |
+| **linux/mips64le** | | | ✓ |
+| **linux/ppc64le** | ✓ | ✓ | ✓ |
+| **linux/riscv64** | ✓ | ✓ | |
+| **linux/s390x** | ✓ | ✓ | ✓ |
 
 ### Other available tags :
 - [`openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk17) [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17)
 - [`alpine-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17)
 - [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8)
 - [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) (use this tag for architectures **linux/386** and **linux/arm/v6**)
+
+You can [*give feedback here*](https://github.com/antlafarge/jdownloader/discussions).
 
 # [Docker Compose](https://docs.docker.com/compose)
 
@@ -254,44 +260,3 @@ If many internal commands fail, your container may lack some privileges and you 
 
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
-
-# Docker commands reminder
-
-## Container stop
-```
-docker stop jdownloader
-```
-
-## Container restart
-```
-docker restart jdownloader
-```
-
-## Container logs
-```
-docker logs --follow --tail 100 jdownloader
-```
-
-*Note: To access the JDownloader log files, you have to set the `<LOGS-PATH>` volume.*
-
-## Container delete
-```
-docker rm -f jdownloader
-```
-
-## Image delete
-```
-docker rmi antlafarge/jdownloader:openjdk17
-```
-
-## Compose start
-```
-cd /path/to/docker-compose.yml/directory/
-docker compose up -d
-```
-
-## Compose stop
-```
-cd /path/to/docker-compose.yml/directory/
-docker compose down
-```
