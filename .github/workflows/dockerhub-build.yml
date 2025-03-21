@@ -53,6 +53,10 @@ jobs:
             file: alpine.Dockerfile
             openjdk: openjdk21-jre-headless
             platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
+          - name: debian-openjdk21
+            file: debian-trixie.Dockerfile
+            openjdk: openjdk-21-jre-headless
+            platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/riscv64,linux/s390x
           - name: ubuntu-openjdk21
             file: ubuntu.Dockerfile
             openjdk: openjdk-21-jre-headless

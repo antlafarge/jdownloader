@@ -43,11 +43,14 @@ jobs:
 
           docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine-openjdk21
+          docker pull ${{ env.IMAGE_NAME }}:dev-debian-openjdk21
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 -t ${{ env.IMAGE_NAME }}:debian-openjdk21
           docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:openjdk21
 
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 -t ${{ env.IMAGE_NAME }}:debian
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:latest
       - name: Logout from Docker Hub
