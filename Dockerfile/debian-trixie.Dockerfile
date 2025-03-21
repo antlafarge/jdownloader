@@ -16,7 +16,7 @@ ENV LOG_FILE="/dev/null"
 ENV JAVA_OPTIONS=""
 ENV UMASK=""
 
-ARG OPENJDK="openjdk-17-jre-headless"
+ARG OPENJDK="openjdk-21-jre-headless"
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
