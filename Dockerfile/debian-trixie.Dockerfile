@@ -29,6 +29,8 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
+RUN mkdir -m 777 /jdownloader/
+
 COPY --chown=1000:100 --chmod=777 ./src/ /jdownloader/
 
 WORKDIR /jdownloader/
