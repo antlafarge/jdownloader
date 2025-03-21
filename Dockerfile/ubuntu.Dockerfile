@@ -28,8 +28,8 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
- COPY --chown=1000:100 --chmod=777 ./src/ /jdownloader/
+COPY --chown=1000:100 --chmod=777 ./src/ /jdownloader/
 
- WORKDIR /jdownloader/
+WORKDIR /jdownloader/
  
 ENTRYPOINT ["./docker-entrypoint.sh"]
