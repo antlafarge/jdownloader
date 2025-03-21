@@ -32,8 +32,6 @@ You can send feedback and discuss the project in the [github discussions](https:
 - [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8)
 - [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
 
-You can [*give feedback here*](https://github.com/antlafarge/jdownloader/discussions).
-
 # [Docker Compose](https://docs.docker.com/compose)
 
 ```yml
