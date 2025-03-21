@@ -202,12 +202,12 @@ The dockerhub image is rebuilt monthly to get last OS and packages security upda
 - [Docker compose](https://github.com/antlafarge/jdownloader#docker-compose) method :
     - Update the image : `docker compose pull jdownloader`
     - Recreate the container : `docker compose up -d --force-recreate jdownloader`
-    - Remove the old untagged images : `docker image prune -f`
+    - Remove the old images : `docker image prune -f`
 - [Docker run](https://github.com/antlafarge/jdownloader#docker-run) method :
     - Update the image : `docker pull antlafarge/jdownloader:latest`
     - Remove the current container : `docker rm -f jdownloader`
-    - Remove the old untagged images : `docker image prune -f`
     - Start the container : `docker run ...`
+    - Remove the old images : `docker image prune -f`
 
 ## Special characters in password
 
