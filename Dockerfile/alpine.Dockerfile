@@ -26,7 +26,7 @@ RUN apk add --no-cache --no-install-recommends \
         unzip \
         ${OPENJDK}
 
-RUN mkdir -m 777 /jdownloader/
+RUN mkdir -p -m 777 /jdownloader/ && chown 1000:100 /jdownloader/
 
 COPY --chown=1000:100 --chmod=777 ./src/ /jdownloader/
 
