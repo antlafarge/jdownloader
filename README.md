@@ -16,7 +16,7 @@ You can send feedback and discuss the project in the [github discussions](https:
 | **linux/386** | · | ✓ | · |
 | **linux/amd64** | ✓ | ✓ | ✓ |
 | **linux/arm/v5** | · | ✓ | · |
-| **linux/arm/v6** | | Use [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) | |
+| **linux/arm/v6** | Try [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) | Try [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) | Try [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) |
 | **linux/arm/v7** | ✓ | ✓ | · |
 | **linux/arm64/v8** | ✓ | ✓ | ✓ |
 | **linux/mips64le** | · | ✓ | · |
