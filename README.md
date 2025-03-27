@@ -11,26 +11,25 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 # Supported architectures and Tags
 
-| arch \ tags | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest)<br>[`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)<br>[`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21)<br>[`openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk21) | [`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian)<br>[`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21)<br> | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)<br>[`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) |
+| arch \ tags | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest)<br>[`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian)<br>[`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21)<br>[`openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk21) | [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)<br>[`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21)<br> | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)<br>[`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) |
 | :- | :---: | :---: | :---: |
-| **linux/386** | · | ✓ | · |
+| **linux/386** | ✓ | · | · |
 | **linux/amd64** | ✓ | ✓ | ✓ |
-| **linux/arm/v5** | · | ✓ | · |
-| **linux/arm/v6** | Try [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) | Try [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) | Try [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) |
+| **linux/arm/v5** | ✓ | · | · |
+| **linux/arm/v6** | Try [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) | Try [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) | Try [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) |
 | **linux/arm/v7** | ✓ | ✓ | · |
 | **linux/arm64/v8** | ✓ | ✓ | ✓ |
-| **linux/mips64le** | · | ✓ | · |
+| **linux/mips64le** | ✓ | · | · |
 | **linux/ppc64le** | ✓ | ✓ | ✓ |
 | **linux/riscv64** | ✓ | ✓ | ✓ |
 | **linux/s390x** | ✓ | ✓ | ✓ |
 
 ### Other available tags :
 
-- [`openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk17) [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17)
-- [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17)
+- [`openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk17) [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17)
+- [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17)
 - [`alpine-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17)
-- [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8)
-- [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
+- [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
 
 # [Docker Compose](https://docs.docker.com/compose)
 
