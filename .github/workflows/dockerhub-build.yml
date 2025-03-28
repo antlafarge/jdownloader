@@ -80,6 +80,19 @@ jobs:
           platforms: ${{ matrix.platforms }}
           tags: ${{ env.IMAGE_NAME }}:dev-${{ matrix.name }}
           push: true
+      - name: Logout from Docker Hub
+        run: docker logout
+
+  Manifest:
+    name: Create and push docker manifests
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Create and push manifests
         run: |
           docker manifest create ${{ env.IMAGE_NAME }}:dev-openjdk8 \
