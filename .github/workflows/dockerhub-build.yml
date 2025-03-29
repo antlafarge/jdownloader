@@ -85,8 +85,8 @@ jobs:
 
   Manifest:
     name: Create and push docker manifests
-    runs-on: ubuntu-latest
     needs: Build
+    runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -96,42 +96,42 @@ jobs:
       - name: Create and push manifests
         run: |
           docker manifest create ${{ env.IMAGE_NAME }}:dev-openjdk8 \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk8 \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk8
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 \
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
           docker manifest push ${{ env.IMAGE_NAME }}:dev-openjdk8
           docker manifest create ${{ env.IMAGE_NAME }}:dev-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}/debian-openjdk17
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 \
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 \
+            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk17
           docker manifest push ${{ env.IMAGE_NAME }}:dev-openjdk17
           docker manifest create ${{ env.IMAGE_NAME }}:dev-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/debian-openjdk21
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 \
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 \
+            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk21
           docker manifest push ${{ env.IMAGE_NAME }}:dev-openjdk21
           docker manifest create ${{ env.IMAGE_NAME }}:dev-debian \
-            --amend ${{ env.IMAGE_NAME }}/debian-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/debian-openjdk17
+            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 \
+            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk17
           docker manifest push ${{ env.IMAGE_NAME }}:dev-debian
           docker manifest create ${{ env.IMAGE_NAME }}:dev-ubuntu \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk8
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 \
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 \
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
           docker manifest push ${{ env.IMAGE_NAME }}:dev-ubuntu
           docker manifest create ${{ env.IMAGE_NAME }}:dev-alpine \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk8
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 \
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 \
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8
           docker manifest push ${{ env.IMAGE_NAME }}:dev-alpine
           docker manifest create ${{ env.IMAGE_NAME }}:dev-latest \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/debian-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}/debian-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}/alpine-openjdk8 \
-            --amend ${{ env.IMAGE_NAME }}/ubuntu-openjdk8
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 \
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 \
+            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 \
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 \
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 \
+            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk17 \
+            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 \
+            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
           docker manifest push ${{ env.IMAGE_NAME }}:dev-latest
       - name: Logout from Docker Hub
         run: docker logout
