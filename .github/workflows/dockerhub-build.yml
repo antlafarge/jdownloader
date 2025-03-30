@@ -83,7 +83,7 @@ jobs:
       - name: Logout from Docker Hub
         run: docker logout
 
-  Manifest:
+  Manifests:
     name: Create and push docker manifests
     needs: Build
     runs-on: ubuntu-latest
@@ -95,43 +95,37 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Create and push manifests
         run: |
-          docker manifest create ${{ env.IMAGE_NAME }}:dev-openjdk8 \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
-          docker manifest push ${{ env.IMAGE_NAME }}:dev-openjdk8
-          docker manifest create ${{ env.IMAGE_NAME }}:dev-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk17
-          docker manifest push ${{ env.IMAGE_NAME }}:dev-openjdk17
-          docker manifest create ${{ env.IMAGE_NAME }}:dev-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk21
-          docker manifest push ${{ env.IMAGE_NAME }}:dev-openjdk21
-          docker manifest create ${{ env.IMAGE_NAME }}:dev-debian \
-            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk17
-          docker manifest push ${{ env.IMAGE_NAME }}:dev-debian
-          docker manifest create ${{ env.IMAGE_NAME }}:dev-ubuntu \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
-          docker manifest push ${{ env.IMAGE_NAME }}:dev-ubuntu
-          docker manifest create ${{ env.IMAGE_NAME }}:dev-alpine \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8
-          docker manifest push ${{ env.IMAGE_NAME }}:dev-alpine
-          docker manifest create ${{ env.IMAGE_NAME }}:dev-latest \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}:dev-debian-openjdk17 \
-            --amend ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 \
-            --amend ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8
-          docker manifest push ${{ env.IMAGE_NAME }}:dev-latest
+          docker buildx imagetools create -t antlafarge/jdownloader:dev-openjdk8 \
+            antlafarge/jdownloader:dev-alpine-openjdk8 \
+            antlafarge/jdownloader:dev-ubuntu-openjdk8
+
+          docker buildx imagetools create -t antlafarge/jdownloader:dev-openjdk17 \
+            antlafarge/jdownloader:dev-alpine-openjdk17 \
+            antlafarge/jdownloader:dev-ubuntu-openjdk17 \
+            antlafarge/jdownloader:dev-debian-openjdk17
+
+          docker buildx imagetools create -t antlafarge/jdownloader:dev-openjdk21 \
+            antlafarge/jdownloader:dev-alpine-openjdk21 \
+            antlafarge/jdownloader:dev-ubuntu-openjdk21 \
+            antlafarge/jdownloader:dev-debian-openjdk21
+
+          docker buildx imagetools create -t antlafarge/jdownloader:dev-alpine \
+            antlafarge/jdownloader:dev-alpine-openjdk21 \
+            antlafarge/jdownloader:dev-alpine-openjdk17 \
+            antlafarge/jdownloader:dev-alpine-openjdk8
+
+          docker buildx imagetools create -t antlafarge/jdownloader:dev-ubuntu \
+            antlafarge/jdownloader:dev-ubuntu-openjdk21 \
+            antlafarge/jdownloader:dev-ubuntu-openjdk17 \
+            antlafarge/jdownloader:dev-ubuntu-openjdk8
+
+          docker buildx imagetools create -t antlafarge/jdownloader:dev-debian \
+            antlafarge/jdownloader:dev-debian-openjdk21 \
+            antlafarge/jdownloader:dev-debian-openjdk17
+
+          docker buildx imagetools create -t antlafarge/jdownloader:dev-latest \
+            antlafarge/jdownloader:dev-alpine \
+            antlafarge/jdownloader:dev-ubuntu \
+            antlafarge/jdownloader:dev-debian
       - name: Logout from Docker Hub
         run: docker logout

@@ -27,29 +27,25 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Release images (re-tag from dev-* to *)
         run: |
-          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 -t ${{ env.IMAGE_NAME }}:alpine-openjdk8
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 -t ${{ env.IMAGE_NAME }}:openjdk8
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk8
 
-          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 -t ${{ env.IMAGE_NAME }}:alpine-openjdk17
-          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk17
-          docker pull ${{ env.IMAGE_NAME }}:dev-debian-openjdk17
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk17 -t ${{ env.IMAGE_NAME }}:debian-openjdk17
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk17 -t ${{ env.IMAGE_NAME }}:openjdk17
 
-          docker pull ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine-openjdk21
-          docker pull ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk21
-          docker pull ${{ env.IMAGE_NAME }}:dev-debian-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 -t ${{ env.IMAGE_NAME }}:debian-openjdk21
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 -t ${{ env.IMAGE_NAME }}:openjdk21
 
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 -t ${{ env.IMAGE_NAME }}:debian
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 -t ${{ env.IMAGE_NAME }}:latest
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-openjdk8 -t ${{ env.IMAGE_NAME }}:openjdk8
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-openjdk17 -t ${{ env.IMAGE_NAME }}:openjdk17
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-openjdk21 -t ${{ env.IMAGE_NAME }}:openjdk21
+
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine -t ${{ env.IMAGE_NAME }}:alpine
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu -t ${{ env.IMAGE_NAME }}:ubuntu
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian -t ${{ env.IMAGE_NAME }}:debian
+
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-latest -t ${{ env.IMAGE_NAME }}:latest
       - name: Logout from Docker Hub
         run: docker logout
