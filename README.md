@@ -9,27 +9,29 @@ Github repository : [https://github.com/antlafarge/jdownloader](https://github.c
 You can report issues in the [github issues](https://github.com/antlafarge/jdownloader/issues).  
 You can send feedback and discuss the project in the [github discussions](https://github.com/antlafarge/jdownloader/discussions).
 
-# Supported architectures and Tags
+# Tags and architectures
 
-| arch \ tags | [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest)<br>[`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian)<br>[`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21)<br>[`openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk21) | <br>[`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu)<br>[`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21) | [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)<br>[`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) | <br><br>[`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)<br>[`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) |
-| :- | :---: | :---: | :---: | :---: |
-| | *~275 MB* | *~255 MB* | *~115 MB* | *~110 MB* |
-| **linux/386** | ✓ | · | · | ✓ |
-| **linux/amd64** | ✓ | ✓ | ✓ | ✓ |
-| **linux/arm/v5** | ✓ | · | · | · |
-| **linux/arm/v6** | · | · | · | ✓ |
-| **linux/arm/v7** | ✓ | ✓ | · | ✓ |
-| **linux/arm64/v8** | ✓ | ✓ | ✓ | ✓ |
-| **linux/mips64le** | ✓ | · | · | · |
-| **linux/ppc64le** | ✓ | ✓ | ✓ | ✓ |
-| **linux/riscv64** | ✓ | ✓ | ✓ | · |
-| **linux/s390x** | ✓ | ✓ | ✓ | ✓ |
+- [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) = [`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian) + [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) + [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)
+- [`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian) = [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21) + [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17)
+- [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) = [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21) + [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17) + [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8)
+- [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) = [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) + [`alpine-openjd17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17) + [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
+- [`openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk21) = [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21) + [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21) + [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21)
+- [`openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk17) = [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17) + [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17) + [`alpine-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17)
+- [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) = [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8) + [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
 
-### Other available tags :
-
-- [`openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk17) [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17) *~265 MB*
-- [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17) *~255 MB*
-- [`alpine-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17) *~110 MB*
+| arch \ tags | [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21) | [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21) | [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) | [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17) | [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17) | [`alpine-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17) | [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8) | [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) |
+| :- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | *~270 MB* | *~260 MB* | *~120 MB* | *~265 MB* | *~280 MB* | *~115 MB* | *~250 MB* | *~115 MB* |
+| **linux/386** | ✓ | · | · | ✓ | · | · | · | ✓ |
+| **linux/amd64** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **linux/arm/v5** | ✓ | · | · | ✓ | · | · | · | · |
+| **linux/arm/v6** | · | · | · | · | · | · | · | ✓ |
+| **linux/arm/v7** | ✓ | ✓ | · | ✓ | ✓ | · | ✓ | ✓ |
+| **linux/arm64/v8** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **linux/mips64le** | ✓ | · | · | ✓ | · | · | · | · |
+| **linux/ppc64le** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **linux/riscv64** | ✓ | ✓ | ✓ | · | ✓ | · | | · |
+| **linux/s390x** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 # [Docker Compose](https://docs.docker.com/compose)
 
