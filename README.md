@@ -28,7 +28,7 @@ You can send feedback and discuss the project in the [github discussions](https:
 | **linux/arm/v6** | · | · | · | · | · | · | · | ✓ |
 | **linux/arm/v7** | ✓ | ✓ | · | ✓ | ✓ | · | ✓ | ✓ |
 | **linux/arm64/v8** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **linux/mips64le** | ✓ | · | · | ✓ | · | · | · | · |
+| **linux/mips64le** | · | · | · | ✓ | · | · | · | · |
 | **linux/ppc64le** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | **linux/riscv64** | ✓ | ✓ | ✓ | · | ✓ | · | | · |
 | **linux/s390x** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -239,19 +239,6 @@ The dockerhub image is rebuilt monthly to get last OS and packages security upda
 Check the user you use to run the container (with `user` parameter) can read and write the directories you created and you mounted as [volumes](https://docs.docker.com/engine/reference/run/#volume-shared-filesystems).  
 Read carefully the [Setup guide](https://github.com/antlafarge/jdownloader#setup) and follow the steps.  
 Or run the container as root (remove `user` parameter).
-
-## Armhf libseccomp2 issue
-
-If you run the image on an armhf host (`arm/v7`), you may encounter many command errors (`wait`, `sleep`, `curl`, `date`)  
-This may be resolved by upgrading the `libseccomp2` library (docker dependency).  
-First you should try to upgrade your system by using the usual method.  
-If this upgrade didn't resolve the problem, add the backports repo for debian buster and update : 
-``` 
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 04EE7237B7D453EC 648ACFD622F3D138  
-echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee -a /etc/apt/sources.list.d/buster-backports.list  
-sudo apt update  
-sudo apt install -t buster-backports libseccomp2
-```
 
 ## Docker privileges
 
