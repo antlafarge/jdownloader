@@ -16,7 +16,7 @@ ENV LOG_FILE="/dev/null"
 ENV JAVA_OPTIONS=""
 ENV UMASK=""
 
-ARG OPENJDK="openjdk-17-jre-headless"
+ARG OPENJDK="openjdk-21-jre-headless"
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
@@ -30,9 +30,10 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 RUN mkdir -p -m 777 /jdownloader/ && chown 1000:100 /jdownloader/
+RUN mkdir -p -m 777 /init/ && chown 1000:100 /init/
 
-COPY --chown=1000:100 --chmod=777 ./src/ /jdownloader/
+COPY --chown=1000:100 --chmod=777 ./src/ /init/
 
-WORKDIR /jdownloader/
+WORKDIR /init/
 
 ENTRYPOINT ["./docker-entrypoint.sh"]

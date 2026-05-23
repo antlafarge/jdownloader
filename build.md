@@ -16,7 +16,7 @@
 
 ### Debian
 
-    docker build -t debian-openjdk17 -f ./Dockerfile/debian.Dockerfile --build-arg OPENJDK="openjdk-17-jre-headless" .
+    docker build -t debian-openjdk21 -f ./Dockerfile/debian.Dockerfile --build-arg OPENJDK="openjdk-21-jre-headless" .
 
 ## Build and push for all architectures
 

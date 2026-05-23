@@ -18,7 +18,7 @@ ENV UMASK=""
 
 ARG OPENJDK="openjdk21-jre-headless"
 
-RUN apk add --no-cache --no-install-recommends \
+RUN apk add --no-cache \
         --repository=https://dl-cdn.alpinelinux.org/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/community/ \
         bash \
         curl \
@@ -27,9 +27,10 @@ RUN apk add --no-cache --no-install-recommends \
         ${OPENJDK}
 
 RUN mkdir -p -m 777 /jdownloader/ && chown 1000:100 /jdownloader/
+RUN mkdir -p -m 777 /init/ && chown 1000:100 /init/
 
-COPY --chown=1000:100 --chmod=777 ./src/ /jdownloader/
+COPY --chown=1000:100 --chmod=777 ./src/ /init/
 
-WORKDIR /jdownloader/
+WORKDIR /init/
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
