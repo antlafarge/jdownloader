@@ -61,8 +61,10 @@ if [ -n "$UMASK" ]; then
     umask $UMASK
 fi
 
-JDownloaderJarFile="JDownloader.jar"
-JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
+JDownloaderJarFileName="JDownloader.jar"
+JDownloaderJarFile="/jdownloader/$JDownloaderJarFileName"
+JDownloaderDir="/jdownloader"
+JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFileName"
 
 group "Check \"$JDownloaderJarFile\""
 
@@ -71,11 +73,11 @@ unzip -t $JDownloaderJarFile &> /dev/null
 unzipExitCode=$?
 if [ "$unzipExitCode" -ne 0 ]; then
     log "Delete any existing JDownloader installation files"
-    rm -f -r $JDownloaderJarFile Core.jar ./tmp ./update
+    rm -f -r $JDownloaderJarFile $JDownloaderDir/Core.jar $JDownloaderDir/tmp $JDownloaderDir/update
 fi
 
 # If the JDownloader jar file does not exist
-if [ ! -f "./$JDownloaderJarFile" ]; then
+if [ ! -f "$JDownloaderJarFile" ]; then
     downloadFile "https://$JDownloaderJarUrl" "$JDownloaderJarFile"
     downloadFileExitCode=$?
     if [ $downloadFileExitCode -ne 0 ]; then
@@ -92,20 +94,20 @@ groupEnd
 group "Setup JDownloader"
 
 # Create directory logs if applicable
-if [ ! -d "./logs/" ]; then
-    log "Create directory \"./logs/\""
-    mkdir -p "./logs/"
+if [ ! -d "$JDownloaderDir/logs/" ]; then
+    log "Create directory \"$JDownloaderDir/logs/\""
+    mkdir -p "$JDownloaderDir/logs/"
 fi
 
-installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.json" "./cfg/"
-installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json" "./cfg/"
-installFile "org.jdownloader.settings.GeneralSettings.json" "./cfg/"
-installFile "org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "./cfg/"
-installFile "extensions.requestedinstalls.json" "./update/versioninfo/JD/"
+installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.json" "$JDownloaderDir/cfg/"
+installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json" "$JDownloaderDir/cfg/"
+installFile "org.jdownloader.settings.GeneralSettings.json" "$JDownloaderDir/cfg/"
+installFile "org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "$JDownloaderDir/cfg/"
+installFile "extensions.requestedinstalls.json" "$JDownloaderDir/update/versioninfo/JD/"
 
 if [ -n "$JD_EMAIL" ]; then
     log "Set JDownloader email"
-    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "email" "$JD_EMAIL"
+    replaceJsonValue "$JDownloaderDir/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "email" "$JD_EMAIL"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JDownloader email failed"
@@ -114,7 +116,7 @@ fi
 
 if [ -n "$JD_PASSWORD" ]; then
     log "Set JDownloader password"
-    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "password" "$JD_PASSWORD"
+    replaceJsonValue "$JDownloaderDir/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "password" "$JD_PASSWORD"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JDownloader password failed"
@@ -123,7 +125,7 @@ fi
 
 if [ -n "$JD_DEVICENAME" ]; then
     log "Set JDownloader devicename"
-    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "devicename" "$JD_DEVICENAME"
+    replaceJsonValue "$JDownloaderDir/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "devicename" "$JD_DEVICENAME"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JDownloader device name failed"
