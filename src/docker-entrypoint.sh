@@ -11,13 +11,13 @@ trap "handleSignal 15" SIGTERM
 
 group "Container started"
 
-# Detect OS (ubuntu or alpine)
+# Detect OS (alpine or debian or ubuntu)
 OS=$(cat /etc/os-release | grep "ID=" | sed -En "s/^ID=(.+)$/\1/p")
 OS_prettyName=$(cat /etc/os-release | grep "PRETTY_NAME=" | sed -En "s/^PRETTY_NAME=\"(.+)\"$/\1/p")
-log "OS = \"$OS_prettyName\""
+log "OS = '$OS_prettyName'"
 
 # Log user ID and group ID
-log "USER = \"$(id -u):$(id -g)\""
+log "USER = '$(id -u):$(id -g)'"
 
 # JAVA
 if [ "$OS" = "alpine" ]; then
@@ -25,27 +25,27 @@ if [ "$OS" = "alpine" ]; then
 else
     JAVA_VERSION="$(dpkg -l | grep "openjdk.*jre" | cut -d" " -f3,4)"
 fi
-log "JAVA version = \"$JAVA_VERSION\""
+log "JAVA version = '$JAVA_VERSION'"
 if [ -n "$JAVA_OPTIONS" ]; then
-    log "JAVA options = \"$JAVA_OPTIONS\""
+    log "JAVA options = '$JAVA_OPTIONS'"
 fi
 
 # Retrieve JD_EMAIL
 if [ -f "/run/secrets/JD_EMAIL" ]; then
     JD_EMAIL=$(cat /run/secrets/JD_EMAIL)
 elif [ -n "$JD_EMAIL" ]; then
-    log "WARNING" "Secret \"JD_EMAIL\" not found, use environment variable"
+    log "WARNING" "Secret 'JD_EMAIL' not found, use environment variable"
 else
-    log "WARNING" "\"JD_EMAIL\" not found"
+    log "WARNING" "'JD_EMAIL' not found"
 fi
 
 # Retrieve JD_PASSWORD
 if [ -f "/run/secrets/JD_PASSWORD" ]; then
     JD_PASSWORD=$(cat /run/secrets/JD_PASSWORD)
 elif [ -n "$JD_PASSWORD" ]; then
-    log "WARNING" "Secret \"JD_PASSWORD\" not found, use environment variable"
+    log "WARNING" "Secret 'JD_PASSWORD' not found, use environment variable"
 else
-    log "WARNING" "\"JD_PASSWORD\" not found"
+    log "WARNING" "'JD_PASSWORD' not found"
 fi
 
 # Rerieve JD_DEVICENAME
@@ -61,29 +61,37 @@ if [ -n "$UMASK" ]; then
     umask $UMASK
 fi
 
-JDownloaderJarFile="JDownloader.jar"
-JDownloaderJarUrl="installer.jdownloader.org/$JDownloaderJarFile"
+appDir="/app"
+jdownloaderDir="/jdownloader"
+jdownloaderFile="JDownloader.jar"
+jdownloaderPath="$jdownloaderDir/$jdownloaderFile"
+jdownloaderUrl="https://installer.jdownloader.org/$jdownloaderFile"
 
-group "Check \"$JDownloaderJarFile\""
+# Create JDownloader directory
+if [ ! -d "$jdownloaderDir" ]; then
+    log "Create directory '$jdownloaderDir'"
+    mkdir -p "$jdownloaderDir"
+    chmod 777 "$jdownloaderDir"
+fi
+
+cd "$jdownloaderDir"
+
+group "Check '$jdownloaderPath'"
 
 # Check JDownloader application integrity
-unzip -t $JDownloaderJarFile &> /dev/null
+unzip -t "$jdownloaderPath" &> /dev/null
 unzipExitCode=$?
 if [ "$unzipExitCode" -ne 0 ]; then
     log "Delete any existing JDownloader installation files"
-    rm -f -r $JDownloaderJarFile Core.jar ./tmp ./update
+    rm -f -r "$jdownloaderPath" "$jdownloaderDir/Core.jar" "$jdownloaderDir/tmp" "$jdownloaderDir/update"
 fi
 
 # If the JDownloader jar file does not exist
-if [ ! -f "./$JDownloaderJarFile" ]; then
-    downloadFile "https://$JDownloaderJarUrl" "$JDownloaderJarFile"
+if [ ! -f "$jdownloaderPath" ]; then
+    downloadFile "$jdownloaderUrl" "$jdownloaderPath"
     downloadFileExitCode=$?
     if [ $downloadFileExitCode -ne 0 ]; then
-        downloadFile "http://$JDownloaderJarUrl" "$JDownloaderJarFile"
-        downloadFileExitCode=$?
-        if [ $downloadFileExitCode -ne 0 ]; then
-            fatal $downloadFileExitCode "Download JDownloader failed"
-        fi
+        fatal $downloadFileExitCode "Download JDownloader failed"
     fi
 fi
 
@@ -91,21 +99,17 @@ groupEnd
 
 group "Setup JDownloader"
 
-# Create directory logs if applicable
-if [ ! -d "./logs/" ]; then
-    log "Create directory \"./logs/\""
-    mkdir -p "./logs/"
-fi
+myJDownloaderSettingsFile="org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json"
 
-installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.json" "./cfg/"
-installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json" "./cfg/"
-installFile "org.jdownloader.settings.GeneralSettings.json" "./cfg/"
-installFile "org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "./cfg/"
-installFile "extensions.requestedinstalls.json" "./update/versioninfo/JD/"
+installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.json" "$appDir" "$jdownloaderDir/cfg"
+installFile "org.jdownloader.extensions.eventscripter.EventScripterExtension.scripts.json" "$appDir" "$jdownloaderDir/cfg"
+installFile "org.jdownloader.settings.GeneralSettings.json" "$appDir" "$jdownloaderDir/cfg"
+installFile "$myJDownloaderSettingsFile" "$appDir" "$jdownloaderDir/cfg"
+installFile "extensions.requestedinstalls.json" "$appDir" "$jdownloaderDir/update/versioninfo/JD"
 
 if [ -n "$JD_EMAIL" ]; then
     log "Set JDownloader email"
-    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "email" "$JD_EMAIL"
+    replaceJsonValue "$jdownloaderDir/cfg/$myJDownloaderSettingsFile" "email" "$JD_EMAIL"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JDownloader email failed"
@@ -114,7 +118,7 @@ fi
 
 if [ -n "$JD_PASSWORD" ]; then
     log "Set JDownloader password"
-    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "password" "$JD_PASSWORD"
+    replaceJsonValue "$jdownloaderDir/cfg/$myJDownloaderSettingsFile" "password" "$JD_PASSWORD"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JDownloader password failed"
@@ -123,7 +127,7 @@ fi
 
 if [ -n "$JD_DEVICENAME" ]; then
     log "Set JDownloader devicename"
-    replaceJsonValue "./cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json" "devicename" "$JD_DEVICENAME"
+    replaceJsonValue "$jdownloaderDir/cfg/$myJDownloaderSettingsFile" "devicename" "$JD_DEVICENAME"
     exitCode=$?
     if [ $exitCode -ne 0 ]; then
         fatal $exitCode "Set JDownloader device name failed"
@@ -139,14 +143,15 @@ unset JD_DEVICENAME
 group "Start JDownloader"
 
 # Start JDownloader in a background process
-java $JAVA_OPTIONS -Djava.awt.headless=true -jar $JDownloaderJarFile &> "$LOG_FILE" &
+# java $JAVA_OPTIONS -Djava.awt.headless=true -jar "$jdownloaderFile" &> "$LOG_FILE" &
+java $JAVA_OPTIONS -Djava.awt.headless=true -jar "$jdownloaderFile" &
 pid=$!
 lastPid=""
-JDownloaderPidFile="JDownloader.pid"
+JDownloaderPidFile="$jdownloaderDir/JDownloader.pid"
 
 while [ -n "$pid" ]; do
-    jdrev=$(cat update/versioninfo/JD/rev 2> /dev/null)
-    jdurev=$(cat update/versioninfo/JDU/rev 2> /dev/null)
+    jdrev=$(cat "$jdownloaderDir/update/versioninfo/JD/rev" 2> /dev/null)
+    jdurev=$(cat "$jdownloaderDir/update/versioninfo/JDU/rev" 2> /dev/null)
 
     log "JDownloader ${lastPid:+re}started [PID=$pid]${jdurev:+ [JDU-REV=$jdurev]}${jdrev:+ [JD-REV=$jdrev]}"
 
@@ -160,7 +165,7 @@ while [ -n "$pid" ]; do
     lastPid="$pid"
 
     # Get the written JDownloader PID or another running java PID
-    pid=$(pgrep -L -F $JDownloaderPidFile 2> /dev/null || pgrep -o java)
+    pid=$(pgrep -L -F "$JDownloaderPidFile" 2> /dev/null || pgrep -o java)
 done
 
 log "JDownloader stopped"

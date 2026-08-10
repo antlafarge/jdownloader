@@ -72,7 +72,7 @@ killProcess()
 handleSignal()
 {
     local signalCode=$1
-    log "Kill signal \"$signalCode\" received"
+    log "Kill signal '$signalCode' received"
     if [ -n "$pid" ]; then # If java process found
         stop=true
         killProcess $pid
@@ -86,18 +86,19 @@ handleSignal()
 # Install a file in a directory
 installFile()
 {
-    local fileName="$1"
-    local targetDir="$2"
-    local targetFile="${targetDir}${fileName}"
+    local file="$1"
+    local sourceDir="$2"
+    local targetDir="$3"
     # Create directory if applicable
     if [ ! -d "$targetDir" ]; then
-        log "Create directory \"$targetDir\""
+        log "Create directory '$targetDir'"
         mkdir -p "$targetDir"
     fi
     # Copy file if applicable
-    if [ ! -f "$targetFile" ]; then
-        log "Install \"$targetFile\""
-        cp "./$fileName" "$targetFile"
+    targetPath="$targetDir/$file"
+    if [ ! -f "$targetPath" ]; then
+        log "Install '$targetPath'"
+        cp -u "$sourceDir/$file" "$targetPath"
         local exitCode=$?
         if [ $exitCode -ne 0 ]; then
             log "ERROR :" "cp exited with code \"$exitCode\""
@@ -110,14 +111,14 @@ installFile()
 # Usage : replaceJsonValue file field value
 replaceJsonValue()
 {
-    local file=$1
-    local field=$(printf "%s" "$2" | sed -e 's/\\/\\\\\\\\/g' -e 's/[]\/$*.^[]/\\&/g') # This field will be compared to a key from a json file, so we need to quadruple escape the backslashes (double for bash string, double for json string) \\\\\\\\    And this field will be used in a sed regex, so we escape regex special characters ]\/$*.^[
-    local newValue=$(printf "%s" "$3" | sed -e 's/\\/\\\\\\\\/g' -e 's/[\/&]/\\&/g' -e 's/"/\\\\"/g') # This value will be compared to a value from a json file, so we need to quadruple escape the backslashes (double for bash string, double for json string) \\\\\\\\    And this value will be used in a sed replace, so we escape special characters \/&    And this value will be stored in a json file, so finally we double escape the quotes \\\\"
+    local filePath="$1"
+    local field="$(printf "%s" "$2" | sed -e 's/\\/\\\\\\\\/g' -e 's/[]\/$*.^[]/\\&/g')" # This field will be compared to a key from a json file, so we need to quadruple escape the backslashes (double for bash string, double for json string) \\\\\\\\    And this field will be used in a sed regex, so we escape regex special characters ]\/$*.^[
+    local newValue="$(printf "%s" "$3" | sed -e 's/\\/\\\\\\\\/g' -e 's/[\/&]/\\&/g' -e 's/"/\\\\"/g')" # This value will be compared to a value from a json file, so we need to quadruple escape the backslashes (double for bash string, double for json string) \\\\\\\\    And this value will be used in a sed replace, so we escape special characters \/&    And this value will be stored in a json file, so finally we double escape the quotes \\\\"
     local fieldPart="\($field\)" # match the field
     local valuePart="\([^\\\"]\|\\\\.\)*" # match the value. This looks complicated because it can contain escaped quotes \" because of json format.
     local search="\"$fieldPart\"\s*:\s*\"$valuePart\""
     local replace="\"\1\":\"$newValue\""
-    sed -i "s/$search/$replace/g" $file
+    sed -i "s/$search/$replace/g" "$filePath"
     local exitCode=$?
     if [ $exitCode -ne 0 ]; then
         log "ERROR :" "sed exited with code \"$exitCode\""
@@ -129,13 +130,13 @@ replaceJsonValue()
 downloadFile()
 {
     local fileUrl="$1"
-    local targetFile="$2"
-    if [ ! -f "./$targetFile" ]; then
-        log "Download \"$fileUrl\""
-        curl -s -o "$targetFile" "$fileUrl"
+    local targetFilePath="$2"
+    if [ ! -f "./$targetFilePath" ]; then
+        log "Download '$fileUrl'"
+        curl -s -o "$targetFilePath" "$fileUrl"
         curlExitCode=$?
         if [ $curlExitCode -ne 0 ]; then
-            log "ERROR :" "curl exited with code \"$curlExitCode\""
+            log "ERROR :" "curl exited with code '$curlExitCode'"
         fi
     fi
 }

@@ -11,27 +11,31 @@ You can send feedback and discuss the project in the [github discussions](https:
 
 # Tags and architectures
 
-- [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) = [`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian) + [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) + [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine)
-- [`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian) = [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21) + [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17)
-- [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) = [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21) + [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17) + [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8)
-- [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) = [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) + [`alpine-openjd17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17) + [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
-- [`openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk21) = [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21) + [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21) + [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21)
-- [`openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk17) = [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17) + [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17) + [`alpine-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17)
-- [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) = [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8) + [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
+- [`latest`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=latest) = [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) + [`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian)
 
-| arch \ tags | [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21) | [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21) | [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) | [`debian-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk17) | [`ubuntu-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk17) | [`alpine-openjdk17`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk17) | [`ubuntu-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk8) | [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) |
-| :- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| | *~270 MB* | *~260 MB* | *~120 MB* | *~265 MB* | *~280 MB* | *~115 MB* | *~250 MB* | *~115 MB* |
-| **linux/386** | ✓ | · | · | ✓ | · | · | · | ✓ |
-| **linux/amd64** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **linux/arm/v5** | ✓ | · | · | ✓ | · | · | · | · |
-| **linux/arm/v6** | · | · | · | · | · | · | · | ✓ |
-| **linux/arm/v7** | ✓ | ✓ | · | ✓ | ✓ | · | ✓ | ✓ |
-| **linux/arm64/v8** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **linux/mips64le** | · | · | · | ✓ | · | · | · | · |
-| **linux/ppc64le** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **linux/riscv64** | ✓ | ✓ | ✓ | · | ✓ | · | | · |
-| **linux/s390x** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+- [`alpine`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine) = [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) + [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
+
+- [`ubuntu`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu) = [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21)
+
+- [`debian`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian) = [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21)
+
+- [`openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk21) = [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) + [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21)+ [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21)
+
+- [`openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=openjdk8) = [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8)
+
+*Note : Ubuntu has been dropped for simplification purposes. You should use alpine for performance, or debian for compatibility.*
+
+| arch \ tags | [`alpine-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk21) | [`debian-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=debian-openjdk21) | [`ubuntu-openjdk21`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=ubuntu-openjdk21) | [`alpine-openjdk8`](https://hub.docker.com/repository/docker/antlafarge/jdownloader/tags?page=1&ordering=last_updated&name=alpine-openjdk8) |
+| :- | :-: | :-: | :-: | :-: |
+| **linux/386** | | ✓ | | ✓ |
+| **linux/amd64** | ✓ | ✓ | ✓ | ✓ |
+| **linux/arm/v5** | |✓ | | |
+| **linux/arm/v6** | | | | ✓ |
+| **linux/arm/v7** | | ✓ | ✓ | ✓ |
+| **linux/arm64/v8** | ✓ | ✓ | ✓ | ✓ |
+| **linux/ppc64le** | ✓ | ✓ | ✓ | ✓ |
+| **linux/riscv64** | ✓ | ✓ | ✓ | |
+| **linux/s390x** | ✓ | ✓ | ✓ | ✓ |
 
 # [Docker Compose](https://docs.docker.com/compose)
 
@@ -43,9 +47,10 @@ services:
     restart: <RESTART> # Optional
     user: <UID>:<GID> # Optional
     volumes:
-      - "<DOWNLOADS-PATH>:/jdownloader/downloads/"
-      - "<CONFIG-PATH>:/jdownloader/cfg/" # Optional
-      - "<LOGS-PATH>:/jdownloader/logs/" # Optional
+      - "<DOWNLOADS-PATH>:/jdownloader/downloads"
+      - "<CONFIG-PATH>:/jdownloader/cfg" # Optional
+      - "<LOGS-PATH>:/jdownloader/logs" # Optional
+      - "<JDOWNLOADER-PATH>:/jdownloader" # Optional
     environment:
       JD_EMAIL: "<JD-EMAIL>" # Optional (better to use secrets)
       JD_PASSWORD: "<JD-PASSWORD>" # Optional (better to use secrets)
@@ -80,8 +85,8 @@ services:
     restart: on-failure:3
     user: 1000:100
     volumes:
-      - "/hdd/JDownloader/downloads/:/jdownloader/downloads/"
-      - "/hdd/JDownloader/cfg/:/jdownloader/cfg/"
+      - "/hdd/JDownloader/downloads:/jdownloader/downloads"
+      - "/hdd/JDownloader/cfg:/jdownloader/cfg"
     secrets:
         - JD_EMAIL
         - JD_PASSWORD
@@ -111,6 +116,7 @@ Name | Type | Description | Optional | Default
 **`<DOWNLOADS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where your downloads will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | **REQUIRED** |
 **`<CONFIG-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where the JDownloader settings files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Recommended | In container
 **`<LOGS-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Directory where the JDownloader log files will be stored on your host machine.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Not recommended | In container
+**`<JDOWNLOADER-PATH>`** | [Volume](https://docs.docker.com/reference/cli/docker/container/run/#volume) | Mount this volume only if you need to run the container with a read-only file system.<br>*If you use the `user` parameter, check the permissions of the directories you mount as volumes.* | Not recommended | In container
 **`<JD-EMAIL-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) e-mail is saved. | **REQUIRED** |
 **`<JD-PASSWORD-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) password is saved. | **REQUIRED** |
 **`<JD-DEVICENAME-FILE>`** | [Secret](https://docs.docker.com/compose/use-secrets/) | The path to the docker secret file where your [myJDownloader](https://my.jdownloader.org) device name is saved. | Optional | (hostname)
@@ -132,9 +138,10 @@ docker run -d \
         --name <CONTAINER-NAME> \
         --restart <RESTART> \
         --user <UID>:<GID> \
-    -v "<DOWNLOADS-PATH>:/jdownloader/downloads/" \
-        -v "<CONFIG-PATH>:/jdownloader/cfg/" \
-        -v "<LOGS-PATH>:/jdownloader/logs/" \
+    -v "<DOWNLOADS-PATH>:/jdownloader/downloads" \
+        -v "<CONFIG-PATH>:/jdownloader/cfg" \
+        -v "<LOGS-PATH>:/jdownloader/logs" \
+        -v "<JDOWNLOADER-PATH>:/jdownloader" \
     -v "<JD-EMAIL-FILE>:/run/secrets/JD_EMAIL" \
     -v "<JD-PASSWORD-FILE>:/run/secrets/JD_PASSWORD" \
         -e JD_EMAIL="<JD-EMAIL>" \
@@ -159,8 +166,8 @@ docker run -d \
         --name jdownloader \
         --restart on-failure:3 \
         --user 1000:100 \
-    -v "/hdd/JDownloader/downloads/:/jdownloader/downloads/" \
-        -v "/hdd/JDownloader/cfg/:/jdownloader/cfg/" \
+    -v "/hdd/JDownloader/downloads/:/jdownloader/downloads" \
+        -v "/hdd/JDownloader/cfg/:/jdownloader/cfg" \
     -v "./JD_EMAIL.txt:/run/secrets/JD_EMAIL" \
     -v "./JD_PASSWORD.txt:/run/secrets/JD_PASSWORD" \
         -e JD_DEVICENAME="JD-DOCKER" \

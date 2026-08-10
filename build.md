@@ -6,17 +6,17 @@
 
 ## Build docker image
 
-### Ubuntu
-
-    docker build -t ubuntu-openjdk21 -f ./Dockerfile/ubuntu.Dockerfile --build-arg OPENJDK="openjdk-21-jre-headless" .
-
 ### Alpine
 
-    docker build -t alpine-openjdk21 -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk21-jre-headless" .
+    docker build -t dev-alpine-openjdk21 -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk21-jre-headless" .
 
 ### Debian
 
-    docker build -t debian-openjdk17 -f ./Dockerfile/debian.Dockerfile --build-arg OPENJDK="openjdk-17-jre-headless" .
+    docker build -t dev-debian-openjdk21 -f ./Dockerfile/debian.Dockerfile --build-arg OPENJDK="openjdk-21-jre-headless" .
+
+### Ubuntu
+
+    docker build -t dev-ubuntu-openjdk21 -f ./Dockerfile/ubuntu.Dockerfile --build-arg OPENJDK="openjdk-21-jre-headless" .
 
 ## Build and push for all architectures
 
@@ -29,43 +29,41 @@ https://www.docker.com/blog/multi-arch-images
     docker buildx use mybuilder
     docker buildx inspect --bootstrap
 
-### OpenJDK 8
-
-#### dev
-
-    docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-alpine-openjdk8 -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk8-jre" --push .
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-ubuntu-openjdk8 -f ./Dockerfile/ubuntu.Dockerfile --build-arg OPENJDK="openjdk-8-jre-headless" --push .
-
-#### release
-
-    docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:alpine-openjdk8 -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk8-jre" --push .
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:ubuntu-openjdk8 -t antlafarge/jdownloader:openjdk8 -f ./Dockerfile/ubuntu.Dockerfile --build-arg OPENJDK="openjdk-8-jre-headless" --push .
-
-### OpenJDK 17
-
-#### dev
-
-    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-alpine-openjdk17 -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk17-jre-headless" --push .
-    docker buildx build --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-debian-openjdk17 -f ./Dockerfile/debian.Dockerfile --build-arg OPENJDK="openjdk-17-jre-headless" --push .
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:dev-ubuntu-openjdk17 -f ./Dockerfile/ubuntu.Dockerfile --build-arg OPENJDK="openjdk-17-jre-headless" --push .
-
-#### release
-
-    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:alpine-openjdk17 -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk17-jre-headless" --push .
-    docker buildx build --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:debian-openjdk17 -f ./Dockerfile/debian.Dockerfile --build-arg OPENJDK="openjdk-17-jre-headless" --push .
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:ubuntu-openjdk17 -t antlafarge/jdownloader:openjdk17 -f ./Dockerfile/ubuntu.Dockerfile --build-arg OPENJDK="openjdk-17-jre-headless" --push .
-
 ### OpenJDK 21
 
 #### dev
 
+    // dev-alpine-openjdk21
     docker buildx build --platform linux/amd64,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:dev-alpine-openjdk21 -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk21-jre-headless" --push .
+
+    // dev-debian-openjdk21
+    docker buildx build --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:dev-debian-openjdk21 -f ./Dockerfile/debian.Dockerfile --build-arg OPENJDK="openjdk-21-jre-headless" --push .
+
+    // dev-ubuntu-openjdk21
     docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:dev-ubuntu-openjdk21 -f ./Dockerfile/ubuntu.Dockerfile --build-arg OPENJDK="openjdk-21-jre-headless" --push .
 
 #### release
 
-    docker buildx build --platform linux/amd64,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:alpine-openjdk21 -t antlafarge/jdownloader:alpine -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk21-jre-headless" --push .
-    docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t antlafarge/jdownloader:ubuntu-openjdk21 -t antlafarge/jdownloader:openjdk21 -t antlafarge/jdownloader:ubuntu -t antlafarge/jdownloader:latest -f ./Dockerfile/ubuntu.Dockerfile --build-arg OPENJDK="openjdk-21-jre-headless" --push .
+    // alpine-openjdk21
+    docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk21 -t antlafarge/jdownloader:alpine-openjdk21
+
+    // debian-openjdk21
+    docker buildx imagetools create antlafarge/jdownloader:dev-debian-openjdk21 -t antlafarge/jdownloader:debian-openjdk21
+
+    // ubuntu-openjdk21
+    docker buildx imagetools create antlafarge/jdownloader:dev-ubuntu-openjdk21 -t antlafarge/jdownloader:ubuntu-openjdk21
+
+### OpenJDK 8
+
+#### dev
+
+    // dev-alpine-openjdk8
+    docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t antlafarge/jdownloader:dev-alpine-openjdk8 -f ./Dockerfile/alpine.Dockerfile --build-arg OPENJDK="openjdk8-jre" --push .
+
+#### release
+
+    // alpine-openjdk8
+    docker buildx imagetools create antlafarge/jdownloader:dev-alpine-openjdk8 -t antlafarge/jdownloader:alpine-openjdk8
 
 ## Debug container
 
@@ -77,6 +75,9 @@ https://www.docker.com/blog/multi-arch-images
 
 ## Remove not tagged images
 
+    docker image prune -a
+
+    // or
     docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
 
 # Docker commands reminder
@@ -105,7 +106,7 @@ docker rm -f jdownloader
 
 ## Image delete
 ```
-docker rmi antlafarge/jdownloader:openjdk17
+docker rmi jdownloader:openjdk21
 ```
 
 ## Compose start

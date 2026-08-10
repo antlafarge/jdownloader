@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:26.04
 
 LABEL dockerhub="https://hub.docker.com/r/antlafarge/jdownloader"
 LABEL github="https://github.com/antlafarge/jdownloader"
@@ -8,6 +8,7 @@ LABEL maintainer.github="https://github.com/antlafarge"
 LABEL maintainer.dockerhub="https://hub.docker.com/u/antlafarge"
 
 ENV JD_EMAIL=""
+# check=skip=SecretsUsedInArgOrEnv
 ENV JD_PASSWORD=""
 ENV JD_DEVICENAME=""
 ENV LANG="C.UTF-8"
@@ -28,10 +29,11 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-RUN mkdir -p -m 777 /jdownloader/ && chown 1000:100 /jdownloader/
+RUN mkdir -p -m 777 /app && \
+    chown 1000:100 /app
 
-COPY --chown=1000:100 --chmod=777 ./src/ /jdownloader/
+COPY --chown=1000:100 --chmod=777 ./src /app
 
-WORKDIR /jdownloader/
- 
+WORKDIR /app
+
 ENTRYPOINT ["./docker-entrypoint.sh"]

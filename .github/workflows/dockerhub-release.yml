@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   Release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -26,18 +26,12 @@ jobs:
       - name: Release images (re-tag from dev-* to *)
         run: |
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk8 -t ${{ env.IMAGE_NAME }}:alpine-openjdk8
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk8 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk8
-
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk17 -t ${{ env.IMAGE_NAME }}:alpine-openjdk17
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk17 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk17
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk17 -t ${{ env.IMAGE_NAME }}:debian-openjdk17
 
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine-openjdk21 -t ${{ env.IMAGE_NAME }}:alpine-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu-openjdk21 -t ${{ env.IMAGE_NAME }}:ubuntu-openjdk21
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-debian-openjdk21 -t ${{ env.IMAGE_NAME }}:debian-openjdk21
 
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-openjdk8 -t ${{ env.IMAGE_NAME }}:openjdk8
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-openjdk17 -t ${{ env.IMAGE_NAME }}:openjdk17
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-openjdk21 -t ${{ env.IMAGE_NAME }}:openjdk21
 
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine -t ${{ env.IMAGE_NAME }}:alpine
